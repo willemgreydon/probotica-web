@@ -394,6 +394,13 @@ export function ControlCenterPanel({ bots }: ControlCenterPanelProps) {
           <span style={{ fontFamily: 'var(--font-mono)', fontSize: '.58rem', letterSpacing: '.24em', textTransform: 'uppercase', color: 'var(--telemetry-dim)' }}>
             System Telemetry
           </span>
+          <span
+            className="mono-chip"
+            title="Static placeholder values — live runtime telemetry is coming (PB-034)"
+            style={{ marginLeft: 'auto', fontSize: '.5rem', color: 'var(--status-warning)', borderColor: 'color-mix(in oklab, var(--status-warning), transparent 55%)' }}
+          >
+            Static
+          </span>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))' }}>
           {[

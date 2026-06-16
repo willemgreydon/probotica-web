@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import type { KnowledgeArticle } from '../lib/knowledge-types';
 import { KnowledgeCard } from './KnowledgeCard';
 import { staggerContainer, staggerItem } from '@/lib/motion/transitions';
@@ -21,6 +21,9 @@ export function KnowledgeGrid({
   title,
   subtitle,
 }: KnowledgeGridProps) {
+  // Framer Motion is JS-driven and ignores the CSS prefers-reduced-motion rule,
+  // so disable the stagger animation explicitly when the user prefers reduced motion.
+  const reduce = useReducedMotion();
   const gridCols = {
     2: 'repeat(auto-fill, minmax(min(100%, 520px), 1fr))',
     3: 'repeat(auto-fill, minmax(min(100%, 340px), 1fr))',
@@ -53,9 +56,9 @@ export function KnowledgeGrid({
       )}
 
       <motion.div
-        variants={staggerContainer(0.07)}
-        initial="hidden"
-        whileInView="visible"
+        variants={reduce ? undefined : staggerContainer(0.07)}
+        initial={reduce ? false : 'hidden'}
+        whileInView={reduce ? undefined : 'visible'}
         viewport={{ once: true, margin: '-60px' }}
         style={{
           display:             'grid',
@@ -64,7 +67,7 @@ export function KnowledgeGrid({
         }}
       >
         {articles.map(article => (
-          <motion.div key={article.slug} variants={staggerItem}>
+          <motion.div key={article.slug} variants={reduce ? undefined : staggerItem}>
             <KnowledgeCard article={article} variant={variant} />
           </motion.div>
         ))}
