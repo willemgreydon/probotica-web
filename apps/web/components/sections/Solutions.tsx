@@ -7,8 +7,8 @@ const MODULES = [
     num: '01',
     title: 'Bot Lab',
     href: '/bots',
-    text: '111 imported expert bots across 12 domains. Test with live API, inspect capabilities, view safety notes and sample inputs.',
-    stat: '111 bots',
+    text: '500+ imported expert bots across 12 domains. Test with live API, inspect capabilities, view safety notes and sample inputs.',
+    stat: '500+ bots',
     color: 'var(--primary)',
   },
   {

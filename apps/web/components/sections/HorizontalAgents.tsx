@@ -142,7 +142,7 @@ export function HorizontalAgents() {
 
         <div className="mt-8 flex flex-wrap items-center gap-4">
           <Link href="/bots" className="btn btn-primary" style={{ minHeight: 44 }}>
-            Browse All 111 Bots
+            Browse All 500+ Bots
           </Link>
           <Link href="/categories/sales" className="btn" style={{ minHeight: 44 }}>
             Explore by Category

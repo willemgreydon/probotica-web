@@ -158,8 +158,8 @@ export function WorkflowBuilder({ bots, templates, workflow, onWorkflowChange, o
       >
         <div className="panel-body">
           <div className="flex flex-wrap items-start justify-between gap-4">
-            <div>
-              <div className="flex items-center gap-3 mb-2">
+            <div style={{ flex: '1 1 280px', minWidth: 0 }}>
+              <div className="flex items-center gap-3 mb-2 flex-wrap">
                 <span
                   className="text-xs px-2 py-0.5 rounded border font-medium uppercase tracking-wider"
                   style={{ color: 'var(--accent)', borderColor: 'color-mix(in srgb, var(--accent) 30%, transparent)' }}
@@ -171,7 +171,7 @@ export function WorkflowBuilder({ bots, templates, workflow, onWorkflowChange, o
               <h2 className="text-xl font-bold text-foreground">{workflow.title}</h2>
               <p className="text-muted-foreground text-sm mt-1">{workflow.description}</p>
             </div>
-            <div className="telemetry-panel" style={{ minWidth: 180 }}>
+            <div className="telemetry-panel" style={{ flex: '1 1 200px', minWidth: 0 }}>
               <div className="telemetry-row">
                 <span className="telemetry-key">Steps</span>
                 <span className="telemetry-val">{runtimeSummary.totalSteps}</span>

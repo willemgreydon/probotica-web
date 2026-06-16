@@ -39,22 +39,27 @@ function MiniBarChart({ values, color = 'var(--primary)', label = 'Bar chart' }:
 }
 
 /* ── Readiness heatmap cell ── */
-function HeatCell({ score }: { score: number }) {
+function HeatCell({ bot }: { bot: PublicBotDefinition }) {
+  const score = getBotReadiness(bot).score;
+  const band = score >= 90 ? 'production-ready' : score >= 75 ? 'ready' : score >= 55 ? 'needs work' : 'draft';
   const color = score >= 90 ? 'var(--status-online)' :
                 score >= 75 ? 'var(--primary)' :
                 score >= 55 ? 'var(--status-warning)' :
                               'var(--status-error)';
   const opacity = 0.2 + (score / 100) * 0.65;
+  const tip = `${bot.name}\n${bot.category} · ${bot.status} · ${bot.outputMode}\nReadiness ${score}% (${band})`;
   return (
-    <div
-      title={`${score}%`}
-      role="img"
-      aria-label={`Bot readiness ${score} percent`}
+    <Link
+      href={`/bots/${bot.slug}`}
+      title={tip}
+      aria-label={`${bot.name}, ${bot.category}, ${bot.status}, readiness ${score} percent (${band}). Open bot.`}
+      className="focus-ring"
       style={{
         width: '100%', aspectRatio: '1',
         borderRadius: '3px',
         background: color,
         opacity,
+        display: 'block',
       }}
     />
   );
@@ -308,7 +313,7 @@ export function ControlCenterPanel({ bots }: ControlCenterPanelProps) {
         </div>
         <div className="panel-body">
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(18px, 1fr))', gap: '3px' }}>
-            {stats.readinessScores.map((score, i) => <HeatCell key={i} score={score} />)}
+            {bots.map((bot) => <HeatCell key={bot.slug} bot={bot} />)}
           </div>
           <p style={{ fontFamily: 'var(--font-mono)', fontSize: '.58rem', letterSpacing: '.18em', textTransform: 'uppercase', color: 'var(--telemetry-dim)', marginTop: '10px' }}>
             Each cell = 1 bot · {stats.readinessScores.length} total · {stats.readinessStrong} deployment-ready

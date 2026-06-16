@@ -120,7 +120,7 @@ export function SiteHeader() {
                 className="header-nav-link text-mono focus-ring hidden sm:inline-flex"
                 style={{ fontSize: '.67rem', letterSpacing: '.16em', padding: '0 10px' }}
               >
-                {authLinks.signIn.label.toUpperCase()}
+                {authLinks.signIn.label}
               </Link>
 
               <Link
@@ -175,7 +175,7 @@ function NavDropdown({
         className="header-nav-link text-mono focus-ring"
         style={{ fontSize: '.66rem', letterSpacing: '.16em', padding: '0 10px' }}
       >
-        {group.label.toUpperCase()}
+        {group.label}
       </Link>
     );
   }
@@ -195,7 +195,7 @@ function NavDropdown({
         onClick={onToggle}
         onFocus={onOpen}
       >
-        {group.label.toUpperCase()}
+        {group.label}
         <ChevronDown size={11} aria-hidden style={{ transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 160ms ease' }} />
       </button>
 

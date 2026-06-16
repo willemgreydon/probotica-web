@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 
 const KPI_ITEMS = [
-  { value: '111', label: 'Imported Bots', desc: 'Expert AI assistants across 12 domains', accent: true },
+  { value: '500+', label: 'Imported Bots', desc: 'Expert AI assistants across 12 domains', accent: true },
   { value: '10', label: 'Workflow Templates', desc: 'Chain bots into multi-step operations', accent: false },
   { value: 'Local-first', label: 'Workspaces', desc: 'Session memory, no data leakage', accent: false },
   { value: 'Server', label: 'Prompt Boundary', desc: 'System prompts never reach the client', accent: true },
@@ -14,7 +14,7 @@ const PROCESS_STEPS = [
   {
     n: '01',
     label: 'Test AI Assistants',
-    sub: 'Open Bot Lab, pick from 111 imported experts, run live API calls with real-time output.',
+    sub: 'Open Bot Lab, pick from 500+ imported experts, run live API calls with real-time output.',
     href: '/bots',
     cta: 'Open Bot Lab',
   },
@@ -43,7 +43,7 @@ const PROCESS_STEPS = [
 
 const STATUS_CHIPS = [
   { id: 'SYS', value: 'OPERATIONAL', ok: true },
-  { id: 'BOTS', value: '111 ACTIVE', ok: true },
+  { id: 'BOTS', value: '500+ ACTIVE', ok: true },
   { id: 'REG', value: 'GDPR-EU', ok: false },
 ];
 

@@ -404,6 +404,58 @@ body {
   .footer-link:hover {
     color: var(--foreground);
   }
+
+  /* ── Form controls (global upgrade) ──
+     Token-driven styling for native inputs/selects/checkboxes/radios so they
+     match the design system instead of the raw browser chrome. */
+  input, select, textarea, button {
+    font-family: inherit;
+  }
+  input[type="text"], input[type="email"], input[type="password"],
+  input[type="search"], input[type="url"], input[type="number"], select, textarea {
+    color: var(--foreground);
+    background: var(--panel-inset);
+    border: 1px solid var(--hud-border);
+    border-radius: var(--radius-md);
+    transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+  }
+  input::placeholder, textarea::placeholder {
+    color: var(--telemetry-dim);
+  }
+  input:hover, select:hover, textarea:hover {
+    border-color: color-mix(in oklab, var(--panel-border-active), transparent 35%);
+  }
+  input:focus-visible, select:focus-visible, textarea:focus-visible {
+    outline: none;
+    border-color: var(--panel-border-active);
+    box-shadow: var(--focus-ring);
+  }
+  /* Custom select caret + room for it (replaces the raw native arrow). */
+  select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M2.5 4.5L6 8l3.5-3.5' stroke='%23889' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+    padding-right: 30px;
+    cursor: pointer;
+  }
+  select option {
+    background: var(--surface-1);
+    color: var(--foreground);
+  }
+  /* Checkboxes & radios — tinted with the brand accent. */
+  input[type="checkbox"], input[type="radio"] {
+    accent-color: var(--primary);
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+  }
+  input[type="checkbox"]:focus-visible, input[type="radio"]:focus-visible {
+    outline: 2px solid var(--panel-border-active);
+    outline-offset: 2px;
+  }
   .text-caption {
     font-size: 0.66rem;
     line-height: 1.25;

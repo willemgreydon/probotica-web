@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { openai } from '@/lib/ai/openai';
 import { botBySlug } from '@/features/bots/data/imported-bots.server';
+import { generateBotOutput } from '@/features/bots/lib/bot-fallback';
 import type { BotTestResponse } from '@/features/bots/lib/bot-types';
 
 export const runtime = 'nodejs';
@@ -28,25 +29,6 @@ function nowMeta(model: string, category: string, startedAt: number) {
     latencyMs: Date.now() - startedAt,
     timestamp: new Date().toISOString(),
   };
-}
-
-function deterministicFallback(botName: string, input: string, capabilities: string[]): string {
-  const compact = input.replace(/\s+/g, ' ').trim();
-  const preview = compact.length > 220 ? `${compact.slice(0, 220)}...` : compact;
-  const selectedCaps = capabilities.slice(0, 3);
-  const capLine = selectedCaps.length > 0
-    ? `Capabilities: ${selectedCaps.join(' | ')}`
-    : 'Capabilities: prompt-based guidance';
-
-  return [
-    `[DEMO MODE] ${botName} executed with deterministic fallback.`,
-    `Input Summary: ${preview}`,
-    capLine,
-    'Next Steps:',
-    '1) Refine the input with business context.',
-    '2) Run again with OPENAI_API_KEY enabled for live output.',
-    '3) Human-review all business-critical decisions.',
-  ].join('\n');
 }
 
 function getSafeModel(modelRaw: string): string {
@@ -82,12 +64,14 @@ export async function POST(req: Request) {
   const model = getSafeModel(bot.model || SAFE_MODEL_FALLBACK);
 
   if (!openai || bot.status === 'draft') {
+    const fb = generateBotOutput(bot, input);
     const response: BotTestResponse = {
       ok: true,
       fallback: true,
       botSlug: bot.slug,
       botName: bot.name,
-      output: deterministicFallback(bot.name, input, bot.capabilities),
+      output: fb.output,
+      structured: fb.structured,
       meta: nowMeta(model, bot.category, startedAt),
     };
     return noStoreJson(response);
@@ -127,12 +111,14 @@ export async function POST(req: Request) {
     };
     return noStoreJson(response);
   } catch {
+    const fb = generateBotOutput(bot, input);
     const response: BotTestResponse = {
       ok: true,
       fallback: true,
       botSlug: bot.slug,
       botName: bot.name,
-      output: deterministicFallback(bot.name, input, bot.capabilities),
+      output: fb.output,
+      structured: fb.structured,
       meta: nowMeta(model, bot.category, startedAt),
     };
     return noStoreJson(response);

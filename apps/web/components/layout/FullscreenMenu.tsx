@@ -237,7 +237,7 @@ export function FullscreenMenu({ open, onClose }: FullscreenMenuProps) {
               <div className="space-y-2">
                 {[
                   { key: 'runtime', val: 'online', ok: true },
-                  { key: 'bots', val: '111 active', ok: true },
+                  { key: 'bots', val: '500+ active', ok: true },
                   { key: 'location', val: 'vienna/eu', ok: false },
                   { key: 'gdpr', val: 'compliant', ok: true },
                 ].map((row) => (
