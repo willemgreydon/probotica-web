@@ -3,8 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { Bot, ChevronDown, Menu } from 'lucide-react';
-import { primaryNav, authLinks, type NavGroup } from '@/lib/content/navigation';
-import { ThemeAccessibilityMenu } from '@/components/layout/ThemeAccessibilityMenu';
+import { authLinks, type NavGroup } from '@/lib/content/navigation';
 import { FullscreenMenu } from '@/components/layout/FullscreenMenu';
 import { LanguageSwitch } from '@/components/layout/LanguageSwitch';
 import { useT } from '@/components/providers/LocaleProvider';
@@ -91,29 +90,9 @@ export function SiteHeader() {
               <span className="text-mono" style={{ letterSpacing: '.2em' }}>PROBOTICA</span>
             </Link>
 
-            {/* Desktop primary nav */}
-            <nav
-              ref={navRef}
-              className="hidden items-center gap-1 lg:flex"
-              aria-label="Primary"
-            >
-              {primaryNav.map((group) => (
-                <NavDropdown
-                  key={group.label}
-                  group={group}
-                  open={openGroup === group.label}
-                  onOpen={() => openNow(group.label)}
-                  onClose={closeSoon}
-                  onToggle={() => setOpenGroup((g) => (g === group.label ? null : group.label))}
-                />
-              ))}
-            </nav>
-
-            {/* Right controls */}
+            {/* Right controls — nav + mode switch live in the mega menu */}
             <div className="flex items-center gap-1">
               <LanguageSwitch />
-
-              <ThemeAccessibilityMenu />
 
               <div
                 aria-hidden
@@ -136,10 +115,10 @@ export function SiteHeader() {
                 {t('auth.getStarted')}
               </Link>
 
-              {/* Mobile menu trigger */}
+              {/* Menu trigger — opens the mega menu (primary nav + mode switch) */}
               <button
                 type="button"
-                className="header-control text-mono focus-ring lg:hidden"
+                className="header-control text-mono focus-ring"
                 style={{ fontSize: '.67rem', letterSpacing: '.18em', gap: 6 }}
                 onClick={() => setMenuOpen(true)}
                 aria-label="Open navigation menu"

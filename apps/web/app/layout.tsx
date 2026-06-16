@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, JetBrains_Mono, Space_Grotesk } from 'next/font/google';
+import { Inter, JetBrains_Mono, Syne } from 'next/font/google';
 import Script from 'next/script';
 import { cookies } from 'next/headers';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
@@ -16,10 +16,10 @@ const fontBody = Inter({
   display: 'swap',
 });
 
-const fontDisplay = Space_Grotesk({
+const fontDisplay = Syne({
   subsets: ['latin'],
   variable: '--font-display',
-  weight: ['500', '700'],
+  weight: ['500', '600', '700', '800'],
   display: 'swap',
 });
 

@@ -3,7 +3,10 @@
 import Link from 'next/link';
 import { useEffect, useRef } from 'react';
 import { X, Bot } from 'lucide-react';
-import { navGroups } from '@/lib/content/site';
+import { primaryNav } from '@/lib/content/navigation';
+import { ThemeAccessibilityMenu } from '@/components/layout/ThemeAccessibilityMenu';
+import { LanguageSwitch } from '@/components/layout/LanguageSwitch';
+import { useT } from '@/components/providers/LocaleProvider';
 
 interface FullscreenMenuProps {
   open: boolean;
@@ -11,6 +14,7 @@ interface FullscreenMenuProps {
 }
 
 export function FullscreenMenu({ open, onClose }: FullscreenMenuProps) {
+  const t = useT();
   const panelRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
 
@@ -173,15 +177,15 @@ export function FullscreenMenu({ open, onClose }: FullscreenMenuProps) {
 
         {/* Nav grid */}
         <div className="grid gap-4 lg:grid-cols-[1.5fr_1fr]">
-          {/* Left: nav groups */}
+          {/* Left: nav groups (primary navigation) */}
           <div className="grid gap-4 sm:grid-cols-2">
-            {navGroups.map((group, groupIndex) => (
-              <section key={group.title} aria-label={group.title}>
+            {primaryNav.map((group, groupIndex) => (
+              <section key={group.label} aria-label={t(`nav.${group.label}`)}>
                 <div
                   className="mb-3 flex items-center justify-between px-1"
                 >
                   <h3 style={{ fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.28em', textTransform: 'uppercase', color: 'var(--muted-foreground)', fontFamily: 'var(--font-mono)' }}>
-                    {group.title}
+                    {t(`nav.${group.label}`)}
                   </h3>
                   <span className="route-marker">{String(groupIndex + 1).padStart(2, '0')}</span>
                 </div>
@@ -227,8 +231,20 @@ export function FullscreenMenu({ open, onClose }: FullscreenMenuProps) {
             ))}
           </div>
 
-          {/* Right: status + CTA */}
+          {/* Right: controls + status + CTA */}
           <aside>
+            {/* Mode switch + language */}
+            <div
+              className="p-5 mb-4"
+              style={{ border: '1px solid var(--hud-border)', background: 'var(--command-surface)', borderRadius: 'var(--radius-xl)' }}
+            >
+              <p className="edge-label mb-4">{t('common.language')} & Mode</p>
+              <div className="flex items-center gap-3 flex-wrap">
+                <LanguageSwitch />
+                <ThemeAccessibilityMenu />
+              </div>
+            </div>
+
             <div
               className="p-5 mb-4"
               style={{ border: '1px solid var(--hud-border)', background: 'var(--command-surface)', borderRadius: 'var(--radius-xl)' }}
