@@ -123,6 +123,11 @@
   --neon-orange: #ffab6a;
   --neon-pink: #ff7eb3;
 
+  /* Knowledge-hub semantic aliases (theme-aware; were previously undefined,
+     causing eyebrow/heading text to fall back to inherited colors). */
+  --color-acid: var(--neon-lime);
+  --color-fog: var(--foreground);
+
   /* ── Component-specific ── */
   --robot-face: #101a25;
   --robot-shell: #0f141d;

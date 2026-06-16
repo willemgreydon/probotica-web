@@ -14,11 +14,11 @@ interface ControlCenterPanelProps {
 }
 
 /* ── Mini bar chart (SVG) ── */
-function MiniBarChart({ values, color = 'var(--primary)' }: { values: number[]; color?: string }) {
+function MiniBarChart({ values, color = 'var(--primary)', label = 'Bar chart' }: { values: number[]; color?: string; label?: string }) {
   const max = Math.max(...values, 1);
   const w = 100 / values.length;
   return (
-    <svg viewBox={`0 0 100 32`} style={{ width: '100%', height: '32px', display: 'block' }} preserveAspectRatio="none">
+    <svg viewBox={`0 0 100 32`} role="img" aria-label={label} style={{ width: '100%', height: '32px', display: 'block' }} preserveAspectRatio="none">
       {values.map((v, i) => {
         const h = (v / max) * 28;
         return (
@@ -48,6 +48,8 @@ function HeatCell({ score }: { score: number }) {
   return (
     <div
       title={`${score}%`}
+      role="img"
+      aria-label={`Bot readiness ${score} percent`}
       style={{
         width: '100%', aspectRatio: '1',
         borderRadius: '3px',
@@ -249,10 +251,19 @@ export function ControlCenterPanel({ bots }: ControlCenterPanelProps) {
             <PressureBar label="Workspaces"    value={stats.workspaceCount}              max={Math.max(stats.workspaceCount, 5)}    color="var(--secondary)" />
             <PressureBar label="Workflows"     value={stats.workflowTemplateCount}        max={Math.max(stats.workflowTemplateCount, 10)} color="var(--neon-lime)" />
             <div style={{ paddingTop: '8px', borderTop: '1px solid var(--panel-border)' }}>
-              <p style={{ fontFamily: 'var(--font-mono)', fontSize: '.58rem', letterSpacing: '.16em', textTransform: 'uppercase', color: 'var(--telemetry-dim)', marginBottom: '8px' }}>
-                7-day Activity Trend
-              </p>
-              <MiniBarChart values={stats.trend} />
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, marginBottom: '8px' }}>
+                <p style={{ fontFamily: 'var(--font-mono)', fontSize: '.58rem', letterSpacing: '.16em', textTransform: 'uppercase', color: 'var(--telemetry-dim)', margin: 0 }}>
+                  7-day Activity Trend
+                </p>
+                <span
+                  className="mono-chip"
+                  title="Placeholder data — real usage telemetry is coming (PB-034)"
+                  style={{ fontSize: '.5rem', color: 'var(--status-warning)', borderColor: 'color-mix(in oklab, var(--status-warning), transparent 55%)' }}
+                >
+                  Simulated
+                </span>
+              </div>
+              <MiniBarChart values={stats.trend} label="Simulated 7-day activity trend — placeholder demo data, not real usage" />
             </div>
           </div>
         </div>

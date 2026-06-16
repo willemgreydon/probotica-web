@@ -24,13 +24,13 @@ const CATEGORY_COLORS: Record<string, string> = {
   ux:            'var(--neon-cyan)',
   content:       'var(--neon-violet)',
   marketing:     'var(--neon-orange)',
-  'real-estate': '#88ffcc',
+  'real-estate': 'var(--success)',
   development:   'var(--secondary)',
-  learning:      '#ffcb74',
+  learning:      'var(--warning)',
   automation:    'var(--primary)',
-  research:      '#be9bff',
-  support:       '#8ac9ff',
-  strategy:      '#ff8f96',
+  research:      'var(--accent)',
+  support:       'var(--info)',
+  strategy:      'var(--danger)',
   other:         'var(--muted-foreground)',
 };
 
@@ -275,12 +275,16 @@ export function MarketplaceView({ bots, templates }: MarketplaceViewProps) {
           </div>
 
           {/* Tabs */}
-          <div style={{ display: 'flex', gap: '2px', border: '1px solid var(--panel-border)', borderRadius: 'var(--radius-md)', padding: '2px' }}>
+          <div role="tablist" aria-label="Marketplace catalog" style={{ display: 'flex', gap: '2px', border: '1px solid var(--panel-border)', borderRadius: 'var(--radius-md)', padding: '2px' }}>
             {(['bots', 'workflows'] as const).map((t) => (
               <button
                 key={t}
                 type="button"
+                role="tab"
+                aria-selected={tab === t}
+                aria-label={t === 'bots' ? 'Show bots' : 'Show workflow packs'}
                 onClick={() => setTab(t)}
+                className="focus-ring"
                 style={{
                   padding: '5px 14px', borderRadius: '8px', border: 'none',
                   fontFamily: 'var(--font-mono)', fontSize: '.62rem', letterSpacing: '.14em', textTransform: 'uppercase',
