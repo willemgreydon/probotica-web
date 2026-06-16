@@ -1,0 +1,1 @@
+{"tasks":{"dev":{"cache":false,"persistent":true},"build":{"dependsOn":["^build"],"outputs":[".next/**","!.next/cache/**"]},"lint":{},"typecheck":{}},"globalEnv":["OPENAI_API_KEY","NEXT_PUBLIC_SITE_URL","CONTACT_EMAIL"]}

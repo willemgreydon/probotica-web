@@ -1,0 +1,336 @@
+import type { LearningPath } from '../lib/knowledge-types';
+
+export const learningPaths: LearningPath[] = [
+  {
+    slug: 'start-here-beginner',
+    title: 'Start Here',
+    subtitle: 'The beginner path',
+    description:
+      'New to AI? This path takes you from zero to a solid foundational understanding of artificial intelligence — what it is, how it works, and why it matters for every business and career.',
+    difficulty: 'beginner',
+    estimatedHours: 3,
+    targetAudience: 'Complete beginners, business professionals, non-technical stakeholders',
+    accentColor: '#b9ff4a',
+    icon: '🌱',
+    tags: ['beginner', 'foundations', 'overview'],
+    steps: [
+      {
+        order: 1,
+        articleSlug: 'what-is-artificial-intelligence',
+        title: 'What Is Artificial Intelligence?',
+        description: 'Start here: the clearest possible explanation of what AI actually is and how it works.',
+        estimatedMinutes: 8,
+      },
+      {
+        order: 2,
+        articleSlug: 'machine-learning-vs-deep-learning',
+        title: 'Machine Learning vs Deep Learning',
+        description: 'Understand the relationship between the two most important branches of modern AI.',
+        estimatedMinutes: 9,
+      },
+      {
+        order: 3,
+        articleSlug: 'what-is-prompt-engineering',
+        title: 'What Is Prompt Engineering?',
+        description: 'Learn the practical skill that determines how well you can use any AI tool.',
+        estimatedMinutes: 9,
+      },
+      {
+        order: 4,
+        articleSlug: 'future-of-human-ai-collaboration',
+        title: 'The Future of Human-AI Collaboration',
+        description: 'Finish with the big picture: how AI changes work, which skills matter, and what to do now.',
+        estimatedMinutes: 10,
+      },
+    ],
+  },
+
+  {
+    slug: 'neural-networks-deep-dive',
+    title: 'Neural Networks',
+    subtitle: 'From perceptrons to transformers',
+    description:
+      'A rigorous technical path through the architecture and mathematics of neural networks — from the basic perceptron to the transformer models powering today\'s AI systems.',
+    difficulty: 'intermediate',
+    estimatedHours: 5,
+    targetAudience: 'Developers, data scientists, technical professionals',
+    accentColor: '#8b5cf6',
+    icon: '🕸️',
+    tags: ['neural networks', 'deep learning', 'technical', 'architecture'],
+    steps: [
+      {
+        order: 1,
+        articleSlug: 'what-is-artificial-intelligence',
+        title: 'AI Foundations',
+        description: 'Establish the foundational context before diving into network architecture.',
+        estimatedMinutes: 8,
+      },
+      {
+        order: 2,
+        articleSlug: 'neural-networks-explained',
+        title: 'Neural Networks Explained',
+        description: 'The core article: architecture, training, backpropagation, and transformer models.',
+        estimatedMinutes: 11,
+      },
+      {
+        order: 3,
+        articleSlug: 'machine-learning-vs-deep-learning',
+        title: 'ML vs Deep Learning',
+        description: 'Understand where neural networks fit in the broader machine learning landscape.',
+        estimatedMinutes: 9,
+      },
+    ],
+  },
+
+  {
+    slug: 'ai-business-automation',
+    title: 'AI Business Automation',
+    subtitle: 'From strategy to production deployment',
+    description:
+      'A practical path for business leaders and developers who want to build real AI automation systems — covering use case selection, prompt engineering, agent architecture, and governance.',
+    difficulty: 'intermediate',
+    estimatedHours: 4,
+    targetAudience: 'Business leaders, product managers, developers, operations teams',
+    accentColor: '#b9ff4a',
+    icon: '⚡',
+    tags: ['business', 'automation', 'ROI', 'production'],
+    steps: [
+      {
+        order: 1,
+        articleSlug: 'what-is-artificial-intelligence',
+        title: 'AI Overview',
+        description: 'Ground yourself in what AI can and cannot do before selecting use cases.',
+        estimatedMinutes: 8,
+      },
+      {
+        order: 2,
+        articleSlug: 'what-is-prompt-engineering',
+        title: 'Prompt Engineering',
+        description: 'The foundational skill for reliable AI automation.',
+        estimatedMinutes: 9,
+      },
+      {
+        order: 3,
+        articleSlug: 'what-are-ai-agents',
+        title: 'AI Agents',
+        description: 'How autonomous agents extend automation beyond simple prompt-response.',
+        estimatedMinutes: 10,
+      },
+      {
+        order: 4,
+        articleSlug: 'generative-ai-in-business-automation',
+        title: 'Generative AI in Business',
+        description: 'The complete playbook for production deployment.',
+        estimatedMinutes: 11,
+      },
+    ],
+  },
+
+  {
+    slug: 'robotics-and-humanoids',
+    title: 'Robotics & Humanoids',
+    subtitle: 'Physical AI and the embodied frontier',
+    description:
+      'From the fundamentals of robotic systems to the cutting edge of humanoid robots and embodied AI — a focused path through the physical dimension of artificial intelligence.',
+    difficulty: 'intermediate',
+    estimatedHours: 3,
+    targetAudience: 'Engineers, futurists, investors, manufacturing professionals',
+    accentColor: '#f97316',
+    icon: '🦾',
+    tags: ['robotics', 'humanoids', 'embodied AI', 'physical AI'],
+    steps: [
+      {
+        order: 1,
+        articleSlug: 'what-is-artificial-intelligence',
+        title: 'AI Foundations',
+        description: 'The AI capabilities that make modern robotics possible.',
+        estimatedMinutes: 8,
+      },
+      {
+        order: 2,
+        articleSlug: 'introduction-to-robotics',
+        title: 'Introduction to Robotics',
+        description: 'How robots sense, plan, and act — the fundamental architecture.',
+        estimatedMinutes: 8,
+      },
+      {
+        order: 3,
+        articleSlug: 'humanoid-robots-and-embodied-ai',
+        title: 'Humanoid Robots and Embodied AI',
+        description: 'The frontier: why human form, current systems, and remaining challenges.',
+        estimatedMinutes: 10,
+      },
+    ],
+  },
+
+  {
+    slug: 'prompt-engineering-mastery',
+    title: 'Prompt Engineering',
+    subtitle: 'From basics to production-grade systems',
+    description:
+      'A focused path for anyone who wants to master the art and science of prompt engineering — from zero-shot basics to production prompt systems for AI agents and business automation.',
+    difficulty: 'intermediate',
+    estimatedHours: 3,
+    targetAudience: 'Developers, content teams, marketers, product managers, AI builders',
+    accentColor: '#88ffcc',
+    icon: '✍️',
+    tags: ['prompt engineering', 'LLMs', 'practical', 'production'],
+    steps: [
+      {
+        order: 1,
+        articleSlug: 'what-is-artificial-intelligence',
+        title: 'AI Foundations',
+        description: 'Understand what language models are before learning how to prompt them.',
+        estimatedMinutes: 8,
+      },
+      {
+        order: 2,
+        articleSlug: 'what-is-prompt-engineering',
+        title: 'Prompt Engineering',
+        description: 'The complete guide to prompting technique: from zero-shot to chain-of-thought.',
+        estimatedMinutes: 9,
+      },
+      {
+        order: 3,
+        articleSlug: 'what-are-ai-agents',
+        title: 'AI Agents',
+        description: 'How prompting extends to multi-step agent systems with tool use.',
+        estimatedMinutes: 10,
+      },
+    ],
+  },
+
+  {
+    slug: 'ethical-ai',
+    title: 'Ethical AI',
+    subtitle: 'Responsible development and governance',
+    description:
+      'A path through the ethical dimensions of AI — fairness, accountability, governance, and the design of AI systems that respect human values. Essential for anyone deploying AI in consequential contexts.',
+    difficulty: 'intermediate',
+    estimatedHours: 4,
+    targetAudience: 'Compliance teams, product leaders, policymakers, AI practitioners',
+    accentColor: '#a78bfa',
+    icon: '⚖️',
+    tags: ['ethics', 'governance', 'compliance', 'responsible AI'],
+    steps: [
+      {
+        order: 1,
+        articleSlug: 'what-is-artificial-intelligence',
+        title: 'AI Foundations',
+        description: 'Understand AI capabilities and limitations before assessing ethical implications.',
+        estimatedMinutes: 8,
+      },
+      {
+        order: 2,
+        articleSlug: 'ai-ethics-and-governance',
+        title: 'AI Ethics and Governance',
+        description: 'The FATE framework, EU AI Act, GDPR, and practical ethical implementation.',
+        estimatedMinutes: 12,
+      },
+      {
+        order: 3,
+        articleSlug: 'generative-ai-in-business-automation',
+        title: 'AI in Business',
+        description: 'Apply ethical principles to real business automation contexts.',
+        estimatedMinutes: 11,
+      },
+      {
+        order: 4,
+        articleSlug: 'future-of-human-ai-collaboration',
+        title: 'Human-AI Collaboration',
+        description: 'Design human-AI systems that keep humans appropriately in the loop.',
+        estimatedMinutes: 10,
+      },
+    ],
+  },
+
+  {
+    slug: 'advanced-expert',
+    title: 'Advanced Expert',
+    subtitle: 'The full technical landscape',
+    description:
+      'A comprehensive expert path covering the full technical depth of modern AI — architecture, training, agents, automation, embodied systems, and ethical frameworks. For practitioners who want the complete picture.',
+    difficulty: 'advanced',
+    estimatedHours: 10,
+    targetAudience: 'AI engineers, researchers, technical architects, senior practitioners',
+    accentColor: '#06b6d4',
+    icon: '🔬',
+    tags: ['advanced', 'comprehensive', 'technical', 'architecture'],
+    steps: [
+      {
+        order: 1,
+        articleSlug: 'what-is-artificial-intelligence',
+        title: 'AI Foundations',
+        description: 'Establish the conceptual framework for all subsequent material.',
+        estimatedMinutes: 8,
+      },
+      {
+        order: 2,
+        articleSlug: 'neural-networks-explained',
+        title: 'Neural Networks',
+        description: 'The core architecture — layers, training, backpropagation, transformers.',
+        estimatedMinutes: 11,
+      },
+      {
+        order: 3,
+        articleSlug: 'machine-learning-vs-deep-learning',
+        title: 'ML vs Deep Learning',
+        description: 'Understand the complete learning algorithm landscape.',
+        estimatedMinutes: 9,
+      },
+      {
+        order: 4,
+        articleSlug: 'what-are-ai-agents',
+        title: 'AI Agents',
+        description: 'Autonomous systems, ReAct loops, tool use, and multi-agent orchestration.',
+        estimatedMinutes: 10,
+      },
+      {
+        order: 5,
+        articleSlug: 'what-is-prompt-engineering',
+        title: 'Prompt Engineering',
+        description: 'Production-grade prompt design for reliable AI systems.',
+        estimatedMinutes: 9,
+      },
+      {
+        order: 6,
+        articleSlug: 'introduction-to-robotics',
+        title: 'Robotics',
+        description: 'Physical AI: sensing, planning, actuation, and learned policies.',
+        estimatedMinutes: 8,
+      },
+      {
+        order: 7,
+        articleSlug: 'humanoid-robots-and-embodied-ai',
+        title: 'Humanoid Robots',
+        description: 'The embodied AI frontier: current systems and remaining challenges.',
+        estimatedMinutes: 10,
+      },
+      {
+        order: 8,
+        articleSlug: 'generative-ai-in-business-automation',
+        title: 'Business Automation',
+        description: 'Production deployment patterns for enterprise AI automation.',
+        estimatedMinutes: 11,
+      },
+      {
+        order: 9,
+        articleSlug: 'ai-ethics-and-governance',
+        title: 'Ethics and Governance',
+        description: 'Responsible AI: FATE, regulation, and institutional design.',
+        estimatedMinutes: 12,
+      },
+      {
+        order: 10,
+        articleSlug: 'future-of-human-ai-collaboration',
+        title: 'Human-AI Collaboration',
+        description: 'The organisational and societal implications of the AI transition.',
+        estimatedMinutes: 10,
+      },
+    ],
+  },
+];
+
+export const pathBySlug = Object.fromEntries(
+  learningPaths.map(p => [p.slug, p])
+) as Record<string, LearningPath>;

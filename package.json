@@ -1,0 +1,1 @@
+{"name":"probotica-god-tier","private":true,"packageManager":"pnpm@9.15.0","scripts":{"dev":"turbo dev","build":"turbo build","lint":"turbo lint","typecheck":"turbo typecheck"},"devDependencies":{"@tailwindcss/postcss":"^4.3.0","turbo":"latest","typescript":"latest"}}

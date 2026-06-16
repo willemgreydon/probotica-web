@@ -1,0 +1,117 @@
+import type { Metadata } from 'next';
+import Link from 'next/link';
+import { Check } from 'lucide-react';
+import { authLinks } from '@/lib/content/navigation';
+
+export const metadata: Metadata = {
+  title: 'Pricing',
+  description: 'Simple, transparent plans for running AI bots, prompt packs and workflow automation. Start free, scale when you need to.',
+};
+
+/**
+ * Pricing page (PB-025) — placeholder tier structure + contact CTA.
+ * Real billing is deferred; this establishes the nav destination and IA.
+ */
+const tiers = [
+  {
+    name: 'Starter',
+    price: '€0',
+    cadence: '/ month',
+    blurb: 'Explore the platform and the Knowledge Universe.',
+    cta: { label: 'Get started', href: authLinks.getStarted.href },
+    featured: false,
+    features: ['Run demo bots', 'Full Knowledge Universe access', 'Community support', '1 workspace'],
+  },
+  {
+    name: 'Pro',
+    price: '€39',
+    cadence: '/ month',
+    blurb: 'For solo operators shipping real AI output.',
+    cta: { label: 'Start Pro', href: authLinks.getStarted.href },
+    featured: true,
+    features: ['Live AI runs', 'Prompt packs & marketplace', 'Workflow automation', 'Unlimited workspaces', 'Export & versioning'],
+  },
+  {
+    name: 'Team',
+    price: 'Custom',
+    cadence: '',
+    blurb: 'For teams that need scale, control and compliance.',
+    cta: { label: 'Contact sales', href: '/contact' },
+    featured: false,
+    features: ['Everything in Pro', 'Shared workspaces & roles', 'Control Center telemetry', 'GDPR & audit support', 'Priority support'],
+  },
+];
+
+export default function PricingPage() {
+  return (
+    <main id="main-content" className="page-shell hud-grid bg-premium">
+      <div className="container-x">
+        <p className="text-mono" style={{ fontSize: '.5625rem', fontWeight: 700, letterSpacing: '.35em', textTransform: 'uppercase', color: 'var(--muted-foreground)' }}>
+          Pricing
+        </p>
+        <h1 className="text-display" style={{ marginTop: 12, marginBottom: 12 }}>
+          Plans that scale with your output
+        </h1>
+        <p className="text-body" style={{ maxWidth: 560, color: 'var(--muted-foreground)', marginBottom: 40 }}>
+          Start free and learn the concepts. Upgrade when you&rsquo;re ready to run them in production.
+          Final pricing is being finalized — these tiers are indicative.
+        </p>
+
+        <div
+          style={{
+            display: 'grid',
+            gap: 20,
+            gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+            alignItems: 'stretch',
+          }}
+        >
+          {tiers.map((tier) => (
+            <section
+              key={tier.name}
+              aria-label={`${tier.name} plan`}
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                padding: 24,
+                borderRadius: 'var(--radius-xl)',
+                border: `1px solid ${tier.featured ? 'var(--panel-border-active)' : 'var(--hud-border)'}`,
+                background: 'var(--command-surface)',
+                boxShadow: tier.featured ? 'var(--glow-sm)' : 'none',
+              }}
+            >
+              <h2 className="text-mono" style={{ fontSize: '.66rem', fontWeight: 700, letterSpacing: '.24em', textTransform: 'uppercase', color: 'var(--muted-foreground)' }}>
+                {tier.name}
+              </h2>
+              <div style={{ marginTop: 12, marginBottom: 8 }}>
+                <span style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--foreground)' }}>{tier.price}</span>
+                <span style={{ fontSize: '.8rem', color: 'var(--muted-foreground)' }}> {tier.cadence}</span>
+              </div>
+              <p className="text-body" style={{ fontSize: '.86rem', color: 'var(--muted-foreground)', minHeight: 44 }}>
+                {tier.blurb}
+              </p>
+              <ul style={{ listStyle: 'none', margin: '16px 0 24px', padding: 0, display: 'grid', gap: 10 }}>
+                {tier.features.map((feature) => (
+                  <li key={feature} style={{ display: 'flex', alignItems: 'flex-start', gap: 8, fontSize: '.84rem' }}>
+                    <Check size={15} aria-hidden style={{ color: 'var(--primary)', flexShrink: 0, marginTop: 2 }} />
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href={tier.cta.href}
+                className={`btn focus-ring ${tier.featured ? 'btn-primary' : ''}`}
+                style={{ marginTop: 'auto', minHeight: 42, justifyContent: 'center' }}
+              >
+                {tier.cta.label}
+              </Link>
+            </section>
+          ))}
+        </div>
+
+        <p className="text-body" style={{ marginTop: 32, fontSize: '.84rem', color: 'var(--muted-foreground)' }}>
+          Need something specific? <Link href="/contact" className="focus-ring" style={{ color: 'var(--primary)' }}>Talk to us</Link>.
+        </p>
+      </div>
+    </main>
+  );
+}
