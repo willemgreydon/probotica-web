@@ -1,6 +1,9 @@
+'use client';
+
 import Link from 'next/link';
 import { Bot } from 'lucide-react';
 import { footerColumns, socialLinks, authLinks, siteMeta } from '@/lib/content/navigation';
+import { useT } from '@/components/providers/LocaleProvider';
 
 /**
  * SiteFooter (PB-002) — the single global footer for all public routes.
@@ -8,6 +11,7 @@ import { footerColumns, socialLinks, authLinks, siteMeta } from '@/lib/content/n
  * footer that was previously hardcoded into the home page.
  */
 export function SiteFooter() {
+  const t = useT();
   const year = 2026;
 
   return (
@@ -33,7 +37,7 @@ export function SiteFooter() {
               <span className="text-mono" style={{ letterSpacing: '.2em' }}>PROBOTICA</span>
             </Link>
             <p className="text-body" style={{ marginTop: 14, maxWidth: 320, fontSize: '.86rem', color: 'var(--muted-foreground)' }}>
-              Teach the concept, then run the concept. AI bots, prompt packs and workflow automation for teams that need output, not demos.
+              {t('footer.tagline')}
             </p>
             <Link
               href={authLinks.getStarted.href}
@@ -51,7 +55,7 @@ export function SiteFooter() {
                 className="text-mono"
                 style={{ fontSize: '.62rem', fontWeight: 700, letterSpacing: '.28em', textTransform: 'uppercase', color: 'var(--muted-foreground)', marginBottom: 12 }}
               >
-                {column.label}
+                {t(`nav.${column.label}`)}
               </h2>
               <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'grid', gap: 8 }}>
                 {column.links.map((link) => (

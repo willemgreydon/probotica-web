@@ -6,6 +6,8 @@ import { Bot, ChevronDown, Menu } from 'lucide-react';
 import { primaryNav, authLinks, type NavGroup } from '@/lib/content/navigation';
 import { ThemeAccessibilityMenu } from '@/components/layout/ThemeAccessibilityMenu';
 import { FullscreenMenu } from '@/components/layout/FullscreenMenu';
+import { LanguageSwitch } from '@/components/layout/LanguageSwitch';
+import { useT } from '@/components/providers/LocaleProvider';
 
 /**
  * SiteHeader (PB-001) — the single sticky header for all public/marketing routes.
@@ -14,6 +16,7 @@ import { FullscreenMenu } from '@/components/layout/FullscreenMenu';
  * Consumes the typed navigation model (PB-010).
  */
 export function SiteHeader() {
+  const t = useT();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [openGroup, setOpenGroup] = useState<string | null>(null);
@@ -61,7 +64,7 @@ export function SiteHeader() {
 
   return (
     <>
-      <a href="#main-content" className="skip-link">Skip to main content</a>
+      <a href="#main-content" className="skip-link">{t('common.skipToContent')}</a>
 
       <header
         className="fixed left-0 right-0 top-0 animate-in-fade"
@@ -108,6 +111,8 @@ export function SiteHeader() {
 
             {/* Right controls */}
             <div className="flex items-center gap-1">
+              <LanguageSwitch />
+
               <ThemeAccessibilityMenu />
 
               <div
@@ -120,7 +125,7 @@ export function SiteHeader() {
                 className="header-nav-link text-mono focus-ring hidden sm:inline-flex"
                 style={{ fontSize: '.67rem', letterSpacing: '.16em', padding: '0 10px' }}
               >
-                {authLinks.signIn.label}
+                {t('auth.signIn')}
               </Link>
 
               <Link
@@ -128,7 +133,7 @@ export function SiteHeader() {
                 className="btn btn-primary focus-ring hidden sm:inline-flex"
                 style={{ fontSize: '.67rem', letterSpacing: '.16em', height: 34, padding: '0 14px' }}
               >
-                {authLinks.getStarted.label}
+                {t('auth.getStarted')}
               </Link>
 
               {/* Mobile menu trigger */}
@@ -142,7 +147,7 @@ export function SiteHeader() {
                 aria-haspopup="dialog"
               >
                 <Menu size={13} aria-hidden />
-                <span className="hidden sm:inline">MENU</span>
+                <span className="hidden sm:inline">{t('common.menu')}</span>
               </button>
             </div>
           </div>
@@ -167,6 +172,8 @@ function NavDropdown({
   onClose: () => void;
   onToggle: () => void;
 }) {
+  const t = useT();
+  const label = t(`nav.${group.label}`);
   // Single-destination groups (e.g. Pricing) render as a plain link.
   if (group.links.length === 1 && group.href) {
     return (
@@ -175,7 +182,7 @@ function NavDropdown({
         className="header-nav-link text-mono focus-ring"
         style={{ fontSize: '.66rem', letterSpacing: '.16em', padding: '0 10px' }}
       >
-        {group.label}
+        {label}
       </Link>
     );
   }
@@ -195,13 +202,13 @@ function NavDropdown({
         onClick={onToggle}
         onFocus={onOpen}
       >
-        {group.label}
+        {label}
         <ChevronDown size={11} aria-hidden style={{ transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 160ms ease' }} />
       </button>
 
       <div
         role="menu"
-        aria-label={group.label}
+        aria-label={label}
         hidden={!open}
         style={{
           position: 'absolute',

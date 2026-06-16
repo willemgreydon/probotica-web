@@ -1,9 +1,12 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter, JetBrains_Mono, Space_Grotesk } from 'next/font/google';
 import Script from 'next/script';
+import { cookies } from 'next/headers';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
 import { AccessibilityProvider } from '@/components/providers/AccessibilityProvider';
+import { LocaleProvider } from '@/components/providers/LocaleProvider';
 import { CursorProvider } from '@/components/motion/CursorProvider';
+import { LOCALE_COOKIE, DEFAULT_LOCALE, isLocale } from '@/lib/i18n/config';
 import './globals.css';
 
 const fontBody = Inter({
@@ -44,10 +47,14 @@ export const viewport: Viewport = {
 
 const INIT_SCRIPT = `(function(){try{var d=document.documentElement;var t=localStorage.getItem('probotica-theme')||'system';var m=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';var r=t==='system'?m:t;d.dataset.theme=(r==='light'?'light':'dark');var a=localStorage.getItem('probotica-accessibility');var p=a?JSON.parse(a):{};d.dataset.contrast=p.contrast||'default';d.dataset.motion=p.motion||'default';d.dataset.transparency=p.transparency||'default';d.dataset.reading=p.reading||'default';d.dataset.colorMode=p.colorMode||'default';}catch(e){}})();`;
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const cookieStore = await cookies();
+  const cookieLocale = cookieStore.get(LOCALE_COOKIE)?.value;
+  const locale = isLocale(cookieLocale) ? cookieLocale : DEFAULT_LOCALE;
+
   return (
     <html
-      lang="en"
+      lang={locale}
       className={`${fontBody.variable} ${fontDisplay.variable} ${fontMono.variable}`}
       data-theme="dark"
       data-contrast="default"
@@ -59,12 +66,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     >
       <body className="bg-premium">
         <Script id="probotica-init-theme" strategy="beforeInteractive" dangerouslySetInnerHTML={{ __html: INIT_SCRIPT }} />
-        <ThemeProvider>
-          <AccessibilityProvider>
-            <CursorProvider />
-            {children}
-          </AccessibilityProvider>
-        </ThemeProvider>
+        <LocaleProvider locale={locale}>
+          <ThemeProvider>
+            <AccessibilityProvider>
+              <CursorProvider />
+              {children}
+            </AccessibilityProvider>
+          </ThemeProvider>
+        </LocaleProvider>
       </body>
     </html>
   );
