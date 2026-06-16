@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { getServerT } from '@/lib/i18n/server';
 
 export const metadata: Metadata = {
   title: 'AI Studio | ProBotica',
@@ -15,16 +16,17 @@ const STUDIO_FEATURES = [
   { num: '06', title: 'Server Boundary', desc: 'System prompts never reach the browser. All prompt logic is server-only for security.' },
 ];
 
-export default function StudioPage() {
+export default async function StudioPage() {
+  const t = await getServerT();
   return (
     <main id="main-content" className="page-shell hud-grid bg-premium">
       <div className="container-x">
-        <p className="label-eyebrow mb-4">AI Studio</p>
+        <p className="label-eyebrow mb-4">{t('pages.studioEyebrow')}</p>
         <h1 className="heading-section text-balance" style={{ maxWidth: '640px' }}>
-          Agent Studio
+          {t('pages.studioTitle')}
         </h1>
         <p className="text-lead mt-5" style={{ maxWidth: '560px' }}>
-          Design, deploy, and monitor production-ready AI agent systems. Start with a live bot test, chain into a workflow, save outputs to workspace.
+          {t('pages.studioLead')}
         </p>
 
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-10">

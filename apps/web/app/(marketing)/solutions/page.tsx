@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { getServerT } from '@/lib/i18n/server';
 
 export const metadata: Metadata = {
   title: 'Solutions | ProBotica AI Stack',
@@ -49,16 +50,17 @@ const SOLUTIONS = [
   },
 ];
 
-export default function SolutionsPage() {
+export default async function SolutionsPage() {
+  const t = await getServerT();
   return (
     <main id="main-content" className="page-shell hud-grid bg-premium">
       <div className="container-x">
-        <p className="label-eyebrow mb-4">Solutions</p>
+        <p className="label-eyebrow mb-4">{t('pages.solutionsEyebrow')}</p>
         <h1 className="heading-section text-balance" style={{ maxWidth: '680px' }}>
-          AI Solution Stack
+          {t('pages.solutionsTitle')}
         </h1>
         <p className="text-lead mt-5" style={{ maxWidth: '540px' }}>
-          Choose assistants, prompt products, and automation systems built for measurable business outcomes. Every module is production-safe and cross-linked.
+          {t('pages.solutionsLead')}
         </p>
 
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-10">

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { getServerT } from '@/lib/i18n/server';
 
 export const metadata: Metadata = {
   title: 'Industries | ProBotica Applied AI',
@@ -30,16 +31,17 @@ const INDUSTRIES = [
   },
 ];
 
-export default function IndustriesPage() {
+export default async function IndustriesPage() {
+  const t = await getServerT();
   return (
     <main id="main-content" className="page-shell hud-grid bg-premium">
       <div className="container-x">
-        <p className="label-eyebrow mb-4">Industries</p>
+        <p className="label-eyebrow mb-4">{t('pages.industriesEyebrow')}</p>
         <h1 className="heading-section text-balance" style={{ maxWidth: '680px' }}>
-          Industry Playbooks
+          {t('pages.industriesTitle')}
         </h1>
         <p className="text-lead mt-5" style={{ maxWidth: '520px' }}>
-          Applied AI operating models for real estate, marketing, education, and operations teams. Domain-tuned bots, workflows, and industry kits built for fast deployment.
+          {t('pages.industriesLead')}
         </p>
 
         <div className="mt-10 grid gap-4 sm:grid-cols-3 mb-10">

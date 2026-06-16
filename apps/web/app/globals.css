@@ -408,11 +408,29 @@ body {
     color: var(--foreground);
   }
 
-  /* Theme-aware brand assets (emblem/logo per light/dark). Default theme is dark. */
-  .brand-asset-light { display: none; }
-  .brand-asset-dark { display: inline-block; }
-  [data-theme="light"] .brand-asset-light { display: inline-block; }
-  [data-theme="light"] .brand-asset-dark { display: none; }
+  /* Logo lockup: a single theme-swapped emblem + the ProBotica wordmark.
+     One element; the emblem image swaps by theme (no double render). */
+  .brand-emblem {
+    display: inline-block;
+    width: 26px;
+    height: 26px;
+    flex-shrink: 0;
+    background-image: url('/brand/emblem-dark.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  [data-theme="light"] .brand-emblem {
+    background-image: url('/brand/emblem-light.png');
+  }
+  .brand-wordmark {
+    font-family: var(--font-display), ui-sans-serif, sans-serif;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    font-size: 1.05rem;
+    line-height: 1;
+    color: var(--foreground);
+  }
 
   /* ── Form controls (global upgrade) ──
      Token-driven styling for native inputs/selects/checkboxes/radios so they

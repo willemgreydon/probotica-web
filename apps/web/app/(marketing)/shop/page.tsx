@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { getServerT } from '@/lib/i18n/server';
 
 export const metadata: Metadata = {
   title: 'Shop | ProBotica Marketplace',
@@ -13,16 +14,17 @@ const SHOP_CATEGORIES = [
   { tag: 'Industries', title: 'Industry Kits', desc: 'Bundled AI modules for real estate, marketing, education, and development teams.', href: '/industries', count: '3 industries' },
 ];
 
-export default function ShopPage() {
+export default async function ShopPage() {
+  const t = await getServerT();
   return (
     <main id="main-content" className="page-shell hud-grid bg-premium">
       <div className="container-x">
-        <p className="label-eyebrow mb-4">Shop</p>
+        <p className="label-eyebrow mb-4">{t('pages.shopEyebrow')}</p>
         <h1 className="heading-section text-balance" style={{ maxWidth: '640px' }}>
-          Prompt &amp; Agent Marketplace
+          {t('pages.shopTitle')}
         </h1>
         <p className="text-lead mt-5" style={{ maxWidth: '520px' }}>
-          Browse ready-to-launch prompt packs, AI workflow systems, and industry kits. Everything in ProBotica is production-safe and business-ready.
+          {t('pages.shopLead')}
         </p>
 
         <div className="mt-10 grid gap-4 sm:grid-cols-2 mb-10">

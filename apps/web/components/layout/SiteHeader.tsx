@@ -91,9 +91,8 @@ export function SiteHeader() {
               aria-label="ProBotica — home"
               style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}
             >
-              <img src="/brand/emblem-dark.png" alt="" aria-hidden className="brand-asset-dark" width={24} height={24} style={{ height: 24, width: 'auto' }} />
-              <img src="/brand/emblem-light.png" alt="" aria-hidden className="brand-asset-light" width={24} height={24} style={{ height: 24, width: 'auto' }} />
-              <span className="text-mono" style={{ letterSpacing: '.2em', fontWeight: 700 }}>PROBOTICA</span>
+              <span className="brand-emblem" aria-hidden />
+              <span className="brand-wordmark">ProBotica</span>
             </Link>
 
             {/* Right controls — nav + mode switch live in the mega menu */}
