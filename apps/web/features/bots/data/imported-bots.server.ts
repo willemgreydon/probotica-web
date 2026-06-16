@@ -2,6 +2,7 @@ import 'server-only';
 import fs from 'node:fs';
 import path from 'node:path';
 import type { BotCategory, BotDefinition } from '@/features/bots/lib/bot-types';
+import { buildGeneratedBots } from '@/features/bots/data/generated-bots';
 
 const IMPORT_DIR = path.join(process.cwd(), '_imports', 'bot-export', 'part-1');
 
@@ -140,7 +141,15 @@ function loadImportedBots(): BotDefinition[] {
     .sort((a, b) => a.name.localeCompare(b.name));
 }
 
-export const importedBots: BotDefinition[] = loadImportedBots();
+const parsedBots: BotDefinition[] = loadImportedBots();
+
+/** Markdown-imported bots plus the generated catalog that fills sparse categories. */
+export const importedBots: BotDefinition[] = [...parsedBots, ...buildGeneratedBots(parsedBots)].sort(
+  (a, b) => a.name.localeCompare(b.name),
+);
+
+/** Count of bots parsed from the markdown export (excludes the generated catalog). */
+export const PARSED_BOT_COUNT = parsedBots.length;
 
 export const botBySlug: Record<string, BotDefinition> = Object.fromEntries(
   importedBots.map((bot) => [bot.slug, bot])

@@ -35,8 +35,8 @@ export default async function BotsPage({ searchParams }: BotsPageProps) {
             Validate prompts, compare outputs, and prototype automation behavior before deployment.
           </p>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '20px' }}>
-            <span className="mono-chip">{publicBots.length} bots imported</span>
-            <span className="mono-chip">{BOT_IMPORT_STATS.skippedCount} skipped</span>
+            <span className="mono-chip">{publicBots.length} bots available</span>
+            <span className="mono-chip">{BOT_IMPORT_STATS.importedCount} imported · {BOT_IMPORT_STATS.skippedCount} skipped</span>
             <span className="complexity-badge complexity-medium">live runtime</span>
           </div>
         </div>
