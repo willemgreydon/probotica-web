@@ -10,6 +10,7 @@ import { BotStateBlock } from '@/features/bots/components/BotStateBlock';
 import { botScenarios, type BotScenarioPreset } from '@/features/bots/data/bot-scenarios';
 import { clearBotRuns, deleteBotRun, getBotRuns, saveBotRun, type BotRunHistoryItem } from '@/features/bots/lib/bot-history';
 import { getBotReadiness } from '@/features/bots/lib/bot-readiness';
+import { exportBotsZip } from '@/features/bots/lib/bot-export';
 
 type StatusFilter = 'all' | 'active' | 'draft' | 'disabled';
 type SortMode = 'name' | 'category' | 'status';
@@ -629,9 +630,14 @@ export function BotLab({ bots, importStats, initialSelectedSlug }: BotLabProps) 
                         );
                       })}
                     </div>
-                    <button className="btn" type="button" onClick={() => setCompareSlugs([])} style={{ alignSelf: 'flex-start' }}>
-                      Clear All
-                    </button>
+                    <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                      <button className="btn btn-primary focus-ring" type="button" onClick={() => exportBotsZip(compareBots)} aria-label="Export selected bots as a ZIP pack">
+                        Export .zip pack ({compareBots.length})
+                      </button>
+                      <button className="btn focus-ring" type="button" onClick={() => setCompareSlugs([])}>
+                        Clear All
+                      </button>
+                    </div>
                   </>
                 )}
               </div>

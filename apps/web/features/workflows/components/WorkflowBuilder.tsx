@@ -150,7 +150,7 @@ export function WorkflowBuilder({ bots, templates, workflow, onWorkflowChange, o
   }, [workflow.steps, botBySlug]);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 min-w-0" style={{ maxWidth: '100%' }}>
       {/* Header */}
       <div
         className="panel relative overflow-hidden"
@@ -268,7 +268,7 @@ export function WorkflowBuilder({ bots, templates, workflow, onWorkflowChange, o
         {/* Topology + execution */}
         <div className="space-y-4">
           {/* Execution Topology — drag step cards between lanes */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 items-start">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 items-start [&>*]:min-w-0">
             {stepsByLane.map(({ lane, steps }) => (
               <div
                 key={lane}

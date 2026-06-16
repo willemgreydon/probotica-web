@@ -177,7 +177,7 @@ export function WorkspaceShell({ bots, workspaceId }: WorkspaceShellProps) {
   }
 
   return (
-    <main className="shell-x py-8 grid gap-6">
+    <main className="shell-x py-8 grid gap-6 [&>*]:min-w-0">
       <section className="section-frame p-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
@@ -189,7 +189,7 @@ export function WorkspaceShell({ bots, workspaceId }: WorkspaceShellProps) {
             <button className="btn focus-ring" type="button" onClick={handleNewWorkspace} aria-label="Create a new workspace">
               New Workspace
             </button>
-            <Link className="btn focus-ring" href="/workspace" aria-label="View all workspaces">All Workspaces</Link>
+            <Link className="btn focus-ring" href="/workspaces" aria-label="View all workspaces">All Workspaces</Link>
           </div>
         </div>
 
