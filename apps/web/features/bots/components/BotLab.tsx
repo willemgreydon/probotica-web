@@ -11,6 +11,7 @@ import { botScenarios, type BotScenarioPreset } from '@/features/bots/data/bot-s
 import { clearBotRuns, deleteBotRun, getBotRuns, saveBotRun, type BotRunHistoryItem } from '@/features/bots/lib/bot-history';
 import { getBotReadiness } from '@/features/bots/lib/bot-readiness';
 import { exportBotsZip } from '@/features/bots/lib/bot-export';
+import { useT } from '@/components/providers/LocaleProvider';
 
 type StatusFilter = 'all' | 'active' | 'draft' | 'disabled';
 type SortMode = 'name' | 'category' | 'status';
@@ -45,6 +46,7 @@ function categoryAccent(category: string): string {
 }
 
 function RegistryHeader({ count, total }: { count: number; total: number }) {
+  const t = useT();
   return (
     <div style={{
       display: 'flex',
@@ -62,7 +64,7 @@ function RegistryHeader({ count, total }: { count: number; total: number }) {
           display: 'inline-block',
           animation: 'pulse-dot 2s ease-in-out infinite',
         }} />
-        <span className="edge-label">Bot Registry</span>
+        <span className="edge-label">{t('product.botRegistry')}</span>
       </div>
       <span className="route-marker">{count} / {total}</span>
     </div>
@@ -70,6 +72,7 @@ function RegistryHeader({ count, total }: { count: number; total: number }) {
 }
 
 export function BotLab({ bots, importStats, initialSelectedSlug }: BotLabProps) {
+  const t = useT();
   const initialSlug = useMemo(() => {
     if (!bots.length) return '';
     if (initialSelectedSlug && bots.some((bot) => bot.slug === initialSelectedSlug)) {
@@ -252,7 +255,7 @@ export function BotLab({ bots, importStats, initialSelectedSlug }: BotLabProps) 
                 type="search"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search bots, tags, capabilities…"
+                placeholder={t('product.searchBots')}
                 aria-label="Search bots"
                 style={{
                   width: '100%',
@@ -518,9 +521,9 @@ export function BotLab({ bots, importStats, initialSelectedSlug }: BotLabProps) 
               background: 'var(--panel-inset)',
             }}>
               {([
-                { id: 'console', label: 'Console' },
-                { id: 'compare', label: `Compare (${compareBots.length}/3)` },
-                { id: 'history', label: `History (${history.length})` },
+                { id: 'console', label: t('product.console') },
+                { id: 'compare', label: `${t('product.compare')} (${compareBots.length}/3)` },
+                { id: 'history', label: `${t('product.history')} (${history.length})` },
               ] as const).map((tab) => (
                 <button
                   key={tab.id}

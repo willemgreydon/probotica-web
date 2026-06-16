@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Plus, Pencil, Trash2, ArrowRight, Layers } from 'lucide-react';
+import { useT } from '@/components/providers/LocaleProvider';
 import {
   listWorkspaceSummaries,
   createWorkspace,
@@ -20,6 +21,7 @@ import type { WorkspaceSummary } from '@/features/workspace/workspace-types';
  */
 export function WorkspacesOverview() {
   const router = useRouter();
+  const t = useT();
   const [items, setItems] = useState<WorkspaceSummary[]>([]);
   const [hydrated, setHydrated] = useState(false);
 
@@ -57,12 +59,12 @@ export function WorkspacesOverview() {
       <section className="section-frame p-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <p className="label-eyebrow">Workspaces</p>
-            <h1 className="heading-section mt-2">Your workspaces</h1>
-            <p className="text-body mt-2">Create, open, rename or delete your AI orchestration workspaces.</p>
+            <p className="label-eyebrow">{t('product.allWorkspaces')}</p>
+            <h1 className="heading-section mt-2">{t('product.workspacesTitle')}</h1>
+            <p className="text-body mt-2">{t('product.workspacesIntro')}</p>
           </div>
           <button type="button" className="btn btn-primary focus-ring" onClick={onNew} style={{ gap: 8 }}>
-            <Plus size={15} aria-hidden /> New workspace
+            <Plus size={15} aria-hidden /> {t('product.newWorkspaceShort')}
           </button>
         </div>
       </section>
@@ -77,7 +79,7 @@ export function WorkspacesOverview() {
           <p className="text-caption mb-2">No workspaces yet</p>
           <p className="text-body mb-4">Create your first workspace to start building AI workflows.</p>
           <button type="button" className="btn btn-primary focus-ring" onClick={onNew} style={{ gap: 8 }}>
-            <Plus size={15} aria-hidden /> New workspace
+            <Plus size={15} aria-hidden /> {t('product.newWorkspaceShort')}
           </button>
         </div>
       ) : (
@@ -99,13 +101,13 @@ export function WorkspacesOverview() {
               </Link>
               <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 'auto' }}>
                 <Link href={`/workspace/${ws.id}`} className="btn btn-primary focus-ring" style={{ minHeight: 34, fontSize: '.78rem', gap: 6 }}>
-                  Open <ArrowRight size={13} aria-hidden />
+                  {t('product.open')} <ArrowRight size={13} aria-hidden />
                 </Link>
                 <button type="button" className="btn focus-ring" onClick={() => onRename(ws.id)} aria-label={`Rename ${ws.name}`} style={{ minHeight: 34, fontSize: '.78rem', gap: 6 }}>
-                  <Pencil size={13} aria-hidden /> Rename
+                  <Pencil size={13} aria-hidden /> {t('product.rename')}
                 </button>
                 <button type="button" className="btn focus-ring" onClick={() => onDelete(ws.id, ws.name)} aria-label={`Delete ${ws.name}`} style={{ minHeight: 34, fontSize: '.78rem', gap: 6, marginLeft: 'auto', color: 'var(--danger)' }}>
-                  <Trash2 size={13} aria-hidden /> Delete
+                  <Trash2 size={13} aria-hidden /> {t('product.delete')}
                 </button>
               </div>
             </article>

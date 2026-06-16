@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useT } from '@/components/providers/LocaleProvider';
 import type { PublicBotDefinition } from '@/features/bots/lib/bot-types';
 import { workflowTemplates } from '@/features/workflows/data/workflow-templates';
 import type { WorkflowDefinition, WorkflowExecutionResult } from '@/features/workflows/lib/workflow-types';
@@ -37,6 +38,7 @@ function buildDefaultWorkflow(bots: PublicBotDefinition[]): WorkflowDefinition {
 
 export function WorkspaceShell({ bots, workspaceId }: WorkspaceShellProps) {
   const router = useRouter();
+  const t = useT();
   const searchParams = useSearchParams();
   const incomingBotSlug = searchParams.get('bot');
 
@@ -181,15 +183,15 @@ export function WorkspaceShell({ bots, workspaceId }: WorkspaceShellProps) {
       <section className="section-frame p-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <p className="label-eyebrow">AI Workspace</p>
+            <p className="label-eyebrow">{t('product.workspaceEyebrow')}</p>
             <h1 className="heading-section mt-2">{ws.name}</h1>
-            <p className="text-body mt-2">Persistent local-first orchestration workspace with runtime history and memory snapshots.</p>
+            <p className="text-body mt-2">{t('product.workspaceIntro')}</p>
           </div>
           <div className="flex flex-wrap gap-2">
             <button className="btn focus-ring" type="button" onClick={handleNewWorkspace} aria-label="Create a new workspace">
-              New Workspace
+              {t('product.newWorkspace')}
             </button>
-            <Link className="btn focus-ring" href="/workspaces" aria-label="View all workspaces">All Workspaces</Link>
+            <Link className="btn focus-ring" href="/workspaces" aria-label="View all workspaces">{t('product.allWorkspaces')}</Link>
           </div>
         </div>
 
@@ -232,7 +234,7 @@ export function WorkspaceShell({ bots, workspaceId }: WorkspaceShellProps) {
           {/* Workspace registry */}
           <section className="section-frame p-4">
             <div className="flex items-center justify-between">
-              <p className="text-caption">Workspace Registry</p>
+              <p className="text-caption">{t('product.workspaceRegistry')}</p>
               <span className="route-marker">{summaries.length}</span>
             </div>
             <div className="mt-3 grid gap-2" style={{ maxHeight: 240, overflowY: 'auto' }}>
@@ -257,13 +259,13 @@ export function WorkspaceShell({ bots, workspaceId }: WorkspaceShellProps) {
               })}
             </div>
             <button className="btn mt-3 focus-ring" type="button" onClick={handleDeleteWorkspace} aria-label={`Delete workspace ${ws.name}`}>
-              Delete Current
+              {t('product.deleteCurrent')}
             </button>
           </section>
 
           {/* Operational notes */}
           <section className="section-frame p-4">
-            <p className="text-caption">Operational Notes</p>
+            <p className="text-caption">{t('product.operationalNotes')}</p>
             <label htmlFor="ws-note" className="sr-only">New note</label>
             <textarea
               id="ws-note"
@@ -286,7 +288,7 @@ export function WorkspaceShell({ bots, workspaceId }: WorkspaceShellProps) {
               aria-label="Save note"
               style={{ opacity: note.trim() ? 1 : 0.5 }}
             >
-              Save Note
+              {t('product.saveNote')}
             </button>
             <div className="mt-3 grid gap-2" style={{ maxHeight: 220, overflowY: 'auto' }}>
               {ws.notes.length === 0 ? (
@@ -316,7 +318,7 @@ export function WorkspaceShell({ bots, workspaceId }: WorkspaceShellProps) {
           {/* Memory layer */}
           <section className="section-frame p-4">
             <div className="flex items-center justify-between">
-              <p className="text-caption">Memory Layer</p>
+              <p className="text-caption">{t('product.memoryLayer')}</p>
               <span className="route-marker">{snapshots.length}</span>
             </div>
             <p className="edge-label mt-1">Scope: workspace · local-first</p>

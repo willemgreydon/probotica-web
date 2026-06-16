@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { BotLab } from '@/features/bots/components/BotLab';
 import { importedBots } from '@/features/bots/data/imported-bots.server';
 import { BOT_IMPORT_STATS, toPublicBots } from '@/features/bots/data/public-bots';
+import { getServerT } from '@/lib/i18n/server';
 
 export const metadata: Metadata = {
   title: 'ProBotica Bot Lab',
@@ -14,6 +15,7 @@ interface BotsPageProps {
 }
 
 export default async function BotsPage({ searchParams }: BotsPageProps) {
+  const t = await getServerT();
   const publicBots = toPublicBots(importedBots);
   const { select } = await searchParams;
   const initialSelectedSlug =
@@ -26,16 +28,16 @@ export default async function BotsPage({ searchParams }: BotsPageProps) {
         <div className="hero-strip-bg" />
         <div className="hero-strip-content" style={{ padding: 'clamp(20px, 4vw, 40px) clamp(20px, 4vw, 40px) clamp(18px, 3vw, 36px)' }}>
           <div className="section-eyebrow">
-            <span className="label-eyebrow">Bot Lab</span>
+            <span className="label-eyebrow">{t('product.botLabEyebrow')}</span>
           </div>
           <h1 className="heading-section mt-2" style={{ maxWidth: '820px' }}>
-            Test imported assistants and workflow bots in a command-center sandbox.
+            {t('product.botLabTitle')}
           </h1>
           <p className="text-lead mt-4" style={{ maxWidth: '640px' }}>
-            Validate prompts, compare outputs, and prototype automation behavior before deployment.
+            {t('product.botLabLead')}
           </p>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '20px' }}>
-            <span className="mono-chip">{publicBots.length} bots available</span>
+            <span className="mono-chip">{publicBots.length} {t('product.botsAvailable')}</span>
             <span className="mono-chip">{BOT_IMPORT_STATS.importedCount} imported · {BOT_IMPORT_STATS.skippedCount} skipped</span>
             <span className="complexity-badge complexity-medium">live runtime</span>
           </div>
@@ -49,7 +51,7 @@ export default async function BotsPage({ searchParams }: BotsPageProps) {
       />
 
       <div className="panel-sm mt-6 panel-body-sm">
-        <p className="text-caption mb-3">Safety & Compliance</p>
+        <p className="text-caption mb-3">{t('product.safety')}</p>
         <ul className="text-body" style={{ margin: 0, paddingLeft: '1rem' }}>
           <li>Demo outputs may be AI-generated and can contain inaccuracies.</li>
           <li>Do not enter sensitive personal data or confidential business data.</li>

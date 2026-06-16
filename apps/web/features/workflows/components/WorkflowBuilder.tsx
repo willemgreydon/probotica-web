@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import type { PublicBotDefinition } from '@/features/bots/lib/bot-types';
 import type { WorkflowDefinition, WorkflowExecutionResult, WorkflowStepDefinition, WorkflowStepState, WorkflowTemplate } from '@/features/workflows/lib/workflow-types';
 import { getBotReadiness } from '@/features/bots/lib/bot-readiness';
+import { useT } from '@/components/providers/LocaleProvider';
 
 interface WorkflowBuilderProps {
   bots: PublicBotDefinition[];
@@ -36,6 +37,7 @@ function createStep(botSlug: string, lane: WorkflowStepDefinition['lane']): Work
 }
 
 export function WorkflowBuilder({ bots, templates, workflow, onWorkflowChange, onExecution }: WorkflowBuilderProps) {
+  const t = useT();
   const [input, setInput] = useState('Run this workflow with operational clarity and tactical output.');
   const [running, setRunning] = useState(false);
   const [error, setError] = useState<string>('');
@@ -195,7 +197,7 @@ export function WorkflowBuilder({ bots, templates, workflow, onWorkflowChange, o
           {/* Template loader */}
           <div className="panel">
             <div className="panel-header">
-              <span className="text-xs font-semibold text-foreground uppercase tracking-wider">Load Template</span>
+              <span className="text-xs font-semibold text-foreground uppercase tracking-wider">{t('product.loadTemplate')}</span>
             </div>
             <div className="panel-body">
               <select
@@ -215,7 +217,7 @@ export function WorkflowBuilder({ bots, templates, workflow, onWorkflowChange, o
           {/* Add step */}
           <div className="panel">
             <div className="panel-header">
-              <span className="text-xs font-semibold text-foreground uppercase tracking-wider">Add Step</span>
+              <span className="text-xs font-semibold text-foreground uppercase tracking-wider">{t('product.addStep')}</span>
             </div>
             <div className="panel-body space-y-2">
               <select
@@ -240,7 +242,7 @@ export function WorkflowBuilder({ bots, templates, workflow, onWorkflowChange, o
                 className="w-full text-sm font-semibold py-2 px-4 rounded-lg transition-all"
                 style={{ background: 'var(--accent)', color: 'var(--background)' }}
               >
-                + Add Step
+                + {t('product.addStep')}
               </button>
             </div>
           </div>
@@ -460,7 +462,7 @@ export function WorkflowBuilder({ bots, templates, workflow, onWorkflowChange, o
                   ) : (
                     <>
                       <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><polygon points="2,1 11,6 2,11" fill="currentColor"/></svg>
-                      Run Workflow
+                      {t('product.runWorkflow')}
                     </>
                   )}
                 </button>
