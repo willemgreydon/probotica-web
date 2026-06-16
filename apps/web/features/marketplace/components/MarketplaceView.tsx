@@ -5,6 +5,7 @@ import { useMemo, useState } from 'react';
 import { Search, Zap, Bot, ArrowRight, Clock, Layers, Filter } from 'lucide-react';
 import type { PublicBotDefinition } from '@/features/bots/lib/bot-types';
 import { getBotReadiness } from '@/features/bots/lib/bot-readiness';
+import { DistributionBars } from '@/components/visual/DistributionBars';
 import type { WorkflowTemplate } from '@/features/workflows/lib/workflow-types';
 
 interface MarketplaceViewProps {
@@ -181,6 +182,14 @@ export function MarketplaceView({ bots, templates }: MarketplaceViewProps) {
 
   const categories = useMemo(() => Array.from(new Set(bots.map((bot) => bot.category))).sort(), [bots]);
 
+  const categoryDistribution = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const bot of bots) counts.set(bot.category, (counts.get(bot.category) ?? 0) + 1);
+    return Array.from(counts.entries())
+      .map(([label, value]) => ({ label, value, color: CATEGORY_COLORS[label] ?? 'var(--primary)' }))
+      .sort((a, b) => b.value - a.value);
+  }, [bots]);
+
   const filteredBots = useMemo(() => {
     const q = query.trim().toLowerCase();
     return bots.filter((bot) => {
@@ -243,6 +252,9 @@ export function MarketplaceView({ bots, templates }: MarketplaceViewProps) {
           </div>
         </div>
       </div>
+
+      {/* ── Catalog distribution infographic ── */}
+      <DistributionBars title="Catalog by category" data={categoryDistribution} />
 
       {/* ── Search + Filter bar ── */}
       <div className="panel" style={{ borderRadius: 'var(--radius-lg)', overflow: 'hidden' }}>
