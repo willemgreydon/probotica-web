@@ -45,7 +45,7 @@ export function KnowledgeGrid({
             </h2>
           )}
           {subtitle && (
-            <p style={{ fontSize: '1rem', color: 'rgba(220,229,213,.55)', margin: 0, lineHeight: 1.7 }}>
+            <p style={{ fontSize: '1rem', color: 'color-mix(in oklab, var(--foreground), transparent 45%)', margin: 0, lineHeight: 1.7 }}>
               {subtitle}
             </p>
           )}

@@ -14,8 +14,8 @@ export function GlossaryPreview({ terms, title = 'Key Terms' }: GlossaryPreviewP
       style={{
         padding:      '24px',
         borderRadius: '1.75rem',
-        border:       '1px solid rgba(231,239,225,.08)',
-        background:   'rgba(231,239,225,.03)',
+        border:       '1px solid var(--border)',
+        background:   'color-mix(in oklab, var(--foreground), transparent 95%)',
         backdropFilter: 'blur(16px)',
       }}
     >
@@ -25,7 +25,7 @@ export function GlossaryPreview({ terms, title = 'Key Terms' }: GlossaryPreviewP
           fontWeight:    700,
           letterSpacing: '.4em',
           textTransform: 'uppercase',
-          color:         'rgba(220,229,213,.35)',
+          color:         'color-mix(in oklab, var(--foreground), transparent 65%)',
           marginBottom:  '16px',
         }}
       >
@@ -38,7 +38,7 @@ export function GlossaryPreview({ terms, title = 'Key Terms' }: GlossaryPreviewP
             key={term.slug}
             style={{
               paddingBottom: '14px',
-              borderBottom:  '1px solid rgba(231,239,225,.06)',
+              borderBottom:  '1px solid var(--border)',
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '5px' }}>
@@ -59,7 +59,7 @@ export function GlossaryPreview({ terms, title = 'Key Terms' }: GlossaryPreviewP
                 margin:     0,
                 fontSize:   '.875rem',
                 lineHeight: 1.65,
-                color:      'rgba(220,229,213,.52)',
+                color:      'color-mix(in oklab, var(--foreground), transparent 48%)',
               }}
             >
               {term.shortDefinition}

@@ -21,7 +21,7 @@ export function RelatedConcepts({ articles, title = 'Related Concepts' }: Relate
           fontWeight:    700,
           letterSpacing: '.4em',
           textTransform: 'uppercase',
-          color:         'rgba(220,229,213,.35)',
+          color:         'color-mix(in oklab, var(--foreground), transparent 65%)',
           marginBottom:  '14px',
         }}
       >
@@ -44,8 +44,8 @@ export function RelatedConcepts({ articles, title = 'Related Concepts' }: Relate
                 style={{
                   padding:      '14px 16px',
                   borderRadius: '1.25rem',
-                  border:       '1px solid rgba(231,239,225,.08)',
-                  background:   'rgba(231,239,225,.03)',
+                  border:       '1px solid var(--border)',
+                  background:   'color-mix(in oklab, var(--foreground), transparent 95%)',
                   transition:   'border-color 200ms ease, background 200ms ease',
                   cursor:       'none',
                 }}
@@ -83,12 +83,12 @@ export function RelatedConcepts({ articles, title = 'Related Concepts' }: Relate
                     </h4>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 8 }}>
                       <DifficultyBadge difficulty={article.difficulty} size="sm" />
-                      <span style={{ fontSize: '.6rem', color: 'rgba(220,229,213,.3)' }}>
+                      <span style={{ fontSize: '.6rem', color: 'color-mix(in oklab, var(--foreground), transparent 70%)' }}>
                         {readingTimeLabel(article.readingTime)}
                       </span>
                     </div>
                   </div>
-                  <ArrowRight size={14} style={{ color: 'rgba(220,229,213,.25)', flexShrink: 0, marginTop: 2 }} />
+                  <ArrowRight size={14} style={{ color: 'color-mix(in oklab, var(--foreground), transparent 75%)', flexShrink: 0, marginTop: 2 }} />
                 </div>
               </div>
             </Link>

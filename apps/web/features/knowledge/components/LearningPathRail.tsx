@@ -48,7 +48,7 @@ export function LearningPathRail({ paths, currentArticleSlug, compact = false }:
               {path.title}
             </span>
             <PathProgressBadge path={path} />
-            <ArrowRight size={13} style={{ color: 'rgba(220,229,213,.35)', marginLeft: 'auto' }} />
+            <ArrowRight size={13} style={{ color: 'color-mix(in oklab, var(--foreground), transparent 65%)', marginLeft: 'auto' }} />
           </Link>
         ))}
       </div>
@@ -93,7 +93,7 @@ export function LearningPathRail({ paths, currentArticleSlug, compact = false }:
                   </Link>
                   <PathProgressBadge path={path} />
                 </div>
-                <p style={{ fontSize: '.8125rem', color: 'rgba(220,229,213,.5)', margin: 0, lineHeight: 1.5 }}>
+                <p style={{ fontSize: '.8125rem', color: 'color-mix(in oklab, var(--foreground), transparent 50%)', margin: 0, lineHeight: 1.5 }}>
                   {path.subtitle}
                 </p>
               </div>
@@ -108,7 +108,7 @@ export function LearningPathRail({ paths, currentArticleSlug, compact = false }:
                   alignItems: 'center',
                   gap:        4,
                   fontSize:   '.6875rem',
-                  color:      'rgba(220,229,213,.35)',
+                  color:      'color-mix(in oklab, var(--foreground), transparent 65%)',
                 }}
               >
                 <Clock size={11} />
@@ -120,7 +120,7 @@ export function LearningPathRail({ paths, currentArticleSlug, compact = false }:
                   fontWeight:    700,
                   letterSpacing: '.2em',
                   textTransform: 'uppercase',
-                  color:         'rgba(220,229,213,.28)',
+                  color:         'color-mix(in oklab, var(--foreground), transparent 72%)',
                 }}
               >
                 {path.steps.length} articles
@@ -146,19 +146,19 @@ export function LearningPathRail({ paths, currentArticleSlug, compact = false }:
                   >
                     {isCurrent
                       ? <CheckCircle2 size={14} style={{ color: path.accentColor, flexShrink: 0 }} />
-                      : <Circle       size={14} style={{ color: 'rgba(220,229,213,.2)', flexShrink: 0 }} />
+                      : <Circle       size={14} style={{ color: 'color-mix(in oklab, var(--foreground), transparent 80%)', flexShrink: 0 }} />
                     }
                     <span
                       style={{
                         fontSize:   '.875rem',
                         fontWeight: isCurrent ? 700 : 500,
-                        color:      isCurrent ? path.accentColor : 'rgba(220,229,213,.55)',
+                        color:      isCurrent ? path.accentColor : 'color-mix(in oklab, var(--foreground), transparent 45%)',
                         lineHeight: 1.3,
                       }}
                     >
                       {step.title}
                     </span>
-                    <span style={{ marginLeft: 'auto', fontSize: '.6rem', color: 'rgba(220,229,213,.25)', whiteSpace: 'nowrap' }}>
+                    <span style={{ marginLeft: 'auto', fontSize: '.6rem', color: 'color-mix(in oklab, var(--foreground), transparent 75%)', whiteSpace: 'nowrap' }}>
                       {step.estimatedMinutes}m
                     </span>
                   </li>

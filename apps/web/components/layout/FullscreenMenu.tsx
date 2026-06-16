@@ -94,51 +94,39 @@ export function FullscreenMenu({ open, onClose }: FullscreenMenuProps) {
         }}
       />
 
-      {/* Panel — full viewport scroll */}
+      {/* Panel — fixed to viewport height so its content scrolls internally
+          (was minHeight:100dvh inside an overflow:hidden dialog, which clipped
+          and hid the lower menu items). */}
       <div
         ref={panelRef}
         tabIndex={-1}
         style={{
           position: 'relative',
           width: '100%',
-          minHeight: '100dvh',
+          height: '100dvh',
           overflowY: 'auto',
-          padding: 'clamp(16px, 4vw, 52px)',
-          paddingTop: 'clamp(64px, 8vw, 80px)',
+          overscrollBehavior: 'contain',
+          padding: '0 clamp(16px, 4vw, 52px) clamp(32px, 6vw, 64px)',
           transform: open ? 'translate3d(0,0,0)' : 'translate3d(0,12px,0)',
           transition: 'transform 240ms var(--ease-out-expo)',
         }}
       >
-        {/* Close button */}
-        <button
-          ref={closeRef}
-          type="button"
-          onClick={onClose}
-          aria-label="Close navigation menu"
+        {/* Sticky header row — stays visible while the menu scrolls */}
+        <div
+          className="flex items-center gap-3"
           style={{
-            position: 'absolute',
-            right: 'clamp(16px, 4vw, 40px)',
-            top: 'clamp(16px, 3vw, 28px)',
+            position: 'sticky',
+            top: 0,
             zIndex: 10,
-            minWidth: 44,
-            minHeight: 44,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            border: '1px solid var(--hud-border)',
-            borderRadius: 'var(--radius-md)',
-            background: 'var(--surface)',
-            color: 'var(--foreground)',
-            cursor: 'none',
-            transition: 'border-color 160ms ease',
+            paddingTop: 'clamp(16px, 4vw, 28px)',
+            paddingBottom: 12,
+            marginBottom: 'clamp(16px, 3vw, 28px)',
+            borderBottom: '1px solid var(--hud-border)',
+            background: 'color-mix(in oklab, var(--background), transparent 4%)',
+            backdropFilter: 'var(--glass)',
+            WebkitBackdropFilter: 'var(--glass)',
           }}
-          className="focus-ring"
         >
-          <X size={16} aria-hidden />
-        </button>
-
-        {/* Header row */}
-        <div className="mb-8 flex items-center gap-3">
           <Link href="/" onClick={onClose} className="flex items-center gap-2 focus-ring" style={{ textDecoration: 'none' }}>
             <Bot size={16} style={{ color: 'var(--primary)' }} aria-hidden />
             <span className="text-mono" style={{ fontSize: '.72rem', letterSpacing: '.22em', fontWeight: 700, textTransform: 'uppercase', color: 'var(--foreground)' }}>
@@ -157,7 +145,29 @@ export function FullscreenMenu({ open, onClose }: FullscreenMenuProps) {
               className="w-1.5 h-1.5 rounded-full status-dot status-dot-online animate-pulse-dot"
               aria-hidden
             />
-            <span className="edge-label">Live</span>
+            <span className="edge-label" style={{ marginRight: 4 }}>Live</span>
+            <button
+              ref={closeRef}
+              type="button"
+              onClick={onClose}
+              aria-label="Close navigation menu"
+              className="focus-ring"
+              style={{
+                minWidth: 40,
+                minHeight: 40,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                border: '1px solid var(--hud-border)',
+                borderRadius: 'var(--radius-md)',
+                background: 'var(--surface)',
+                color: 'var(--foreground)',
+                cursor: 'none',
+                transition: 'border-color 160ms ease',
+              }}
+            >
+              <X size={16} aria-hidden />
+            </button>
           </div>
         </div>
 

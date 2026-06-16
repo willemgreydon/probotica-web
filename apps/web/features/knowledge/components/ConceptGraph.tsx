@@ -56,8 +56,8 @@ export function ConceptGraph() {
         width:        '100%',
         paddingBottom: '70%',
         borderRadius: '2rem',
-        border:       '1px solid rgba(231,239,225,.08)',
-        background:   'rgba(7,9,7,.6)',
+        border:       '1px solid var(--border)',
+        background:   'var(--surface)',
         backdropFilter: 'blur(20px)',
         overflow:     'hidden',
       }}
@@ -79,7 +79,7 @@ export function ConceptGraph() {
                 y1={`${y}%`}
                 x2={`${target.x}%`}
                 y2={`${target.y}%`}
-                stroke={isActive ? topic.accentColor : 'rgba(231,239,225,.07)'}
+                stroke={isActive ? topic.accentColor : 'color-mix(in oklab, var(--foreground), transparent 95%)'}
                 strokeWidth={isActive ? 1.5 : 0.5}
                 style={{ transition: 'stroke 200ms ease, stroke-width 200ms ease' }}
               />
@@ -122,7 +122,7 @@ export function ConceptGraph() {
                   height:       isHovered ? '40px' : '32px',
                   borderRadius: '50%',
                   border:       `1.5px solid ${isHovered ? topic.accentColor : topic.accentColor + '50'}`,
-                  background:   isHovered ? `${topic.accentColor}20` : 'rgba(7,9,7,.8)',
+                  background:   isHovered ? `${topic.accentColor}20` : 'var(--surface)',
                   display:      'grid',
                   placeItems:   'center',
                   fontSize:     isHovered ? '1rem' : '.875rem',
@@ -142,7 +142,7 @@ export function ConceptGraph() {
                     textTransform: 'uppercase',
                     color:         topic.accentColor,
                     whiteSpace:    'nowrap',
-                    background:    'rgba(7,9,7,.9)',
+                    background:    'var(--surface)',
                     padding:       '2px 6px',
                     borderRadius:  '4px',
                     border:        `1px solid ${topic.accentColor}30`,
@@ -175,7 +175,7 @@ export function ConceptGraph() {
               fontWeight:    700,
               letterSpacing: '.2em',
               textTransform: 'uppercase',
-              color:         'rgba(220,229,213,.3)',
+              color:         'color-mix(in oklab, var(--foreground), transparent 70%)',
             }}
           >
             {tier}

@@ -171,16 +171,17 @@ export function WorkspaceShell({ bots, workspaceId }: WorkspaceShellProps) {
         )}
       </section>
 
-      <section className="grid gap-4 lg:grid-cols-[1.6fr_1fr] xl:grid-cols-[1.8fr_1fr] [&>*]:min-w-0">
-        <WorkflowBuilder
-          bots={bots}
-          templates={workflowTemplates}
-          workflow={activeWorkflow}
-          onWorkflowChange={onWorkflowChange}
-          onExecution={onExecution}
-        />
+      {/* Pipeline builder — full content width so the 4 lanes have room */}
+      <WorkflowBuilder
+        bots={bots}
+        templates={workflowTemplates}
+        workflow={activeWorkflow}
+        onWorkflowChange={onWorkflowChange}
+        onExecution={onExecution}
+      />
 
-        <aside className="grid gap-4" style={{ alignContent: 'start' }}>
+      {/* Workspace panels row */}
+      <section className="grid gap-4 lg:grid-cols-3 [&>*]:min-w-0" style={{ alignItems: 'start' }} aria-label="Workspace panels">
           {/* Workspace registry */}
           <section className="section-frame p-4">
             <div className="flex items-center justify-between">
@@ -297,7 +298,6 @@ export function WorkspaceShell({ bots, workspaceId }: WorkspaceShellProps) {
               </>
             )}
           </section>
-        </aside>
       </section>
 
       <ExecutionTelemetry executions={ws.executionHistory} />

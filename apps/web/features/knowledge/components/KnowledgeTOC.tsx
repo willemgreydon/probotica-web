@@ -45,8 +45,8 @@ export function KnowledgeTOC({ article }: KnowledgeTOCProps) {
         top:          '5.5rem',
         padding:      '20px',
         borderRadius: '1.5rem',
-        border:       '1px solid rgba(231,239,225,.08)',
-        background:   'rgba(231,239,225,.04)',
+        border:       '1px solid var(--border)',
+        background:   'color-mix(in oklab, var(--foreground), transparent 95%)',
         backdropFilter: 'blur(16px)',
         maxHeight:    'calc(100dvh - 8rem)',
         overflowY:    'auto',
@@ -58,7 +58,7 @@ export function KnowledgeTOC({ article }: KnowledgeTOCProps) {
           fontWeight:    700,
           letterSpacing: '.4em',
           textTransform: 'uppercase',
-          color:         'rgba(220,229,213,.35)',
+          color:         'color-mix(in oklab, var(--foreground), transparent 65%)',
           marginBottom:  '14px',
         }}
       >
@@ -79,7 +79,7 @@ export function KnowledgeTOC({ article }: KnowledgeTOCProps) {
                   fontSize:       item.level === 3 ? '.8125rem' : '.875rem',
                   fontWeight:     isActive ? 700 : 500,
                   lineHeight:     1.4,
-                  color:          isActive ? 'var(--color-acid)' : 'rgba(220,229,213,.5)',
+                  color:          isActive ? 'var(--color-acid)' : 'color-mix(in oklab, var(--foreground), transparent 50%)',
                   background:     isActive ? 'rgba(185,255,74,.07)' : 'transparent',
                   borderLeft:     isActive ? '2px solid var(--color-acid)' : '2px solid transparent',
                   textDecoration: 'none',

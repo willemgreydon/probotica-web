@@ -42,6 +42,7 @@ export function WorkflowBuilder({ bots, templates, workflow, onWorkflowChange, o
   const [stepStates, setStepStates] = useState<Record<string, WorkflowStepState>>({});
   const [selectedLane, setSelectedLane] = useState<WorkflowStepDefinition['lane']>('analysis');
   const [selectedBot, setSelectedBot] = useState(bots[0]?.slug ?? '');
+  const [dragLane, setDragLane] = useState<WorkflowStepDefinition['lane'] | null>(null);
 
   const botBySlug = useMemo(() => Object.fromEntries(bots.map((bot) => [bot.slug, bot])), [bots]);
 
@@ -62,6 +63,11 @@ export function WorkflowBuilder({ bots, templates, workflow, onWorkflowChange, o
 
   function removeStep(stepId: string) {
     setSteps(workflow.steps.filter((step) => step.id !== stepId));
+  }
+
+  /** Drag-and-drop: move a step into a different lane (drop target). */
+  function moveStepToLane(stepId: string, lane: WorkflowStepDefinition['lane']) {
+    setSteps(workflow.steps.map((step) => (step.id === stepId ? { ...step, lane } : step)));
   }
 
   function reorderStep(stepId: string, direction: 'up' | 'down') {
@@ -261,10 +267,28 @@ export function WorkflowBuilder({ bots, templates, workflow, onWorkflowChange, o
 
         {/* Topology + execution */}
         <div className="space-y-4">
-          {/* Execution Topology */}
-          <div className="grid grid-cols-2 xl:grid-cols-4 gap-3">
+          {/* Execution Topology — drag step cards between lanes */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 items-start">
             {stepsByLane.map(({ lane, steps }) => (
-              <div key={lane} className="panel" style={{ borderTop: `2px solid ${LANE_COLORS[lane]}` }}>
+              <div
+                key={lane}
+                className="panel"
+                style={{
+                  borderTop: `2px solid ${LANE_COLORS[lane]}`,
+                  outline: dragLane === lane ? `2px dashed ${LANE_COLORS[lane]}` : 'none',
+                  outlineOffset: 2,
+                  background: dragLane === lane ? `color-mix(in oklab, ${LANE_COLORS[lane]}, transparent 92%)` : undefined,
+                  transition: 'background 140ms ease',
+                }}
+                onDragOver={(e) => { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; if (dragLane !== lane) setDragLane(lane); }}
+                onDragLeave={(e) => { if (!e.currentTarget.contains(e.relatedTarget as Node)) setDragLane((l) => (l === lane ? null : l)); }}
+                onDrop={(e) => {
+                  e.preventDefault();
+                  const id = e.dataTransfer.getData('text/plain');
+                  if (id) moveStepToLane(id, lane);
+                  setDragLane(null);
+                }}
+              >
                 <div className="panel-header" style={{ paddingTop: 10 }}>
                   <div className="flex items-center justify-between">
                     <span
@@ -298,10 +322,14 @@ export function WorkflowBuilder({ bots, templates, workflow, onWorkflowChange, o
                       <div
                         key={step.id}
                         className="panel-inset"
-                        style={{ padding: '8px 10px' }}
+                        draggable
+                        onDragStart={(e) => { e.dataTransfer.setData('text/plain', step.id); e.dataTransfer.effectAllowed = 'move'; }}
+                        onDragEnd={() => setDragLane(null)}
+                        style={{ padding: '10px 12px', cursor: 'grab' }}
+                        title="Drag to move between lanes"
                       >
-                        <div className="flex items-start justify-between gap-1 mb-1">
-                          <span className="text-xs font-medium text-foreground text-clamp-2">
+                        <div className="flex items-start justify-between gap-2 mb-1.5">
+                          <span className="text-sm font-medium text-foreground" style={{ lineHeight: 1.35 }}>
                             {bot?.shortName ?? step.botSlug}
                           </span>
                           <span

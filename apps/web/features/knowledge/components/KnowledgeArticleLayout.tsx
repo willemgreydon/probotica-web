@@ -101,8 +101,8 @@ function ArticleSectionBlock({ section }: { section: ArticleSection }) {
             style={{
               padding:      '20px',
               borderRadius: '1rem',
-              border:       '1px solid rgba(231,239,225,.1)',
-              background:   'rgba(7,9,7,.9)',
+              border:       '1px solid var(--border)',
+              background:   'var(--surface)',
               overflowX:    'auto',
             }}
           >
@@ -113,7 +113,7 @@ function ArticleSectionBlock({ section }: { section: ArticleSection }) {
                 gap:           '8px',
                 marginBottom:  '12px',
                 paddingBottom: '12px',
-                borderBottom:  '1px solid rgba(231,239,225,.08)',
+                borderBottom:  '1px solid var(--border)',
               }}
             >
               <span
@@ -229,7 +229,7 @@ export function KnowledgeArticleLayout({
           width:         'min(1180px, calc(100% - 32px))',
           marginInline:  'auto',
           paddingBottom: '3rem',
-          borderBottom:  '1px solid rgba(231,239,225,.07)',
+          borderBottom:  '1px solid var(--border)',
         }}
       >
         <div
@@ -422,8 +422,8 @@ export function KnowledgeArticleLayout({
                     style={{
                       padding:      '16px',
                       borderRadius: '1.25rem',
-                      border:       '1px solid rgba(231,239,225,.08)',
-                      background:   'rgba(231,239,225,.03)',
+                      border:       '1px solid var(--border)',
+                      background:   'color-mix(in oklab, var(--foreground), transparent 95%)',
                       transition:   'border-color 200ms ease',
                     }}
                   >
@@ -443,8 +443,8 @@ export function KnowledgeArticleLayout({
                     style={{
                       padding:      '16px',
                       borderRadius: '1.25rem',
-                      border:       '1px solid rgba(231,239,225,.08)',
-                      background:   'rgba(231,239,225,.03)',
+                      border:       '1px solid var(--border)',
+                      background:   'color-mix(in oklab, var(--foreground), transparent 95%)',
                       textAlign:    'right',
                       transition:   'border-color 200ms ease',
                     }}
