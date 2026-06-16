@@ -8,32 +8,44 @@ export const metadata: Metadata = {
 
 const SECTIONS = [
   {
-    title: 'Data We Collect',
-    body: 'ProBotica collects only the data necessary to operate the platform. When you use the AI demo or Bot Lab, your input prompt is sent to the OpenAI API via our server. We do not store prompt history beyond the current session.',
+    title: 'Controller',
+    body: 'The controller responsible for data processing (Art. 4(7) GDPR) is Claus Nisslmüller e.U. (owner: Claus Rainer Nisslmüller), Mitterbergerweg 6/EG/G02, 4040 Linz, Austria. Email: office@mitterbergerlab.at. ProBotica is a brand/project of Claus Nisslmüller e.U.',
   },
   {
-    title: 'Session Storage',
-    body: 'Workspace data is stored locally in your browser session only. It is not transmitted to any server, third-party service, or analytics system. Closing the browser clears all session data.',
+    title: 'Data we collect',
+    body: 'We collect only the data necessary to operate the platform. When you use the AI demo or Bot Lab, your input prompt is sent to the OpenAI API via our server for inference. We do not store prompt history beyond the current request/session.',
   },
   {
-    title: 'OpenAI API Usage',
-    body: 'Your prompts are forwarded to OpenAI for model inference. ProBotica\'s server acts as an intermediary — your prompts are never attached to any user identity. OpenAI\'s privacy policy applies to model processing.',
+    title: 'Local & session storage',
+    body: 'Workspaces, learning progress and preferences (theme, language) are stored locally in your browser (localStorage/cookies). They are not transmitted to our servers or to third-party analytics. Clearing your browser storage removes this data.',
   },
   {
-    title: 'No Tracking',
-    body: 'ProBotica does not use Google Analytics, Meta Pixel, or any behavioral tracking. No cookies are set for advertising purposes. No cross-session fingerprinting is performed.',
+    title: 'Use of AI systems',
+    body: 'When live AI is enabled, prompts are forwarded to OpenAI (an EU/US processor) for model inference; our server acts as an intermediary and does not attach prompts to a user identity. OpenAI’s data-processing terms apply. Without an API key, deterministic on-device demo output is used and no prompt leaves the server-side route.',
   },
   {
-    title: 'GDPR Rights',
-    body: 'As an EU-based service, ProBotica respects GDPR rights: access, rectification, erasure, portability, and restriction of processing. Contact hello@probotica.at to exercise any right.',
+    title: 'Hosting',
+    body: 'The website is hosted on Vercel (Vercel Inc.). Vercel processes server logs (e.g. IP address, request metadata) as a processor on our behalf to deliver and secure the site.',
   },
   {
-    title: 'Data Retention',
-    body: 'We retain server logs for operational debugging for a maximum of 7 days. No personal data is retained beyond this period. Contact information submitted via email is retained only while the correspondence is active.',
+    title: 'Legal basis',
+    body: 'Processing is based on our legitimate interest in operating a secure, functional service (Art. 6(1)(f) GDPR), on the performance of a contract or pre-contractual steps where applicable (Art. 6(1)(b)), and on your consent where requested (Art. 6(1)(a)).',
   },
   {
-    title: 'Contact',
-    body: 'For any data protection questions, contact hello@probotica.at. Our Data Protection contact is located in Vienna, Austria.',
+    title: 'No advertising tracking',
+    body: 'We do not use Google Analytics, Meta Pixel, advertising cookies, or cross-session fingerprinting.',
+  },
+  {
+    title: 'Retention',
+    body: 'Server logs are retained for operational/security debugging for a maximum of 7 days. Email correspondence is retained only while the matter is active, subject to statutory retention obligations.',
+  },
+  {
+    title: 'Your rights',
+    body: 'You have the right to access, rectification, erasure, restriction, data portability and objection (Art. 15–21 GDPR). To exercise any right, contact office@mitterbergerlab.at.',
+  },
+  {
+    title: 'Right to complain',
+    body: 'You may lodge a complaint with the Austrian Data Protection Authority (Österreichische Datenschutzbehörde, Barichgasse 40-42, 1030 Vienna, dsb.gv.at).',
   },
 ];
 
@@ -59,7 +71,7 @@ export default function PrivacyPage() {
               <div className="flex items-start gap-4">
                 <span className="route-marker mt-0.5 flex-shrink-0">{String(i + 1).padStart(2, '0')}</span>
                 <div>
-                  <h3 style={{ fontSize: '0.88rem', fontWeight: 800, color: 'var(--foreground)', marginBottom: 'var(--space-2)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                  <h3 style={{ fontSize: '0.95rem', fontWeight: 800, color: 'var(--foreground)', marginBottom: 'var(--space-2)' }}>
                     {s.title}
                   </h3>
                   <p className="text-body" style={{ fontSize: '0.88rem' }}>{s.body}</p>
@@ -72,7 +84,7 @@ export default function PrivacyPage() {
         <div className="flex flex-wrap gap-3">
           <Link href="/imprint" className="btn" style={{ minHeight: 40 }}>Imprint</Link>
           <Link href="/terms" className="btn" style={{ minHeight: 40 }}>Terms</Link>
-          <a href="mailto:hello@probotica.at" className="btn" style={{ minHeight: 40 }}>Contact DPO</a>
+          <a href="mailto:office@mitterbergerlab.at" className="btn" style={{ minHeight: 40 }}>Contact</a>
         </div>
       </div>
     </main>

@@ -42,7 +42,7 @@ export default async function KnowledgeCategoryPage({ params }: Props) {
             gap:            '6px',
             fontSize:       '.75rem',
             fontWeight:     600,
-            color:          'rgba(220,229,213,.4)',
+            color:          'color-mix(in oklab, var(--foreground), transparent 60%)',
             textDecoration: 'none',
           }}
         >
@@ -57,7 +57,7 @@ export default async function KnowledgeCategoryPage({ params }: Props) {
           width:         'min(1180px, calc(100% - 32px))',
           marginInline:  'auto',
           paddingBottom: '3rem',
-          borderBottom:  '1px solid rgba(231,239,225,.07)',
+          borderBottom:  '1px solid var(--border)',
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '1.25rem' }}>
@@ -106,7 +106,7 @@ export default async function KnowledgeCategoryPage({ params }: Props) {
           style={{
             fontSize:   'clamp(1rem, 2vw, 1.125rem)',
             lineHeight: 1.65,
-            color:      'rgba(220,229,213,.55)',
+            color:      'color-mix(in oklab, var(--foreground), transparent 45%)',
             maxWidth:   '620px',
             marginBottom: '1.5rem',
           }}
@@ -153,7 +153,7 @@ export default async function KnowledgeCategoryPage({ params }: Props) {
                 fontWeight:    700,
                 letterSpacing: '.4em',
                 textTransform: 'uppercase',
-                color:         'rgba(220,229,213,.3)',
+                color:         'color-mix(in oklab, var(--foreground), transparent 70%)',
                 marginBottom:  '1.75rem',
               }}
             >
@@ -166,13 +166,13 @@ export default async function KnowledgeCategoryPage({ params }: Props) {
             style={{
               padding:      '48px',
               borderRadius: '1.75rem',
-              border:       '1px solid rgba(231,239,225,.07)',
-              background:   'rgba(231,239,225,.02)',
+              border:       '1px solid var(--border)',
+              background:   'color-mix(in oklab, var(--foreground), transparent 95%)',
               textAlign:    'center',
             }}
           >
             <p style={{ fontSize: '1.5rem', marginBottom: '12px' }}>{topic.icon}</p>
-            <p style={{ fontSize: '1rem', color: 'rgba(220,229,213,.45)', lineHeight: 1.6 }}>
+            <p style={{ fontSize: '1rem', color: 'color-mix(in oklab, var(--foreground), transparent 55%)', lineHeight: 1.6 }}>
               Articles on {topic.title} are coming soon.
             </p>
             <Link

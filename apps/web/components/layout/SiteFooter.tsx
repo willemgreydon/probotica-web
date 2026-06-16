@@ -19,7 +19,7 @@ export function SiteFooter() {
       role="contentinfo"
       style={{
         borderTop: '1px solid var(--border)',
-        background: 'color-mix(in oklab, var(--background), black 14%)',
+        background: 'var(--surface-1)',
       }}
     >
       <div className="container-x" style={{ paddingBlock: 'clamp(40px, 6vw, 72px)' }}>
