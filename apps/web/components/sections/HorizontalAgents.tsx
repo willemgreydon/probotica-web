@@ -1,5 +1,8 @@
+'use client';
+
 import Link from 'next/link';
 import { ScrollReveal } from '@/components/motion/ScrollReveal';
+import { useT } from '@/components/providers/LocaleProvider';
 
 const AGENT_CARDS = [
   {
@@ -77,18 +80,18 @@ const AGENT_CARDS = [
 ];
 
 export function HorizontalAgents() {
+  const t = useT();
   return (
     <section id="ai-studio" className="hud-grid section-y">
       <div className="container-x">
         <ScrollReveal>
           <div className="section-header">
-            <p className="section-header-eyebrow">Agent Arsenal</p>
+            <p className="section-header-eyebrow">{t('home.agentsEyebrow')}</p>
             <h2 className="section-header-title" style={{ maxWidth: '680px' }}>
-              Deployable agent modules<br />by domain.
+              {t('home.agentsTitle')}
             </h2>
             <p className="section-header-body">
-              Expert AI assistants with structured outputs, safe fallbacks, and domain-tuned system prompts.
-              Each links to its full category in the Bot Lab.
+              {t('home.agentsBody')}
             </p>
           </div>
         </ScrollReveal>

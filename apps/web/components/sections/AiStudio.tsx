@@ -1,6 +1,9 @@
+'use client';
+
 import Link from 'next/link';
 import { AiDemoPanel } from '@/components/ai/AiDemoPanel';
 import { ScrollReveal } from '@/components/motion/ScrollReveal';
+import { useT } from '@/components/providers/LocaleProvider';
 
 const CAPABILITIES = [
   { label: 'Structured JSON', desc: 'Type-safe output with Zod validation', color: 'var(--primary)' },
@@ -10,17 +13,18 @@ const CAPABILITIES = [
 ];
 
 export function AiStudio() {
+  const t = useT();
   return (
     <section id="openai-api" className="hud-grid section-y">
       <div className="container-x grid items-start gap-10 lg:grid-cols-[1fr_1.4fr]">
         <ScrollReveal>
           <div className="section-header" style={{ marginBottom: 'var(--space-8)' }}>
-            <p className="section-header-eyebrow">AI Control Console</p>
+            <p className="section-header-eyebrow">{t('home.studioEyebrow')}</p>
             <h2 className="section-header-title" style={{ maxWidth: '480px' }}>
-              Live AI demo. Real API.
+              {t('home.studioTitle')}
             </h2>
             <p className="section-header-body" style={{ maxWidth: '420px' }}>
-              Select a bot scenario, submit a prompt, and receive structured output from the actual OpenAI API endpoint — with typed contracts and deterministic fallback.
+              {t('home.studioBody')}
             </p>
           </div>
 
@@ -42,10 +46,10 @@ export function AiStudio() {
 
           <div className="mt-8 flex flex-wrap gap-3">
             <Link href="/bots" className="btn btn-primary" style={{ minHeight: 44 }}>
-              Open Bot Lab
+              {t('home.openBotLab')}
             </Link>
             <Link href="/workspace" className="btn" style={{ minHeight: 44 }}>
-              Go to Workspace
+              {t('home.goWorkspace')}
             </Link>
           </div>
         </ScrollReveal>

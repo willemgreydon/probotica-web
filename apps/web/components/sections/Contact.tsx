@@ -1,6 +1,9 @@
+'use client';
+
 import Link from 'next/link';
 import { ScrollReveal } from '@/components/motion/ScrollReveal';
 import { ArrowRight, Mail, Phone, MapPin, Clock } from 'lucide-react';
+import { useT } from '@/components/providers/LocaleProvider';
 
 const CONTACT_FACTS = [
   { icon: MapPin, label: 'Location', value: 'Vienna / Austria' },
@@ -15,6 +18,7 @@ const QUICK_LINKS = [
 ];
 
 export function Contact() {
+  const t = useT();
   return (
     <section id="contact" className="hud-grid section-y">
       <div className="container-x">
@@ -45,12 +49,12 @@ export function Contact() {
             <div className="grid gap-10 lg:grid-cols-[1fr_auto]">
               <ScrollReveal>
                 <div>
-                  <p className="section-header-eyebrow">Workflow Briefing</p>
+                  <p className="section-header-eyebrow">{t('home.contactEyebrow')}</p>
                   <h2 className="section-header-title text-balance mt-3" style={{ maxWidth: '720px' }}>
-                    Launch your first operational AI module.
+                    {t('home.contactTitle')}
                   </h2>
                   <p className="section-header-body" style={{ maxWidth: '520px' }}>
-                    In 30 minutes we map your highest-leverage automation path, define system boundaries, and ship a practical execution plan.
+                    {t('home.contactBody')}
                   </p>
 
                   <div className="mt-8 flex flex-wrap items-center gap-3">

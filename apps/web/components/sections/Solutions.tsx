@@ -1,5 +1,8 @@
+'use client';
+
 import Link from 'next/link';
 import { ScrollReveal } from '@/components/motion/ScrollReveal';
+import { useT } from '@/components/providers/LocaleProvider';
 
 const MODULES = [
   {
@@ -59,17 +62,18 @@ const MODULES = [
 ];
 
 export function Solutions() {
+  const t = useT();
   return (
     <section id="solutions" className="hud-grid section-y">
       <div className="container-x">
         <ScrollReveal>
           <div className="section-header">
-            <p className="section-header-eyebrow">Operational AI Modules</p>
+            <p className="section-header-eyebrow">{t('home.solEyebrow')}</p>
             <h2 className="section-header-title" style={{ maxWidth: '780px' }}>
-              Six production modules.<br />One AI operating layer.
+              {t('home.solTitle')}
             </h2>
             <p className="section-header-body">
-              Each module is independently usable and fully cross-linked. Start with Bot Lab, chain into Workflows, monitor in Control Center.
+              {t('home.solBody')}
             </p>
           </div>
         </ScrollReveal>
