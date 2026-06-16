@@ -830,6 +830,25 @@ body {
     [data-collapsed="true"] .app-shell-aside-desktop { display: none; }
     [data-collapsed="true"] .app-shell-main { margin-left: 0; }
   }
+  /* Loading skeleton primitive (PB-017). Honors reduced motion. */
+  .skeleton {
+    background: linear-gradient(
+      100deg,
+      var(--panel-inset) 30%,
+      color-mix(in oklab, var(--panel-inset), var(--foreground) 8%) 50%,
+      var(--panel-inset) 70%
+    );
+    background-size: 200% 100%;
+    border-radius: var(--radius-md);
+    animation: pb-shimmer 1.4s ease-in-out infinite;
+  }
+  @keyframes pb-shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .skeleton { animation: none; }
+  }
 
   /* ── Sidebar nav items ── */
   .sidebar-item {
