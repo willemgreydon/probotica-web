@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { getServerT } from '@/lib/i18n/server';
 
 export const metadata: Metadata = {
   title: 'About ProBotica | AI Operating System',
@@ -17,21 +18,22 @@ const STACK = [
   { label: 'Runtime', value: 'Next.js 15' },
   { label: 'AI', value: 'OpenAI GPT-4o' },
   { label: 'Region', value: 'EU / GDPR' },
-  { label: 'Bots', value: '111 experts' },
+  { label: 'Bots', value: '500+ experts' },
   { label: 'Workflows', value: '10 templates' },
   { label: 'Security', value: 'Server boundary' },
 ];
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const t = await getServerT();
   return (
     <main id="main-content" className="page-shell hud-grid bg-premium">
       <div className="container-x">
-        <p className="label-eyebrow mb-4">Company</p>
+        <p className="label-eyebrow mb-4">{t('pages.aboutEyebrow')}</p>
         <h1 className="heading-section text-balance" style={{ maxWidth: '720px' }}>
-          About ProBotica
+          {t('pages.aboutTitle')}
         </h1>
         <p className="text-lead mt-5" style={{ maxWidth: '580px' }}>
-          We build cinematic AI operating systems that are practical, performant, and production-safe. ProBotica is an AI OS for real business operations — not a chatbot wrapper.
+          {t('pages.aboutLead')}
         </p>
 
         <div

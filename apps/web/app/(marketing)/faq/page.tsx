@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { getServerT } from '@/lib/i18n/server';
 
 export const metadata: Metadata = {
   title: 'FAQ | ProBotica',
@@ -41,16 +42,17 @@ const FAQS = [
   },
 ];
 
-export default function FaqPage() {
+export default async function FaqPage() {
+  const t = await getServerT();
   return (
     <main id="main-content" className="page-shell hud-grid bg-premium">
       <div className="container-x">
-        <p className="label-eyebrow mb-4">FAQ</p>
+        <p className="label-eyebrow mb-4">{t('pages.faqEyebrow')}</p>
         <h1 className="heading-section text-balance" style={{ maxWidth: '640px' }}>
-          Frequently Asked Questions
+          {t('pages.faqTitle')}
         </h1>
         <p className="text-lead mt-5" style={{ maxWidth: '520px' }}>
-          Answers on ProBotica features, AI safety, compliance, integrations, and how to get started.
+          {t('pages.faqLead')}
         </p>
 
         <div className="mt-10 space-y-3 mb-10">

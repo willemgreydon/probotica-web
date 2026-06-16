@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Mail, Phone, MapPin, Clock } from 'lucide-react';
+import { getServerT } from '@/lib/i18n/server';
 
 export const metadata: Metadata = {
   title: 'Contact ProBotica | Book AI Briefing',
@@ -22,16 +23,17 @@ const BRIEFING_INCLUDES = [
   'Answer all technical and compliance questions',
 ];
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const t = await getServerT();
   return (
     <main id="main-content" className="page-shell hud-grid bg-premium">
       <div className="container-x">
-        <p className="label-eyebrow mb-4">Contact</p>
+        <p className="label-eyebrow mb-4">{t('pages.contactEyebrow')}</p>
         <h1 className="heading-section text-balance" style={{ maxWidth: '640px' }}>
-          Talk To ProBotica
+          {t('pages.contactTitle')}
         </h1>
         <p className="text-lead mt-5" style={{ maxWidth: '520px' }}>
-          Plan your next AI workflow with a practical architecture session. 30 minutes, no sales pitch — just execution.
+          {t('pages.contactLead')}
         </p>
 
         <div className="mt-10 grid gap-8 lg:grid-cols-[1fr_360px]">

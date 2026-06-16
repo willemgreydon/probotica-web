@@ -53,6 +53,20 @@ const en = {
     contactTitle: 'Launch your first operational AI module.',
     contactBody: 'In 30 minutes we map your highest-leverage automation path, define system boundaries, and ship a practical execution plan.',
   },
+  pages: {
+    aboutEyebrow: 'Company',
+    aboutTitle: 'About ProBotica',
+    aboutLead: 'We build cinematic AI operating systems that are practical, performant, and production-safe. ProBotica is an AI OS for real business operations — not a chatbot wrapper.',
+    contactEyebrow: 'Contact',
+    contactTitle: 'Talk to ProBotica',
+    contactLead: 'Plan your next AI workflow with a practical architecture session. 30 minutes, no sales pitch — just execution.',
+    faqEyebrow: 'FAQ',
+    faqTitle: 'Frequently asked questions',
+    faqLead: 'Answers on ProBotica features, AI safety, compliance, integrations, and how to get started.',
+    pricingEyebrow: 'Pricing',
+    pricingTitle: 'Plans that scale with your output',
+    pricingLead: 'Start free and learn the concepts. Upgrade when you’re ready to run them in production. Final pricing is being finalized — these tiers are indicative.',
+  },
 };
 
 const de: Dict = {
@@ -101,10 +115,33 @@ const de: Dict = {
     contactTitle: 'Starte dein erstes operatives KI-Modul.',
     contactBody: 'In 30 Minuten kartieren wir deinen wirkungsvollsten Automatisierungspfad, definieren Systemgrenzen und liefern einen praktischen Umsetzungsplan.',
   },
+  pages: {
+    aboutEyebrow: 'Unternehmen',
+    aboutTitle: 'Über ProBotica',
+    aboutLead: 'Wir bauen cineastische KI-Betriebssysteme, die praktisch, performant und produktionssicher sind. ProBotica ist ein KI-OS für echte Geschäftsabläufe — kein Chatbot-Aufsatz.',
+    contactEyebrow: 'Kontakt',
+    contactTitle: 'Sprich mit ProBotica',
+    contactLead: 'Plane deinen nächsten KI-Workflow in einer praktischen Architektur-Session. 30 Minuten, kein Verkaufsgespräch — nur Umsetzung.',
+    faqEyebrow: 'FAQ',
+    faqTitle: 'Häufig gestellte Fragen',
+    faqLead: 'Antworten zu ProBotica-Funktionen, KI-Sicherheit, Compliance, Integrationen und zum Einstieg.',
+    pricingEyebrow: 'Preise',
+    pricingTitle: 'Pläne, die mit deinem Output skalieren',
+    pricingLead: 'Starte kostenlos und lerne die Konzepte. Upgrade, wenn du bereit bist, sie in der Produktion auszuführen. Die finalen Preise werden noch festgelegt — diese Stufen sind Richtwerte.',
+  },
 };
 
 const DICTS: Record<Locale, Dict> = { en, de };
 
 export function getDict(locale: Locale): Dict {
   return DICTS[locale] ?? en;
+}
+
+/** Dot-path lookup against a dictionary; returns the path itself if missing. */
+export function translate(dict: Dict, path: string): string {
+  const value = path.split('.').reduce<unknown>(
+    (acc, key) => (acc && typeof acc === 'object' ? (acc as Record<string, unknown>)[key] : undefined),
+    dict,
+  );
+  return typeof value === 'string' ? value : path;
 }

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Check } from 'lucide-react';
 import { authLinks } from '@/lib/content/navigation';
+import { getServerT } from '@/lib/i18n/server';
 
 export const metadata: Metadata = {
   title: 'Pricing',
@@ -42,19 +43,19 @@ const tiers = [
   },
 ];
 
-export default function PricingPage() {
+export default async function PricingPage() {
+  const t = await getServerT();
   return (
     <main id="main-content" className="page-shell hud-grid bg-premium">
       <div className="container-x">
         <p className="text-mono" style={{ fontSize: '.5625rem', fontWeight: 700, letterSpacing: '.35em', textTransform: 'uppercase', color: 'var(--muted-foreground)' }}>
-          Pricing
+          {t('pages.pricingEyebrow')}
         </p>
         <h1 className="text-display" style={{ marginTop: 12, marginBottom: 12 }}>
-          Plans that scale with your output
+          {t('pages.pricingTitle')}
         </h1>
         <p className="text-body" style={{ maxWidth: 560, color: 'var(--muted-foreground)', marginBottom: 40 }}>
-          Start free and learn the concepts. Upgrade when you&rsquo;re ready to run them in production.
-          Final pricing is being finalized — these tiers are indicative.
+          {t('pages.pricingLead')}
         </p>
 
         <div
