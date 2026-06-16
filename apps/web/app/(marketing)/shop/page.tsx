@@ -38,7 +38,7 @@ export default function ShopPage() {
                 <span className="edge-label">{cat.count}</span>
               </div>
               <div className="module-card-body">
-                <h3 style={{ fontSize: '1rem', fontWeight: 800, letterSpacing: '-0.01em', textTransform: 'uppercase', color: 'var(--foreground)', marginBottom: 'var(--space-2)' }}>
+                <h3 style={{ fontSize: '1rem', fontWeight: 800, letterSpacing: '-0.01em', color: 'var(--foreground)', marginBottom: 'var(--space-2)' }}>
                   {cat.title}
                 </h3>
                 <p className="text-body">{cat.desc}</p>

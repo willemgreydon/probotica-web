@@ -38,7 +38,7 @@ export default function StudioPage() {
                 />
               </div>
               <div className="module-card-body">
-                <h3 style={{ fontSize: '0.88rem', fontWeight: 800, letterSpacing: '-0.01em', textTransform: 'uppercase', color: 'var(--foreground)', marginBottom: 'var(--space-2)' }}>
+                <h3 style={{ fontSize: '0.88rem', fontWeight: 800, letterSpacing: '-0.01em', color: 'var(--foreground)', marginBottom: 'var(--space-2)' }}>
                   {f.title}
                 </h3>
                 <p className="text-body" style={{ fontSize: '0.84rem' }}>{f.desc}</p>

@@ -189,9 +189,9 @@ export function WorkflowBuilder({ bots, templates, workflow, onWorkflowChange, o
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-[240px_1fr] gap-6">
-        {/* Controls sidebar */}
-        <aside className="space-y-4">
+      <div className="grid grid-cols-1 gap-6">
+        {/* Controls toolbar — above the pipeline, full width */}
+        <aside className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 items-start">
           {/* Template loader */}
           <div className="panel">
             <div className="panel-header">

@@ -56,7 +56,7 @@ export default function IndustriesPage() {
                 </span>
               </div>
               <div className="module-card-body">
-                <h3 style={{ fontSize: '1rem', fontWeight: 800, letterSpacing: '-0.01em', textTransform: 'uppercase', color: 'var(--foreground)', marginBottom: 'var(--space-2)' }}>
+                <h3 style={{ fontSize: '1rem', fontWeight: 800, letterSpacing: '-0.01em', color: 'var(--foreground)', marginBottom: 'var(--space-2)' }}>
                   {ind.title}
                 </h3>
                 <p className="text-body">{ind.desc}</p>

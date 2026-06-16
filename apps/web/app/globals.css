@@ -240,7 +240,9 @@ body {
   margin: 0;
   color: var(--foreground);
   font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
-  overflow-x: hidden;
+  /* No overflow-x here: it makes <body> a scroll container, which breaks
+     position:sticky on descendants (e.g. the app topbar). Horizontal overflow
+     is already clipped by html { overflow-x: hidden }. */
   min-height: 100dvh;
   min-width: 0;
 }
@@ -343,7 +345,6 @@ body {
     line-height: 0.82;
     letter-spacing: -0.058em;
     font-weight: 700;
-    text-transform: uppercase;
   }
   .text-hero {
     font-family: var(--font-display), ui-sans-serif, sans-serif;
@@ -605,7 +606,6 @@ body {
     letter-spacing: -0.045em;
     line-height: 0.98;
     font-size: clamp(2rem, 4.7vw, 4rem);
-    text-transform: uppercase;
   }
   .glow-line {
     height: 1px;

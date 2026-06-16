@@ -413,7 +413,7 @@ export function BotLab({ bots, importStats, initialSelectedSlug }: BotLabProps) 
               <div style={{ padding: '16px' }}>
                 <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12 }}>
                   <div>
-                    <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '1.15rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                    <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '1.15rem', fontWeight: 700, letterSpacing: '0.04em' }}>
                       {selectedBot.name}
                     </h2>
                     <p style={{ fontSize: '0.8rem', color: 'var(--muted-foreground)', marginTop: 4, lineHeight: 1.55 }}>

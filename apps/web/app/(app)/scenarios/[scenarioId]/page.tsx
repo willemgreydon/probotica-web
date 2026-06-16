@@ -77,7 +77,7 @@ export default async function ScenarioDetailPage({ params }: { params: Promise<{
 
           <h1 style={{
             fontFamily: 'var(--font-display)', fontSize: 'clamp(1.5rem, 4vw, 2.6rem)',
-            fontWeight: 700, letterSpacing: '-0.03em', textTransform: 'uppercase',
+            fontWeight: 700, letterSpacing: '-0.03em',
             lineHeight: 1.1, marginBottom: 14, color: 'var(--foreground)',
           }}>
             {scenario.label}

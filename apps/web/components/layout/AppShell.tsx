@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { RuntimeBreadcrumbs } from './RuntimeBreadcrumbs';
 import { ThemeAccessibilityMenu } from './ThemeAccessibilityMenu';
+import { SiteFooter } from './SiteFooter';
 
 interface NavItem {
   href: string;
@@ -371,6 +372,9 @@ export function AppShell({ children }: AppShellProps) {
         <main style={{ flex: 1, minHeight: 0 }}>
           {children}
         </main>
+
+        {/* Global footer — same as marketing routes, at the bottom of the content column */}
+        <SiteFooter />
       </div>
     </div>
   );

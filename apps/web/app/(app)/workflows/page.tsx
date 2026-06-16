@@ -37,8 +37,7 @@ export default function WorkflowsIndexPage() {
               fontSize: 'clamp(1.6rem, 4vw, 2.6rem)',
               fontWeight: 700,
               letterSpacing: '-0.03em',
-              textTransform: 'uppercase',
-              lineHeight: 1.1,
+                            lineHeight: 1.1,
               margin: '12px 0 12px',
               color: 'var(--foreground)',
             }}

@@ -37,7 +37,7 @@ export default function AiAssistantsPage() {
                 <span className="mono-chip">{a.cat}</span>
               </div>
               <div className="module-card-body">
-                <h3 style={{ fontSize: '0.92rem', fontWeight: 800, letterSpacing: '-0.01em', textTransform: 'uppercase', color: 'var(--foreground)', marginBottom: 'var(--space-2)' }}>
+                <h3 style={{ fontSize: '0.92rem', fontWeight: 800, letterSpacing: '-0.01em', color: 'var(--foreground)', marginBottom: 'var(--space-2)' }}>
                   {a.title}
                 </h3>
                 <p className="text-body">{a.desc}</p>

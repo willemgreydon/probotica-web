@@ -65,7 +65,7 @@ export default function WorkflowAutomationPage() {
                 <span className="mono-chip">{w.cat}</span>
               </div>
               <div className="module-card-body">
-                <h3 style={{ fontSize: '0.92rem', fontWeight: 800, letterSpacing: '-0.01em', textTransform: 'uppercase', color: 'var(--foreground)', marginBottom: 'var(--space-2)' }}>
+                <h3 style={{ fontSize: '0.92rem', fontWeight: 800, letterSpacing: '-0.01em', color: 'var(--foreground)', marginBottom: 'var(--space-2)' }}>
                   {w.title}
                 </h3>
                 <div className="data-rail mt-3" style={{ padding: 'var(--space-3) var(--space-3)' }}>
