@@ -2,11 +2,12 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { Bot, ChevronDown, Menu } from 'lucide-react';
+import { Bot, ChevronDown, Menu, UserRound } from 'lucide-react';
 import { authLinks, type NavGroup } from '@/lib/content/navigation';
 import { FullscreenMenu } from '@/components/layout/FullscreenMenu';
 import { LanguageSwitch } from '@/components/layout/LanguageSwitch';
 import { useT } from '@/components/providers/LocaleProvider';
+import { useAuth } from '@/components/providers/AuthProvider';
 
 /**
  * SiteHeader (PB-001) — the single sticky header for all public/marketing routes.
@@ -16,6 +17,7 @@ import { useT } from '@/components/providers/LocaleProvider';
  */
 export function SiteHeader() {
   const t = useT();
+  const { user } = useAuth();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [openGroup, setOpenGroup] = useState<string | null>(null);
@@ -99,21 +101,35 @@ export function SiteHeader() {
                 style={{ width: 1, height: 18, background: 'var(--hud-border)', margin: '0 4px' }}
               />
 
-              <Link
-                href={authLinks.signIn.href}
-                className="header-nav-link text-mono focus-ring hidden sm:inline-flex"
-                style={{ fontSize: '.67rem', letterSpacing: '.16em', padding: '0 10px' }}
-              >
-                {t('auth.signIn')}
-              </Link>
+              {user ? (
+                <Link
+                  href="/account"
+                  className="btn focus-ring hidden sm:inline-flex"
+                  style={{ fontSize: '.67rem', letterSpacing: '.12em', height: 34, padding: '0 12px', gap: 6 }}
+                  aria-label="Your account"
+                >
+                  <UserRound size={13} aria-hidden />
+                  {user.name.split(' ')[0]}
+                </Link>
+              ) : (
+                <>
+                  <Link
+                    href={authLinks.signIn.href}
+                    className="header-nav-link text-mono focus-ring hidden sm:inline-flex"
+                    style={{ fontSize: '.67rem', letterSpacing: '.16em', padding: '0 10px' }}
+                  >
+                    {t('auth.signIn')}
+                  </Link>
 
-              <Link
-                href={authLinks.getStarted.href}
-                className="btn btn-primary focus-ring hidden sm:inline-flex"
-                style={{ fontSize: '.67rem', letterSpacing: '.16em', height: 34, padding: '0 14px' }}
-              >
-                {t('auth.getStarted')}
-              </Link>
+                  <Link
+                    href={authLinks.getStarted.href}
+                    className="btn btn-primary focus-ring hidden sm:inline-flex"
+                    style={{ fontSize: '.67rem', letterSpacing: '.16em', height: 34, padding: '0 14px' }}
+                  >
+                    {t('auth.getStarted')}
+                  </Link>
+                </>
+              )}
 
               {/* Menu trigger — opens the mega menu (primary nav + mode switch) */}
               <button

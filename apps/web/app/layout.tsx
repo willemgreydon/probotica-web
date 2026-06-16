@@ -5,6 +5,7 @@ import { cookies } from 'next/headers';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
 import { AccessibilityProvider } from '@/components/providers/AccessibilityProvider';
 import { LocaleProvider } from '@/components/providers/LocaleProvider';
+import { AuthProvider } from '@/components/providers/AuthProvider';
 import { CursorProvider } from '@/components/motion/CursorProvider';
 import { LOCALE_COOKIE, DEFAULT_LOCALE, isLocale } from '@/lib/i18n/config';
 import './globals.css';
@@ -67,12 +68,14 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body className="bg-premium">
         <Script id="probotica-init-theme" strategy="beforeInteractive" dangerouslySetInnerHTML={{ __html: INIT_SCRIPT }} />
         <LocaleProvider locale={locale}>
-          <ThemeProvider>
-            <AccessibilityProvider>
-              <CursorProvider />
-              {children}
-            </AccessibilityProvider>
-          </ThemeProvider>
+          <AuthProvider>
+            <ThemeProvider>
+              <AccessibilityProvider>
+                <CursorProvider />
+                {children}
+              </AccessibilityProvider>
+            </ThemeProvider>
+          </AuthProvider>
         </LocaleProvider>
       </body>
     </html>
