@@ -40,11 +40,13 @@ export function HomeSectionNav() {
       className="hidden lg:flex"
       style={{
         position: 'sticky',
-        top: 'var(--topbar-height)',
+        top: '64px', /* clears the fixed SiteHeader (h-16) */
         zIndex: 'var(--z-base)',
+        alignItems: 'center',
         justifyContent: 'center',
         gap: 4,
-        padding: '8px 0',
+        minHeight: 44,
+        padding: '0 16px',
         borderBottom: '1px solid var(--hud-border)',
         background: 'color-mix(in oklab, var(--command-surface), transparent 14%)',
         backdropFilter: 'var(--glass)',
@@ -60,7 +62,7 @@ export function HomeSectionNav() {
             href={n.href}
             className="header-nav-link text-mono focus-ring"
             data-active={isActive ? 'true' : 'false'}
-            style={{ fontSize: '.66rem', letterSpacing: '.16em', padding: '0 10px' }}
+            style={{ fontSize: '.66rem', letterSpacing: '.16em', padding: '0 10px', display: 'inline-flex', alignItems: 'center', height: 32, lineHeight: 1 }}
             aria-current={isActive ? 'true' : undefined}
           >
             {String(idx + 1).padStart(2, '0')} {n.label}

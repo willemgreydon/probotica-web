@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import type { PublicBotDefinition } from '@/features/bots/lib/bot-types';
 import { workflowTemplates } from '@/features/workflows/data/workflow-templates';
 import type { WorkflowDefinition, WorkflowExecutionResult } from '@/features/workflows/lib/workflow-types';
@@ -35,9 +36,16 @@ function buildDefaultWorkflow(bots: PublicBotDefinition[]): WorkflowDefinition {
 }
 
 export function WorkspaceShell({ bots, workspaceId }: WorkspaceShellProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const incomingBotSlug = searchParams.get('bot');
+
   const [summaries, setSummaries] = useState(listWorkspaceSummaries());
   const [workspace, setWorkspace] = useState<WorkspaceRecord | null>(null);
   const [note, setNote] = useState('');
+  /** Bot arriving via ?bot= that needs a confirm before being added. */
+  const [pendingBot, setPendingBot] = useState<PublicBotDefinition | null>(null);
+  const handledBotParam = useRef(false);
 
   useEffect(() => {
     const selected = workspaceId ? getWorkspace(workspaceId) : listWorkspaceSummaries()[0] ? getWorkspace(listWorkspaceSummaries()[0].id) : null;
@@ -64,6 +72,45 @@ export function WorkspaceShell({ bots, workspaceId }: WorkspaceShellProps) {
     if (!workspace) return;
     persist({ ...workspace, workflows: [nextWorkflow, ...workspace.workflows.slice(1)] });
   }
+
+  /** Add a bot as an intake step to the active workflow (used by ?bot= deep links). */
+  function addBotToWorkspace(slug: string) {
+    if (!workspace) return;
+    const wf = workspace.workflows[0] ?? buildDefaultWorkflow(bots);
+    const nextWf: WorkflowDefinition = {
+      ...wf,
+      steps: [...wf.steps, { id: crypto.randomUUID(), botSlug: slug, lane: 'intake' }],
+    };
+    persist({ ...workspace, workflows: [nextWf, ...workspace.workflows.slice(1)] });
+  }
+
+  function clearBotParam() {
+    router.replace('/workspace');
+  }
+
+  // Handle an incoming ?bot= deep link from a bot detail page (once).
+  useEffect(() => {
+    if (handledBotParam.current) return;
+    if (!workspace || !incomingBotSlug) return;
+    const bot = bots.find((b) => b.slug === incomingBotSlug);
+    if (!bot) { handledBotParam.current = true; return; }
+    handledBotParam.current = true;
+
+    // "Already set up" = the workspace has real work beyond the fresh seed.
+    const wf = workspace.workflows[0];
+    const isFresh =
+      workspace.executionHistory.length === 0 &&
+      workspace.notes.length === 0 &&
+      (!wf || wf.id === 'ops-seed');
+
+    if (isFresh) {
+      addBotToWorkspace(bot.slug);
+      clearBotParam();
+    } else {
+      setPendingBot(bot); // ask before changing existing work
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [workspace, incomingBotSlug, bots]);
 
   function onExecution(result: WorkflowExecutionResult) {
     if (!workspace) return;
@@ -301,6 +348,51 @@ export function WorkspaceShell({ bots, workspaceId }: WorkspaceShellProps) {
       </section>
 
       <ExecutionTelemetry executions={ws.executionHistory} />
+
+      {/* Confirm dialog when arriving from a bot detail page with existing work */}
+      {pendingBot && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Add bot to workspace"
+          onClick={() => { setPendingBot(null); clearBotParam(); }}
+          style={{
+            position: 'fixed', inset: 0, zIndex: 'var(--z-command)',
+            display: 'grid', placeItems: 'center', padding: 20,
+            background: 'color-mix(in oklab, var(--background), transparent 25%)',
+            backdropFilter: 'blur(4px)',
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              width: '100%', maxWidth: 440, padding: 24,
+              borderRadius: 'var(--radius-xl)', border: '1px solid var(--panel-border-active)',
+              background: 'var(--command-surface)', boxShadow: 'var(--shadow)',
+            }}
+          >
+            <p className="text-caption" style={{ marginBottom: 8 }}>Workspace already set up</p>
+            <h2 className="text-heading" style={{ fontSize: '1.15rem', marginBottom: 8 }}>
+              Add “{pendingBot.shortName}” to “{ws.name}”?
+            </h2>
+            <p className="text-body" style={{ fontSize: '.88rem', marginBottom: 20 }}>
+              You already have work in this workspace. Add this bot as a new intake step, or cancel and keep things as they are.
+            </p>
+            <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+              <button type="button" className="btn focus-ring" onClick={() => { setPendingBot(null); clearBotParam(); }}>
+                Cancel
+              </button>
+              <button
+                type="button"
+                className="btn btn-primary focus-ring"
+                onClick={() => { addBotToWorkspace(pendingBot.slug); setPendingBot(null); clearBotParam(); }}
+              >
+                Add to workspace
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }

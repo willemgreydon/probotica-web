@@ -164,7 +164,7 @@ export function BotDetailPage({ bot, relatedBots }: BotDetailPageProps) {
               <Terminal size={13} />
               Run in Bot Lab
             </Link>
-            <Link href="/workspace" className="btn" style={{ gap: '8px' }}>
+            <Link href={`/workspace?bot=${bot.slug}`} className="btn" style={{ gap: '8px' }}>
               <Zap size={13} />
               Add to Workflow
             </Link>
@@ -353,7 +353,7 @@ export function BotDetailPage({ bot, relatedBots }: BotDetailPageProps) {
             <p className="text-body" style={{ fontSize: '.8125rem', marginBottom: '12px' }}>
               Add this bot to a workflow and automate production tasks.
             </p>
-            <Link href="/workspace" className="btn btn-primary" style={{ width: '100%', justifyContent: 'center', gap: '6px' }}>
+            <Link href={`/workspace?bot=${bot.slug}`} className="btn btn-primary" style={{ width: '100%', justifyContent: 'center', gap: '6px' }}>
               <Zap size={12} />
               Open Workspace
             </Link>
