@@ -234,6 +234,9 @@ html {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
+  /* Offset in-page anchor jumps so the fixed header + sticky section-nav don't
+     cover the target heading. */
+  scroll-padding-top: 116px;
 }
 
 body {
@@ -341,21 +344,21 @@ body {
   }
   .text-display {
     font-family: var(--font-display), ui-sans-serif, sans-serif;
-    font-size: clamp(2.7rem, 8.2vw, 7.4rem);
+    font-size: clamp(2.1rem, 5.5vw, 4rem);
     line-height: 0.82;
     letter-spacing: -0.058em;
     font-weight: 800;
   }
   .text-hero {
     font-family: var(--font-display), ui-sans-serif, sans-serif;
-    font-size: clamp(2.1rem, 6.2vw, 4.8rem);
+    font-size: clamp(1.9rem, 5vw, 3.6rem);
     line-height: 0.9;
     letter-spacing: -0.05em;
     font-weight: 800;
   }
   .text-section {
     font-family: var(--font-display), ui-sans-serif, sans-serif;
-    font-size: clamp(1.7rem, 4vw, 3.1rem);
+    font-size: clamp(1.5rem, 3.2vw, 2.4rem);
     line-height: 1.02;
     letter-spacing: -0.042em;
     font-weight: 700;
@@ -404,6 +407,12 @@ body {
   .footer-link:hover {
     color: var(--foreground);
   }
+
+  /* Theme-aware brand assets (emblem/logo per light/dark). Default theme is dark. */
+  .brand-asset-light { display: none; }
+  .brand-asset-dark { display: inline-block; }
+  [data-theme="light"] .brand-asset-light { display: inline-block; }
+  [data-theme="light"] .brand-asset-dark { display: none; }
 
   /* ── Form controls (global upgrade) ──
      Token-driven styling for native inputs/selects/checkboxes/radios so they
@@ -657,7 +666,7 @@ body {
     font-weight: 800;
     letter-spacing: -0.045em;
     line-height: 0.98;
-    font-size: clamp(2rem, 4.7vw, 4rem);
+    font-size: clamp(1.6rem, 3.4vw, 2.6rem);
   }
   .glow-line {
     height: 1px;

@@ -33,7 +33,7 @@ export default function PromptPacksPage() {
             <div key={f.num} className="process-step">
               <span className="process-step-num">{f.num}</span>
               <div>
-                <b style={{ fontSize: '0.8rem', fontWeight: 800, display: 'block', textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--foreground)', marginBottom: 4 }}>
+                <b style={{ fontSize: '0.8rem', fontWeight: 800, display: 'block', letterSpacing: '0.02em', color: 'var(--foreground)', marginBottom: 4 }}>
                   {f.title}
                 </b>
                 <p className="text-body" style={{ fontSize: '0.84rem' }}>{f.desc}</p>

@@ -97,7 +97,7 @@ export function Hero() {
           {/* Left — headline + CTAs */}
           <div className="animate-in-up flex flex-col">
             <p className="label-eyebrow mb-4">{t('home.heroEyebrow')}</p>
-            <h1 className="text-display text-balance" style={{ fontSize: 'clamp(2.2rem, 6.5vw, 5.8rem)' }}>
+            <h1 className="text-display text-balance" style={{ fontSize: 'clamp(1.9rem, 4.5vw, 3.4rem)' }}>
               <span className="block">{t('home.heroLine1')}</span>
               <span className="block" style={{ color: 'var(--primary)' }}>{t('home.heroLine2')}</span>
               <span className="block">{t('home.heroLine3')}</span>

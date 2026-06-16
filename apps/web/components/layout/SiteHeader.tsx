@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { Bot, ChevronDown, Menu, UserRound } from 'lucide-react';
+import { ChevronDown, Menu, UserRound } from 'lucide-react';
 import { authLinks, type NavGroup } from '@/lib/content/navigation';
 import { FullscreenMenu } from '@/components/layout/FullscreenMenu';
 import { LanguageSwitch } from '@/components/layout/LanguageSwitch';
@@ -74,10 +74,12 @@ export function SiteHeader() {
       >
         <div
           style={{
-            borderBottom: `1px solid ${scrolled ? 'var(--hud-border)' : 'transparent'}`,
-            background: scrolled ? 'color-mix(in oklab, var(--command-surface), transparent 8%)' : 'transparent',
-            backdropFilter: scrolled ? 'var(--glass)' : 'none',
-            WebkitBackdropFilter: scrolled ? 'var(--glass)' : 'none',
+            borderBottom: '1px solid var(--hud-border)',
+            background: scrolled
+              ? 'color-mix(in oklab, var(--command-surface), transparent 4%)'
+              : 'color-mix(in oklab, var(--command-surface), transparent 22%)',
+            backdropFilter: 'var(--glass)',
+            WebkitBackdropFilter: 'var(--glass)',
             transition: 'background 240ms ease, border-color 240ms ease',
           }}
         >
@@ -85,11 +87,13 @@ export function SiteHeader() {
             {/* Logo */}
             <Link
               href="/"
-              className="header-logo text-caption focus-ring"
+              className="header-logo focus-ring"
               aria-label="ProBotica — home"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}
             >
-              <Bot size={15} aria-hidden />
-              <span className="text-mono" style={{ letterSpacing: '.2em' }}>PROBOTICA</span>
+              <img src="/brand/emblem-dark.png" alt="" aria-hidden className="brand-asset-dark" width={24} height={24} style={{ height: 24, width: 'auto' }} />
+              <img src="/brand/emblem-light.png" alt="" aria-hidden className="brand-asset-light" width={24} height={24} style={{ height: 24, width: 'auto' }} />
+              <span className="text-mono" style={{ letterSpacing: '.2em', fontWeight: 700 }}>PROBOTICA</span>
             </Link>
 
             {/* Right controls — nav + mode switch live in the mega menu */}

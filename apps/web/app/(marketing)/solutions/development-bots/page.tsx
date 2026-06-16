@@ -33,7 +33,7 @@ export default function DevelopmentBotsPage() {
             <div key={c.num} className="process-step" style={{ alignItems: 'flex-start' }}>
               <span className="process-step-num">{c.num}</span>
               <div>
-                <b style={{ fontSize: '0.82rem', fontWeight: 800, display: 'block', textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--foreground)', marginBottom: 4 }}>
+                <b style={{ fontSize: '0.82rem', fontWeight: 800, display: 'block', letterSpacing: '0.02em', color: 'var(--foreground)', marginBottom: 4 }}>
                   {c.title}
                 </b>
                 <p className="text-body" style={{ fontSize: '0.84rem' }}>{c.desc}</p>
