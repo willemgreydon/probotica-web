@@ -49,6 +49,7 @@ export function BotCard({ bot, selected, compareSelected, onSelect, onToggleComp
         boxShadow: selected ? `0 0 0 1px color-mix(in oklab, ${accentColor}, transparent 60%)` : hovered ? 'var(--shadow-sm)' : 'none',
         overflow: 'hidden',
         cursor: 'none',
+        flexShrink: 0,
       }}
     >
       {/* Color accent top line */}
