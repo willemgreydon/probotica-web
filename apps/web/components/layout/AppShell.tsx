@@ -6,6 +6,7 @@ import { useState, useEffect, useCallback } from 'react';
 import {
   Bot, Layers, ShoppingBag, LayoutDashboard, BookOpen,
   Cpu, Settings, Home, Menu, X, Command, ChevronRight, Zap,
+  PanelLeftClose, PanelLeftOpen,
 } from 'lucide-react';
 import { RuntimeBreadcrumbs } from './RuntimeBreadcrumbs';
 import { ThemeAccessibilityMenu } from './ThemeAccessibilityMenu';
@@ -39,7 +40,21 @@ interface AppShellProps {
 export function AppShell({ children }: AppShellProps) {
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [collapsed, setCollapsed] = useState(false);
   const [cmdHint, setCmdHint] = useState(false);
+
+  /* Restore desktop sidebar collapsed preference */
+  useEffect(() => {
+    setCollapsed(localStorage.getItem('probotica-sidebar-collapsed') === '1');
+  }, []);
+
+  const toggleCollapsed = useCallback(() => {
+    setCollapsed((v) => {
+      const next = !v;
+      try { localStorage.setItem('probotica-sidebar-collapsed', next ? '1' : '0'); } catch { /* ignore */ }
+      return next;
+    });
+  }, []);
 
   /* Show ⌘K hint once after load */
   useEffect(() => {
@@ -75,7 +90,7 @@ export function AppShell({ children }: AppShellProps) {
   }, [sidebarOpen]);
 
   return (
-    <div style={{ display: 'flex', minHeight: '100dvh', position: 'relative' }}>
+    <div data-collapsed={collapsed ? 'true' : 'false'} style={{ display: 'flex', minHeight: '100dvh', position: 'relative' }}>
       {/* Sidebar backdrop (mobile) */}
       {sidebarOpen && (
         <div
@@ -249,10 +264,10 @@ export function AppShell({ children }: AppShellProps) {
             gap: '12px',
           }}
         >
-          {/* Mobile hamburger */}
+          {/* Mobile hamburger — opens the overlay drawer (below lg only) */}
           <button
             type="button"
-            className="icon-btn lg:hidden"
+            className="icon-btn app-shell-burger"
             onClick={() => setSidebarOpen((v) => !v)}
             aria-label={sidebarOpen ? 'Close navigation menu' : 'Open navigation menu'}
             aria-expanded={sidebarOpen}
@@ -260,6 +275,19 @@ export function AppShell({ children }: AppShellProps) {
             style={{ minWidth: 44, minHeight: 44 }}
           >
             {sidebarOpen ? <X size={14} /> : <Menu size={14} />}
+          </button>
+
+          {/* Desktop collapse toggle — gives the content more room (lg+ only) */}
+          <button
+            type="button"
+            className="icon-btn app-shell-collapse"
+            onClick={toggleCollapsed}
+            aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+            aria-pressed={collapsed}
+            title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+            style={{ minWidth: 36, minHeight: 36 }}
+          >
+            {collapsed ? <PanelLeftOpen size={15} /> : <PanelLeftClose size={15} />}
           </button>
 
           {/* Mobile logo */}

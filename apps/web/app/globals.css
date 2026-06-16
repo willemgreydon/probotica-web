@@ -817,6 +817,19 @@ body {
       display: none;
     }
   }
+  /* Topbar controls: mobile burger (opens drawer) vs desktop collapse toggle.
+     !important guards against the .icon-btn display rule winning the cascade. */
+  .app-shell-burger { display: inline-flex !important; }
+  .app-shell-collapse { display: none !important; }
+  @media (min-width: 1024px) {
+    .app-shell-burger { display: none !important; }
+    .app-shell-collapse { display: inline-flex !important; }
+  }
+  /* Collapsed desktop sidebar: hide the rail and reclaim its width for content. */
+  @media (min-width: 1024px) {
+    [data-collapsed="true"] .app-shell-aside-desktop { display: none; }
+    [data-collapsed="true"] .app-shell-main { margin-left: 0; }
+  }
 
   /* ── Sidebar nav items ── */
   .sidebar-item {
