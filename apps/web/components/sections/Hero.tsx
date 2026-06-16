@@ -1,5 +1,8 @@
+'use client';
+
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+import { useT } from '@/components/providers/LocaleProvider';
 
 const KPI_ITEMS = [
   { value: '500+', label: 'Imported Bots', desc: 'Expert AI assistants across 12 domains', accent: true },
@@ -48,6 +51,7 @@ const STATUS_CHIPS = [
 ];
 
 export function Hero() {
+  const t = useT();
   return (
     <section
       id="top"
@@ -92,26 +96,26 @@ export function Hero() {
 
           {/* Left — headline + CTAs */}
           <div className="animate-in-up flex flex-col">
-            <p className="label-eyebrow mb-4">PROBOTICA COMMAND LAYER</p>
+            <p className="label-eyebrow mb-4">{t('home.heroEyebrow')}</p>
             <h1 className="text-display text-balance" style={{ fontSize: 'clamp(2.2rem, 6.5vw, 5.8rem)' }}>
-              <span className="block">AI Workflows</span>
-              <span className="block" style={{ color: 'var(--primary)' }}>That Turn</span>
-              <span className="block">Prompts Into</span>
-              <span className="block" style={{ color: 'var(--secondary)' }}>Operations</span>
+              <span className="block">{t('home.heroLine1')}</span>
+              <span className="block" style={{ color: 'var(--primary)' }}>{t('home.heroLine2')}</span>
+              <span className="block">{t('home.heroLine3')}</span>
+              <span className="block" style={{ color: 'var(--secondary)' }}>{t('home.heroLine4')}</span>
             </h1>
 
             <p className="text-lead mt-6" style={{ maxWidth: '500px' }}>
-              ProBotica combines imported expert bots, workflow execution, workspace memory, marketplace modules, and control-center telemetry into one practical AI operating layer for real business tasks.
+              {t('home.heroLead')}
             </p>
 
             {/* Primary CTAs */}
             <div className="mt-8 flex flex-wrap gap-3">
               <Link href="/bots" className="btn btn-primary group" style={{ minHeight: 48, paddingInline: 24 }}>
-                Open Bot Lab
+                {t('home.openBotLab')}
                 <ArrowRight size={14} className="ml-2 transition-transform group-hover:translate-x-1" aria-hidden />
               </Link>
               <Link href="/workspace" className="btn" style={{ minHeight: 48, paddingInline: 24 }}>
-                Launch Workspace
+                {t('home.launchWorkspace')}
               </Link>
               <Link
                 href="/marketplace"
