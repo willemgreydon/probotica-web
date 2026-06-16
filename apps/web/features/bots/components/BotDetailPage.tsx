@@ -13,13 +13,13 @@ const CATEGORY_COLORS: Record<string, string> = {
   ux:           'var(--neon-cyan)',
   content:      'var(--neon-violet)',
   marketing:    'var(--neon-orange)',
-  'real-estate':'#88ffcc',
+  'real-estate':'var(--success)',
   development:  'var(--secondary)',
-  learning:     '#ffcb74',
+  learning:     'var(--warning)',
   automation:   'var(--primary)',
-  research:     '#be9bff',
-  support:      '#8ac9ff',
-  strategy:     '#ff8f96',
+  research:     'var(--accent)',
+  support:      'var(--info)',
+  strategy:     'var(--danger)',
   other:        'var(--muted-foreground)',
 };
 

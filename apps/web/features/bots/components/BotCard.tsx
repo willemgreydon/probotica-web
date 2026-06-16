@@ -46,7 +46,7 @@ export function BotCard({ bot, selected, compareSelected, onSelect, onToggleComp
             ? 'var(--panel-inset)'
             : 'var(--panel-bg)',
         transition: 'border-color 160ms ease, background 160ms ease, box-shadow 160ms ease',
-        boxShadow: selected ? `0 0 0 1px color-mix(in oklab, ${accentColor}, transparent 60%)` : hovered ? '0 2px 12px rgba(0,0,0,.15)' : 'none',
+        boxShadow: selected ? `0 0 0 1px color-mix(in oklab, ${accentColor}, transparent 60%)` : hovered ? 'var(--shadow-sm)' : 'none',
         overflow: 'hidden',
         cursor: 'none',
       }}

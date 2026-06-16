@@ -24,6 +24,25 @@ function copyText(value: string) {
   return navigator.clipboard.writeText(value);
 }
 
+/* Category accent colors — kept in sync with BotCard for visual cohesion. */
+const CATEGORY_ACCENT: Record<string, string> = {
+  sales: 'var(--neon-lime)',
+  ux: 'var(--neon-cyan)',
+  content: 'var(--secondary)',
+  marketing: 'var(--accent)',
+  'real-estate': 'var(--neon-orange)',
+  development: 'var(--primary)',
+  learning: 'var(--neon-violet)',
+  automation: 'var(--neon-cyan)',
+  research: 'var(--secondary)',
+  support: 'var(--neon-lime)',
+  strategy: 'var(--neon-orange)',
+  other: 'var(--muted-foreground)',
+};
+function categoryAccent(category: string): string {
+  return CATEGORY_ACCENT[category] ?? 'var(--primary)';
+}
+
 function RegistryHeader({ count, total }: { count: number; total: number }) {
   return (
     <div style={{
@@ -200,9 +219,14 @@ export function BotLab({ bots, importStats, initialSelectedSlug }: BotLabProps) 
       >
         <style>{`
           .lab-grid > * { min-width: 0; }
+          /* Tablet: registry + center side by side instead of stacked */
+          @media (min-width: 768px) {
+            .lab-grid { grid-template-columns: 240px 1fr !important; }
+          }
           @media (min-width: 1024px) {
             .lab-grid { grid-template-columns: 280px 1fr !important; }
           }
+          /* Wide: add the dedicated output column */
           @media (min-width: 1440px) {
             .lab-grid { grid-template-columns: 300px 1fr 420px !important; }
           }
@@ -356,16 +380,18 @@ export function BotLab({ bots, importStats, initialSelectedSlug }: BotLabProps) 
           {/* Bot profile card */}
           {selectedBot ? (
             <div style={{
-              border: '1px solid var(--panel-border)',
+              border: `1px solid color-mix(in oklab, ${categoryAccent(selectedBot.category)}, var(--panel-border) 55%)`,
               borderRadius: 'var(--radius-xl)',
               background: 'var(--panel-bg)',
               overflow: 'hidden',
             }}>
+              {/* Category accent line */}
+              <div style={{ height: 3, background: categoryAccent(selectedBot.category) }} />
               {/* Profile header */}
               <div style={{
                 padding: '14px 16px',
                 borderBottom: '1px solid var(--panel-border)',
-                background: 'var(--panel-inset)',
+                background: `linear-gradient(180deg, color-mix(in oklab, ${categoryAccent(selectedBot.category)}, transparent 92%), var(--panel-inset))`,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
@@ -421,15 +447,17 @@ export function BotLab({ bots, importStats, initialSelectedSlug }: BotLabProps) 
                 {/* Tags */}
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, marginTop: 12 }}>
                   {selectedBot.tags.map((tag) => (
-                    <span
+                    <button
                       key={tag}
+                      type="button"
                       onClick={() => setQuery(tag)}
-                      className="mono-chip"
-                      style={{ cursor: 'none', transition: 'border-color 140ms ease' }}
+                      className="mono-chip focus-ring"
+                      style={{ cursor: 'none', transition: 'border-color 140ms ease', background: 'none' }}
+                      aria-label={`Filter bots by ${tag}`}
                       title={`Filter by ${tag}`}
                     >
                       {tag}
-                    </span>
+                    </button>
                   ))}
                 </div>
 
