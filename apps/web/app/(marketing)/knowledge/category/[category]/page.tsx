@@ -6,7 +6,8 @@ import { topicBySlug, knowledgeTopics } from '@/features/knowledge/data/knowledg
 import { topicMetadata } from '@/features/knowledge/lib/knowledge-seo';
 import { getArticlesForCategory } from '@/features/knowledge/lib/knowledge-utils';
 import { KnowledgeGrid } from '@/features/knowledge/components/KnowledgeGrid';
-import type { TopicCategory } from '@/features/knowledge/lib/knowledge-types';
+import { DistributionBars } from '@/components/visual/DistributionBars';
+import type { TopicCategory, Difficulty } from '@/features/knowledge/lib/knowledge-types';
 
 interface Props {
   params: Promise<{ category: string }>;
@@ -29,6 +30,16 @@ export default async function KnowledgeCategoryPage({ params }: Props) {
   if (!topic) notFound();
 
   const articles = getArticlesForCategory(category);
+
+  // Difficulty breakdown for this category — derived from the in-scope articles.
+  const difficultyOrder: Difficulty[] = ['beginner', 'intermediate', 'advanced', 'expert'];
+  const difficultyData = difficultyOrder
+    .map((level) => ({
+      label: level,
+      value: articles.filter((a) => a.difficulty === level).length,
+      color: topic.accentColor,
+    }))
+    .filter((d) => d.value > 0);
 
   return (
     <div style={{ minHeight: '100vh', paddingTop: '5rem' }}>
@@ -114,6 +125,22 @@ export default async function KnowledgeCategoryPage({ params }: Props) {
           {topic.description}
         </p>
 
+        <div className="data-rail" style={{ marginBottom: '1.5rem' }}>
+          <div className="data-rail-item">
+            <span className="data-rail-value">{articles.length}</span>
+            <span className="data-rail-label">Articles</span>
+          </div>
+          {difficultyData.map((d) => (
+            <span key={d.label} style={{ display: 'contents' }}>
+              <span className="data-rail-sep" />
+              <div className="data-rail-item">
+                <span className="data-rail-value">{d.value}</span>
+                <span className="data-rail-label" style={{ textTransform: 'capitalize', letterSpacing: '.18em' }}>{d.label}</span>
+              </div>
+            </span>
+          ))}
+        </div>
+
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
           {topic.relatedSlugs.slice(0, 4).map(relSlug => {
             const related = topicBySlug[relSlug];
@@ -159,6 +186,11 @@ export default async function KnowledgeCategoryPage({ params }: Props) {
             >
               {articles.length} article{articles.length !== 1 ? 's' : ''}
             </p>
+            {difficultyData.length > 0 && (
+              <div style={{ marginBottom: '2rem', maxWidth: '520px' }}>
+                <DistributionBars title="Articles by difficulty" data={difficultyData} />
+              </div>
+            )}
             <KnowledgeGrid articles={articles} columns={3} />
           </>
         ) : (

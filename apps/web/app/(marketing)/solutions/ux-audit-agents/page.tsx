@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getServerLocale } from '@/lib/i18n/server';
+import { getPlatformStats } from '@/lib/content/platform-stats';
 
 export const metadata: Metadata = {
   title: 'UX Audit Agents | ProBotica Solutions',
@@ -23,6 +24,7 @@ const UX_CAPABILITIES_DE = [
 
 export default async function UxAuditAgentsPage() {
   const locale = await getServerLocale();
+  const stats = getPlatformStats();
   const UX_CAPABILITIES = locale === 'de' ? UX_CAPABILITIES_DE : UX_CAPABILITIES_EN;
   return (
     <main id="main-content" className="page-shell hud-grid bg-premium">
@@ -39,6 +41,23 @@ export default async function UxAuditAgentsPage() {
             ? 'Verwandle qualitative und quantitative UX-Signale in priorisierte nächste Schritte. KI-gestützte Diagnostik für Onboarding, Conversion und Interface-Usability.'
             : 'Turn qualitative and quantitative UX signals into prioritized next actions. AI-powered diagnostics for onboarding, conversion, and interface usability.'}
         </p>
+
+        <div className="data-rail flex-wrap gap-4 mt-8">
+          <div className="data-rail-item">
+            <span className="data-rail-value">{stats.botCount}+</span>
+            <span className="data-rail-label">Bots</span>
+          </div>
+          <div className="data-rail-sep" />
+          <div className="data-rail-item">
+            <span className="data-rail-value">{stats.categoryCount}</span>
+            <span className="data-rail-label">{locale === 'de' ? 'Kategorien' : 'Categories'}</span>
+          </div>
+          <div className="data-rail-sep" />
+          <div className="data-rail-item">
+            <span className="data-rail-value">{stats.avgReadiness}%</span>
+            <span className="data-rail-label">{locale === 'de' ? 'Ø Readiness' : 'Avg readiness'}</span>
+          </div>
+        </div>
 
         <div className="mt-10 grid gap-3 sm:grid-cols-2 mb-10">
           {UX_CAPABILITIES.map((c) => (

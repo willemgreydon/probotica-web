@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getServerLocale } from '@/lib/i18n/server';
+import { getPlatformStats } from '@/lib/content/platform-stats';
 
 export const metadata: Metadata = {
   title: 'Prompt Packs | ProBotica Solutions',
@@ -23,6 +24,7 @@ const PACK_FEATURES_DE = [
 
 export default async function PromptPacksPage() {
   const locale = await getServerLocale();
+  const stats = getPlatformStats();
   const PACK_FEATURES = locale === 'de' ? PACK_FEATURES_DE : PACK_FEATURES_EN;
   return (
     <main id="main-content" className="page-shell hud-grid bg-premium">
@@ -39,6 +41,23 @@ export default async function PromptPacksPage() {
             ? 'Wiederverwendbare, versionierte Prompt-Systeme für reproduzierbare Ergebnisse in höchster Qualität. Gebaut für Teams, die konsistente KI-Ergebnisse über viele Use Cases hinweg brauchen.'
             : 'Reusable, versioned prompt systems for repeatable high-quality output. Built for teams who need consistent AI results across multiple use cases.'}
         </p>
+
+        <div className="data-rail flex-wrap gap-4 mt-8">
+          <div className="data-rail-item">
+            <span className="data-rail-value">{stats.botCount}+</span>
+            <span className="data-rail-label">Bots</span>
+          </div>
+          <div className="data-rail-sep" />
+          <div className="data-rail-item">
+            <span className="data-rail-value">{stats.categoryCount}</span>
+            <span className="data-rail-label">{locale === 'de' ? 'Kategorien' : 'Categories'}</span>
+          </div>
+          <div className="data-rail-sep" />
+          <div className="data-rail-item">
+            <span className="data-rail-value">{stats.scenarioCount}</span>
+            <span className="data-rail-label">{locale === 'de' ? 'Szenarien' : 'Scenarios'}</span>
+          </div>
+        </div>
 
         <div className="mt-10 grid gap-3 sm:grid-cols-2 mb-10">
           {PACK_FEATURES.map((f) => (

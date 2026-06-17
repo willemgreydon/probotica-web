@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getServerT, getServerLocale } from '@/lib/i18n/server';
+import { getPlatformStats } from '@/lib/content/platform-stats';
+import { DistributionBars } from '@/components/visual/DistributionBars';
 
 export const metadata: Metadata = {
   title: 'About ProBotica | AI Operating System',
@@ -21,21 +23,21 @@ const VALUES_DE = [
   { title: 'Modular by Design', text: 'Bot Lab eigenständig nutzen, in Workflows verketten, im Control Center überwachen. Jedes Modul funktioniert unabhängig.' },
 ];
 
-const STACK_EN = [
+const STACK_EN = (botCount: number, workflowCount: number) => [
   { label: 'Runtime', value: 'Next.js 15' },
   { label: 'AI', value: 'OpenAI GPT-4o' },
   { label: 'Region', value: 'EU / GDPR' },
-  { label: 'Bots', value: '500+ experts' },
-  { label: 'Workflows', value: '10 templates' },
+  { label: 'Bots', value: `${botCount}+ experts` },
+  { label: 'Workflows', value: `${workflowCount} templates` },
   { label: 'Security', value: 'Server boundary' },
 ];
 
-const STACK_DE = [
+const STACK_DE = (botCount: number, workflowCount: number) => [
   { label: 'Runtime', value: 'Next.js 15' },
   { label: 'KI', value: 'OpenAI GPT-4o' },
   { label: 'Region', value: 'EU / DSGVO' },
-  { label: 'Bots', value: '500+ Experten' },
-  { label: 'Workflows', value: '10 Vorlagen' },
+  { label: 'Bots', value: `${botCount}+ Experten` },
+  { label: 'Workflows', value: `${workflowCount} Vorlagen` },
   { label: 'Sicherheit', value: 'Server-Grenze' },
 ];
 
@@ -63,8 +65,9 @@ const COPY = {
 export default async function AboutPage() {
   const t = await getServerT();
   const locale = await getServerLocale();
+  const stats = getPlatformStats();
   const VALUES = locale === 'de' ? VALUES_DE : VALUES_EN;
-  const STACK = locale === 'de' ? STACK_DE : STACK_EN;
+  const STACK = (locale === 'de' ? STACK_DE : STACK_EN)(stats.botCount, stats.workflowCount);
   const c = locale === 'de' ? COPY.de : COPY.en;
   return (
     <main id="main-content" className="page-shell hud-grid bg-premium">
@@ -112,6 +115,13 @@ export default async function AboutPage() {
               <span className="data-rail-label">{s.label}</span>
             </div>
           ))}
+        </div>
+
+        <div className="mb-10">
+          <DistributionBars
+            title={locale === 'de' ? 'Bots nach Kategorie' : 'Bots by category'}
+            data={stats.categoryCounts.slice(0, 8).map((cc) => ({ label: cc.label, value: cc.count }))}
+          />
         </div>
 
         <div className="flex flex-wrap gap-3">

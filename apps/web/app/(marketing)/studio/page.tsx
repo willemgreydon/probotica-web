@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getServerT, getServerLocale } from '@/lib/i18n/server';
+import { getPlatformStats } from '@/lib/content/platform-stats';
 
 export const metadata: Metadata = {
   title: 'AI Studio | ProBotica',
@@ -28,7 +29,14 @@ const STUDIO_FEATURES_DE = [
 export default async function StudioPage() {
   const t = await getServerT();
   const locale = await getServerLocale();
+  const stats = getPlatformStats();
   const STUDIO_FEATURES = locale === 'de' ? STUDIO_FEATURES_DE : STUDIO_FEATURES_EN;
+  const STUDIO_KPIS = [
+    { value: `${stats.botCount}+`, label: 'Bots' },
+    { value: `${stats.categoryCount}`, label: locale === 'de' ? 'Kategorien' : 'Categories' },
+    { value: `${stats.avgReadiness}%`, label: locale === 'de' ? 'Ø Readiness' : 'Avg readiness' },
+    { value: `${stats.scenarioCount}`, label: locale === 'de' ? 'Szenarien' : 'Scenarios' },
+  ];
   return (
     <main id="main-content" className="page-shell hud-grid bg-premium">
       <div className="container-x">
@@ -39,6 +47,15 @@ export default async function StudioPage() {
         <p className="text-lead mt-5" style={{ maxWidth: '560px' }}>
           {t('pages.studioLead')}
         </p>
+
+        <div className="data-rail flex-wrap gap-4 mt-8">
+          {STUDIO_KPIS.map((s) => (
+            <div key={s.label} className="data-rail-item">
+              <span className="data-rail-value">{s.value}</span>
+              <span className="data-rail-label">{s.label}</span>
+            </div>
+          ))}
+        </div>
 
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-10">
           {STUDIO_FEATURES.map((f) => (

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getServerLocale } from '@/lib/i18n/server';
+import { getPlatformStats } from '@/lib/content/platform-stats';
 
 export const metadata: Metadata = {
   title: 'Development Bots | ProBotica Solutions',
@@ -23,6 +24,7 @@ const DEV_CAPABILITIES_DE = [
 
 export default async function DevelopmentBotsPage() {
   const locale = await getServerLocale();
+  const stats = getPlatformStats();
   const DEV_CAPABILITIES = locale === 'de' ? DEV_CAPABILITIES_DE : DEV_CAPABILITIES_EN;
   return (
     <main id="main-content" className="page-shell hud-grid bg-premium">
@@ -39,6 +41,23 @@ export default async function DevelopmentBotsPage() {
             ? 'Engineering-KI-Copilots mit Fokus auf Qualität, Tempo und sicheres Deployment. Accessibility-Audits, Code-Review und Performance-Analyse, gebaut für Frontend- und Fullstack-Teams.'
             : 'Engineering AI copilots focused on quality, speed, and safe deployment. Accessibility audits, code review, and performance analysis built for frontend and fullstack teams.'}
         </p>
+
+        <div className="data-rail flex-wrap gap-4 mt-8">
+          <div className="data-rail-item">
+            <span className="data-rail-value">{stats.botCount}+</span>
+            <span className="data-rail-label">Bots</span>
+          </div>
+          <div className="data-rail-sep" />
+          <div className="data-rail-item">
+            <span className="data-rail-value">{stats.categoryCount}</span>
+            <span className="data-rail-label">{locale === 'de' ? 'Kategorien' : 'Categories'}</span>
+          </div>
+          <div className="data-rail-sep" />
+          <div className="data-rail-item">
+            <span className="data-rail-value">{stats.avgReadiness}%</span>
+            <span className="data-rail-label">{locale === 'de' ? 'Ø Readiness' : 'Avg readiness'}</span>
+          </div>
+        </div>
 
         <div className="mt-10 grid gap-3 sm:grid-cols-2 mb-10">
           {DEV_CAPABILITIES.map((c) => (

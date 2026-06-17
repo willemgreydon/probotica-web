@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getServerT, getServerLocale } from '@/lib/i18n/server';
+import { getPlatformStats } from '@/lib/content/platform-stats';
+import { DistributionBars } from '@/components/visual/DistributionBars';
 
 export const metadata: Metadata = {
   title: 'Solutions | ProBotica AI Stack',
@@ -96,6 +98,7 @@ const SOLUTIONS_DE = [
 export default async function SolutionsPage() {
   const t = await getServerT();
   const locale = await getServerLocale();
+  const stats = getPlatformStats();
   const SOLUTIONS = locale === 'de' ? SOLUTIONS_DE : SOLUTIONS_EN;
   const explore = locale === 'de' ? 'Ansehen →' : 'Explore →';
   return (
@@ -108,6 +111,28 @@ export default async function SolutionsPage() {
         <p className="text-lead mt-5" style={{ maxWidth: '540px' }}>
           {t('pages.solutionsLead')}
         </p>
+
+        <div className="data-rail flex-wrap gap-4 mt-8">
+          <div className="data-rail-item">
+            <span className="data-rail-value">{stats.botCount}+</span>
+            <span className="data-rail-label">Bots</span>
+          </div>
+          <div className="data-rail-sep" />
+          <div className="data-rail-item">
+            <span className="data-rail-value">{stats.categoryCount}</span>
+            <span className="data-rail-label">{locale === 'de' ? 'Kategorien' : 'Categories'}</span>
+          </div>
+          <div className="data-rail-sep" />
+          <div className="data-rail-item">
+            <span className="data-rail-value">{stats.workflowCount}</span>
+            <span className="data-rail-label">Workflows</span>
+          </div>
+          <div className="data-rail-sep" />
+          <div className="data-rail-item">
+            <span className="data-rail-value">{stats.avgReadiness}%</span>
+            <span className="data-rail-label">{locale === 'de' ? 'Ø Readiness' : 'Avg readiness'}</span>
+          </div>
+        </div>
 
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-10">
           {SOLUTIONS.map((s) => (
@@ -136,6 +161,13 @@ export default async function SolutionsPage() {
               </div>
             </Link>
           ))}
+        </div>
+
+        <div className="mb-10">
+          <DistributionBars
+            title={locale === 'de' ? 'Bots nach Kategorie' : 'Bots by category'}
+            data={stats.categoryCounts.slice(0, 8).map((c) => ({ label: c.label, value: c.count }))}
+          />
         </div>
 
         <div className="flex flex-wrap gap-3">

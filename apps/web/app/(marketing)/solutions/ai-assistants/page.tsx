@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getServerLocale } from '@/lib/i18n/server';
+import { getPlatformStats } from '@/lib/content/platform-stats';
 
 export const metadata: Metadata = {
   title: 'AI Assistants | ProBotica Solutions',
@@ -27,6 +28,7 @@ const ASSISTANT_TYPES_DE = [
 
 export default async function AiAssistantsPage() {
   const locale = await getServerLocale();
+  const stats = getPlatformStats();
   const ASSISTANT_TYPES = locale === 'de' ? ASSISTANT_TYPES_DE : ASSISTANT_TYPES_EN;
   return (
     <main id="main-content" className="page-shell hud-grid bg-premium">
@@ -43,6 +45,28 @@ export default async function AiAssistantsPage() {
             ? '500+ importierte Experten-Bots über alle Business-Domänen hinweg. Jeder Assistent hat typisierte Outputs, sichere Fallbacks, serverseitige System-Prompts und domänenoptimierte Temperatur-Einstellungen.'
             : '500+ imported expert bots across all business domains. Every assistant has typed outputs, safe fallbacks, server-only system prompts, and domain-tuned temperature settings.'}
         </p>
+
+        <div className="data-rail flex-wrap gap-4 mt-8">
+          <div className="data-rail-item">
+            <span className="data-rail-value">{stats.botCount}+</span>
+            <span className="data-rail-label">Bots</span>
+          </div>
+          <div className="data-rail-sep" />
+          <div className="data-rail-item">
+            <span className="data-rail-value">{stats.categoryCount}</span>
+            <span className="data-rail-label">{locale === 'de' ? 'Kategorien' : 'Categories'}</span>
+          </div>
+          <div className="data-rail-sep" />
+          <div className="data-rail-item">
+            <span className="data-rail-value">{stats.avgReadiness}%</span>
+            <span className="data-rail-label">{locale === 'de' ? 'Ø Readiness' : 'Avg readiness'}</span>
+          </div>
+          <div className="data-rail-sep" />
+          <div className="data-rail-item">
+            <span className="data-rail-value">{stats.productionReadyCount}</span>
+            <span className="data-rail-label">{locale === 'de' ? 'Produktionsreif' : 'Production-ready'}</span>
+          </div>
+        </div>
 
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-10">
           {ASSISTANT_TYPES.map((a) => (

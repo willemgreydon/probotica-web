@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getServerT, getServerLocale } from '@/lib/i18n/server';
+import { getPlatformStats } from '@/lib/content/platform-stats';
 
 export const metadata: Metadata = {
   title: 'FAQ | ProBotica',
@@ -80,7 +81,14 @@ const FAQS_DE = [
 export default async function FaqPage() {
   const t = await getServerT();
   const locale = await getServerLocale();
+  const stats = getPlatformStats();
   const faqs = locale === 'de' ? FAQS_DE : FAQS_EN;
+  const KPIS = [
+    { value: `${stats.botCount}+`, label: 'Bots' },
+    { value: `${stats.workflowCount}`, label: 'Workflows' },
+    { value: `${stats.articleCount}`, label: locale === 'de' ? 'Artikel' : 'Articles' },
+    { value: `${stats.categoryCount}`, label: locale === 'de' ? 'Kategorien' : 'Categories' },
+  ];
   return (
     <main id="main-content" className="page-shell hud-grid bg-premium">
       <div className="container-x">
@@ -91,6 +99,15 @@ export default async function FaqPage() {
         <p className="text-lead mt-5" style={{ maxWidth: '520px' }}>
           {t('pages.faqLead')}
         </p>
+
+        <div className="data-rail flex-wrap gap-4 mt-8">
+          {KPIS.map((k) => (
+            <div key={k.label} className="data-rail-item">
+              <span className="data-rail-value">{k.value}</span>
+              <span className="data-rail-label">{k.label}</span>
+            </div>
+          ))}
+        </div>
 
         <div className="mt-10 space-y-3 mb-10">
           {faqs.map((item, i) => (

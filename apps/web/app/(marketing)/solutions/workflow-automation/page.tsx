@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getServerLocale } from '@/lib/i18n/server';
+import { getPlatformStats } from '@/lib/content/platform-stats';
+import { DistributionBars } from '@/components/visual/DistributionBars';
 
 export const metadata: Metadata = {
   title: 'Workflow Automation | ProBotica Solutions',
@@ -30,6 +32,7 @@ const LANES_DE = ['Eingang', 'Analyse', 'Ausführung', 'Review'];
 
 export default async function WorkflowAutomationPage() {
   const locale = await getServerLocale();
+  const stats = getPlatformStats();
   const WORKFLOW_TEMPLATES = locale === 'de' ? WORKFLOW_TEMPLATES_DE : WORKFLOW_TEMPLATES_EN;
   const LANES = locale === 'de' ? LANES_DE : LANES_EN;
   return (
@@ -47,6 +50,23 @@ export default async function WorkflowAutomationPage() {
             ? 'Verkette KI-Bots zu produktiven Pipelines. 10 Workflow-Templates für Sales, UX, Content und Strategie — jedes mit konfigurierbarer Schritt-Topologie und Laufzeit-Telemetrie.'
             : 'Chain AI bots into production pipelines. 10 workflow templates for sales, UX, content, and strategy — each with configurable step topology and runtime telemetry.'}
         </p>
+
+        <div className="data-rail flex-wrap gap-4 mt-8">
+          <div className="data-rail-item">
+            <span className="data-rail-value">{stats.workflowCount}</span>
+            <span className="data-rail-label">{locale === 'de' ? 'Vorlagen' : 'Templates'}</span>
+          </div>
+          <div className="data-rail-sep" />
+          <div className="data-rail-item">
+            <span className="data-rail-value">{stats.botCount}+</span>
+            <span className="data-rail-label">Bots</span>
+          </div>
+          <div className="data-rail-sep" />
+          <div className="data-rail-item">
+            <span className="data-rail-value">{stats.scenarioCount}</span>
+            <span className="data-rail-label">{locale === 'de' ? 'Szenarien' : 'Scenarios'}</span>
+          </div>
+        </div>
 
         {/* Lane visualization */}
         <div className="mt-10 mb-8 flex items-center gap-3 overflow-x-auto pb-2">
@@ -101,6 +121,13 @@ export default async function WorkflowAutomationPage() {
               </div>
             </Link>
           ))}
+        </div>
+
+        <div className="mb-10">
+          <DistributionBars
+            title={locale === 'de' ? 'Bots nach Kategorie' : 'Bots by category'}
+            data={stats.categoryCounts.slice(0, 6).map((c) => ({ label: c.label, value: c.count }))}
+          />
         </div>
 
         <div className="flex flex-wrap gap-3">

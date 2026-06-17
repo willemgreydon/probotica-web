@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getServerLocale } from '@/lib/i18n/server';
+import { getPlatformStats } from '@/lib/content/platform-stats';
 
 export const metadata: Metadata = {
   title: 'Education AI | ProBotica Industries',
@@ -23,7 +24,14 @@ const FEATURES_DE = [
 
 export default async function EducationPage() {
   const locale = await getServerLocale();
+  const stats = getPlatformStats();
   const FEATURES = locale === 'de' ? FEATURES_DE : FEATURES_EN;
+  const KPIS = [
+    { value: `${stats.botCount}+`, label: 'Bots' },
+    { value: `${stats.workflowCount}`, label: 'Workflows' },
+    { value: `${stats.avgReadiness}%`, label: locale === 'de' ? 'Ø Readiness' : 'Avg readiness' },
+    { value: `${stats.scenarioCount}`, label: locale === 'de' ? 'Szenarien' : 'Scenarios' },
+  ];
   return (
     <main id="main-content" className="page-shell hud-grid bg-premium">
       <div className="container-x">
@@ -39,6 +47,15 @@ export default async function EducationPage() {
             ? 'Lernassistenten und didaktisch ausgerichtete Automatisierung für moderne Bildungsteams. Von der Erstellung von Skill-Plänen bis zum Design kompletter Trainingsprogramme.'
             : 'Learning assistants and pedagogy-aligned automation for modern education teams. From skill plan generation to full training program design.'}
         </p>
+
+        <div className="data-rail flex-wrap gap-4 mt-8">
+          {KPIS.map((k) => (
+            <div key={k.label} className="data-rail-item">
+              <span className="data-rail-value">{k.value}</span>
+              <span className="data-rail-label">{k.label}</span>
+            </div>
+          ))}
+        </div>
 
         <div className="mt-10 grid gap-3 sm:grid-cols-2 mb-10">
           {FEATURES.map((f) => (

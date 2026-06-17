@@ -25,5 +25,29 @@ export default async function LearningPathPage({ params }: Props) {
   const path = pathBySlug[slug];
   if (!path) notFound();
 
-  return <PathJourney path={path} quiz={quizByPath[slug]} />;
+  return (
+    <>
+      <section style={{ paddingTop: '5rem', paddingBottom: '0.5rem' }}>
+        <div style={{ width: 'min(1180px, calc(100% - 32px))', marginInline: 'auto' }}>
+          <div className="data-rail">
+            <div className="data-rail-item">
+              <span className="data-rail-value">{path.steps.length}</span>
+              <span className="data-rail-label">Steps</span>
+            </div>
+            <span className="data-rail-sep" />
+            <div className="data-rail-item">
+              <span className="data-rail-value">{path.estimatedHours}h</span>
+              <span className="data-rail-label">Estimated</span>
+            </div>
+            <span className="data-rail-sep" />
+            <div className="data-rail-item">
+              <span className="data-rail-value" style={{ textTransform: 'capitalize' }}>{path.difficulty}</span>
+              <span className="data-rail-label">Difficulty</span>
+            </div>
+          </div>
+        </div>
+      </section>
+      <PathJourney path={path} quiz={quizByPath[slug]} />
+    </>
+  );
 }

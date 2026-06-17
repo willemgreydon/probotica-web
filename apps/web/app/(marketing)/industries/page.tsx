@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getServerT, getServerLocale } from '@/lib/i18n/server';
+import { getPlatformStats } from '@/lib/content/platform-stats';
+import { DistributionBars } from '@/components/visual/DistributionBars';
 
 export const metadata: Metadata = {
   title: 'Industries | ProBotica Applied AI',
@@ -58,7 +60,14 @@ const INDUSTRIES_DE = [
 export default async function IndustriesPage() {
   const t = await getServerT();
   const locale = await getServerLocale();
+  const stats = getPlatformStats();
   const INDUSTRIES = locale === 'de' ? INDUSTRIES_DE : INDUSTRIES_EN;
+  const KPIS = [
+    { value: `${stats.botCount}+`, label: 'Bots' },
+    { value: `${stats.categoryCount}`, label: locale === 'de' ? 'Kategorien' : 'Categories' },
+    { value: `${stats.workflowCount}`, label: 'Workflows' },
+    { value: '3', label: locale === 'de' ? 'Branchen' : 'Industries' },
+  ];
   return (
     <main id="main-content" className="page-shell hud-grid bg-premium">
       <div className="container-x">
@@ -69,6 +78,15 @@ export default async function IndustriesPage() {
         <p className="text-lead mt-5" style={{ maxWidth: '520px' }}>
           {t('pages.industriesLead')}
         </p>
+
+        <div className="data-rail flex-wrap gap-4 mt-8">
+          {KPIS.map((k) => (
+            <div key={k.label} className="data-rail-item">
+              <span className="data-rail-value">{k.value}</span>
+              <span className="data-rail-label">{k.label}</span>
+            </div>
+          ))}
+        </div>
 
         <div className="mt-10 grid gap-4 sm:grid-cols-3 mb-10">
           {INDUSTRIES.map((ind) => (
@@ -94,6 +112,13 @@ export default async function IndustriesPage() {
               </div>
             </Link>
           ))}
+        </div>
+
+        <div className="mb-10">
+          <DistributionBars
+            title={locale === 'de' ? 'Bots nach Kategorie' : 'Bots by category'}
+            data={stats.categoryCounts.slice(0, 8).map((c) => ({ label: c.label, value: c.count }))}
+          />
         </div>
 
         <div className="flex flex-wrap gap-3">

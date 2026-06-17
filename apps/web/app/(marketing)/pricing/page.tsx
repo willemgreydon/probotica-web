@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Check } from 'lucide-react';
 import { authLinks } from '@/lib/content/navigation';
 import { getServerT, getServerLocale } from '@/lib/i18n/server';
+import { getPlatformStats } from '@/lib/content/platform-stats';
 
 export const metadata: Metadata = {
   title: 'Pricing',
@@ -76,7 +77,14 @@ const TIERS_DE = [
 export default async function PricingPage() {
   const t = await getServerT();
   const locale = await getServerLocale();
+  const stats = getPlatformStats();
   const tiers = locale === 'de' ? TIERS_DE : TIERS_EN;
+  const PLAN_INCLUDES = [
+    { value: `${stats.botCount}+`, label: 'Bots' },
+    { value: `${stats.workflowCount}`, label: 'Workflows' },
+    { value: `${stats.articleCount}`, label: locale === 'de' ? 'Wissensartikel' : 'Knowledge articles' },
+    { value: `${stats.categoryCount}`, label: locale === 'de' ? 'Kategorien' : 'Categories' },
+  ];
   return (
     <main id="main-content" className="page-shell hud-grid bg-premium">
       <div className="container-x">
@@ -86,9 +94,19 @@ export default async function PricingPage() {
         <h1 className="text-display" style={{ marginTop: 12, marginBottom: 12 }}>
           {t('pages.pricingTitle')}
         </h1>
-        <p className="text-body" style={{ maxWidth: 560, color: 'var(--muted-foreground)', marginBottom: 40 }}>
+        <p className="text-body" style={{ maxWidth: 560, color: 'var(--muted-foreground)', marginBottom: 24 }}>
           {t('pages.pricingLead')}
         </p>
+
+        <p className="label-eyebrow mb-4">{locale === 'de' ? 'In jedem Plan enthalten' : 'In every plan'}</p>
+        <div className="data-rail flex-wrap gap-4" style={{ marginBottom: 40 }}>
+          {PLAN_INCLUDES.map((s) => (
+            <div key={s.label} className="data-rail-item">
+              <span className="data-rail-value">{s.value}</span>
+              <span className="data-rail-label">{s.label}</span>
+            </div>
+          ))}
+        </div>
 
         <div
           style={{
