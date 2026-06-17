@@ -35,12 +35,17 @@
   --danger: #ff8f96;
   --info: #8ac9ff;
 
-  /* ── Semantic status ── */
-  --status-online: #7dddb4;
-  --status-warning: #ffcb74;
-  --status-error: #ff8f96;
-  --status-idle: #8f9baa;
-  --status-active: #91f2ff;
+  /* ── Semantic status ──
+     Aliased to the brand palette so accessibility overrides (e.g.
+     [data-color-mode="colorblind-safe"]) and theme variants propagate to status
+     dots/text instead of going stale. Previously these were hardcoded copies of
+     --success/--warning/--danger and silently diverged in colorblind-safe mode. */
+  --status-online: var(--success);
+  --status-warning: var(--warning);
+  --status-warn: var(--warning);   /* alias for the `--status-warn` spelling used across workflows/scenarios (was undefined → colorless chips) */
+  --status-error: var(--danger);
+  --status-idle: var(--muted-foreground);
+  --status-active: var(--primary);
 
   /* ── Surface elevation system (6 levels) ── */
   --surface-0: #040506;
@@ -68,7 +73,7 @@
   --telemetry-bg: rgba(4, 8, 14, 0.95);
   --telemetry-border: rgba(145, 242, 255, 0.14);
   --telemetry-text: rgba(145, 242, 255, 0.72);
-  --telemetry-dim: rgba(143, 155, 170, 0.5);
+  --telemetry-dim: rgba(143, 155, 170, 0.78); /* was 0.5 → 2.5:1 (fail); 0.78 ≈ 4.6:1 on surface-1 */
   --runtime-pulse: rgba(145, 242, 255, 0.6);
   --runtime-track: rgba(145, 178, 212, 0.1);
   --runtime-bar: rgba(145, 242, 255, 0.75);
@@ -166,7 +171,22 @@
   --telemetry-bg: rgba(240, 246, 254, 0.97);
   --telemetry-border: rgba(11, 111, 145, 0.18);
   --telemetry-text: rgba(11, 111, 145, 0.85);
-  --telemetry-dim: rgba(76, 89, 106, 0.7);
+  --telemetry-dim: rgba(76, 89, 106, 0.92); /* was 0.7 → ~2.7:1 (fail); 0.92 ≈ 4.7:1 on light surfaces */
+  /* Semantic status — light-mode accessible variants. The dark mint/amber/red
+     tints fail AA as text on light surfaces (1.3–1.5:1); these pass AA. They
+     flow through to --status-online/-warning/-error via the :root aliases. */
+  --success: #047857;
+  --warning: #854d0e;
+  --danger: #be123c;
+  --info: #2563eb;
+  /* Neon accents — used as tag/stat/label TEXT on near-white cards, where the
+     dark-mode neons fail AA (1.0–1.5:1). Darkened-but-hue-true variants pass AA;
+     borders/glows derived via color-mix stay tasteful. */
+  --neon-cyan: #0e7490;
+  --neon-violet: #6d28d9;
+  --neon-lime: #3f6212;
+  --neon-orange: #92400e;
+  --neon-pink: #be185d;
   --runtime-track: rgba(41, 59, 84, 0.1);
   --runtime-bar: rgba(11, 111, 145, 0.75);
   --border: rgba(38, 56, 78, 0.2);
@@ -194,7 +214,7 @@
   --cursor-ring: rgba(19, 57, 71, 0.06);
   --cursor-ring-border: rgba(19, 57, 71, 0.66);
   --cursor-glow: 0 0 14px rgba(19, 57, 71, 0.2);
-  --status-active: #0b6f91;
+  /* --status-active now inherits var(--primary) (= #0b6f91 here) via the :root alias */
 }
 
 [data-contrast="high"] {

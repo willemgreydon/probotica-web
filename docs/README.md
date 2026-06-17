@@ -13,6 +13,7 @@ Start with the root [`CLAUDE.md`](../CLAUDE.md) for the one-page orientation, th
 | [routing-navigation.md](./routing-navigation.md) | Routes, dynamic segments, the `(marketing)`/`(app)`/`(auth)` route groups, IA & nav model |
 | [user-flows.md](./user-flows.md) | The real journeys: bot→test→workspace, workflows, knowledge, auth, marketplace; client-state map |
 | [design-system.md](./design-system.md) | Tokens, theming, motion layer, the cinematic aesthetic, hygiene rules |
+| [adr/](./adr/) | Architecture decision records (e.g. [0001 design-system & brand-color audit](./adr/0001-design-system-and-brand-color.md)) |
 | [accessibility.md](./accessibility.md) | Accessibility modes, WCAG targets, reduced-motion, inclusive defaults |
 | [ai-integration.md](./ai-integration.md) | OpenAI lib, scenario/bot endpoints, the no-key demo fallback, safety |
 | [knowledge-universe.md](./knowledge-universe.md) | The educational engine: content model, pedagogy, didactic patterns |
