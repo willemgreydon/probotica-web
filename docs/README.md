@@ -11,6 +11,7 @@ Start with the root [`CLAUDE.md`](../CLAUDE.md) for the one-page orientation, th
 | [architecture.md](./architecture.md) | Monorepo, App Router layout, feature-based structure, data flow |
 | [conventions.md](./conventions.md) | Code style, naming, imports, server/client rules, content-as-data pattern |
 | [routing-navigation.md](./routing-navigation.md) | Routes, dynamic segments, the planned `(marketing)`/`(app)` groups, IA & nav model |
+| [user-flows.md](./user-flows.md) | The real journeys: bot→test→workspace, workflows, knowledge, auth, marketplace; client-state map |
 | [design-system.md](./design-system.md) | Tokens, theming, motion layer, the cinematic aesthetic, hygiene rules |
 | [accessibility.md](./accessibility.md) | Accessibility modes, WCAG targets, reduced-motion, inclusive defaults |
 | [ai-integration.md](./ai-integration.md) | OpenAI lib, scenario/bot endpoints, the no-key demo fallback, safety |
