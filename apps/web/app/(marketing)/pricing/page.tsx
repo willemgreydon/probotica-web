@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Check } from 'lucide-react';
 import { authLinks } from '@/lib/content/navigation';
-import { getServerT } from '@/lib/i18n/server';
+import { getServerT, getServerLocale } from '@/lib/i18n/server';
 
 export const metadata: Metadata = {
   title: 'Pricing',
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
  * Pricing page (PB-025) — placeholder tier structure + contact CTA.
  * Real billing is deferred; this establishes the nav destination and IA.
  */
-const tiers = [
+const TIERS_EN = [
   {
     name: 'Starter',
     price: '€0',
@@ -43,8 +43,40 @@ const tiers = [
   },
 ];
 
+const TIERS_DE = [
+  {
+    name: 'Starter',
+    price: '€0',
+    cadence: '/ Monat',
+    blurb: 'Plattform und Knowledge Universe erkunden.',
+    cta: { label: 'Loslegen', href: authLinks.getStarted.href },
+    featured: false,
+    features: ['Demo-Bots ausführen', 'Voller Knowledge-Universe-Zugang', 'Community-Support', '1 Workspace'],
+  },
+  {
+    name: 'Pro',
+    price: '€39',
+    cadence: '/ Monat',
+    blurb: 'Für Einzelanwender:innen mit echtem KI-Output.',
+    cta: { label: 'Pro starten', href: authLinks.getStarted.href },
+    featured: true,
+    features: ['Live-KI-Läufe', 'Prompt-Pakete & Marktplatz', 'Workflow-Automatisierung', 'Unbegrenzte Workspaces', 'Export & Versionierung'],
+  },
+  {
+    name: 'Team',
+    price: 'Individuell',
+    cadence: '',
+    blurb: 'Für Teams mit Bedarf an Skalierung, Kontrolle und Compliance.',
+    cta: { label: 'Sales kontaktieren', href: '/contact' },
+    featured: false,
+    features: ['Alles aus Pro', 'Geteilte Workspaces & Rollen', 'Control-Center-Telemetrie', 'DSGVO- & Audit-Support', 'Priorisierter Support'],
+  },
+];
+
 export default async function PricingPage() {
   const t = await getServerT();
+  const locale = await getServerLocale();
+  const tiers = locale === 'de' ? TIERS_DE : TIERS_EN;
   return (
     <main id="main-content" className="page-shell hud-grid bg-premium">
       <div className="container-x">
@@ -110,7 +142,10 @@ export default async function PricingPage() {
         </div>
 
         <p className="text-body" style={{ marginTop: 32, fontSize: '.84rem', color: 'var(--muted-foreground)' }}>
-          Need something specific? <Link href="/contact" className="focus-ring" style={{ color: 'var(--primary)' }}>Talk to us</Link>.
+          {locale === 'de' ? 'Etwas Spezielles nötig? ' : 'Need something specific? '}
+          <Link href="/contact" className="focus-ring" style={{ color: 'var(--primary)' }}>
+            {locale === 'de' ? 'Sprich mit uns' : 'Talk to us'}
+          </Link>.
         </p>
       </div>
     </main>

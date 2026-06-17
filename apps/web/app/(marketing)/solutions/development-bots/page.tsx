@@ -1,31 +1,43 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { getServerLocale } from '@/lib/i18n/server';
 
 export const metadata: Metadata = {
   title: 'Development Bots | ProBotica Solutions',
   description: 'Engineering AI copilots for code review, accessibility audits, frontend quality assurance, and safe deployment workflows.',
 };
 
-const DEV_CAPABILITIES = [
+const DEV_CAPABILITIES_EN = [
   { num: '01', title: 'A11y Review', desc: 'Systematic accessibility audit across React/Next.js components. WCAG 2.1 compliance checks with prioritized fixes.' },
   { num: '02', title: 'Performance Audit', desc: 'Render optimization analysis, bundle size review, and Core Web Vitals improvement recommendations.' },
   { num: '03', title: 'Code Quality Review', desc: 'Architecture review, naming consistency, anti-pattern detection, and refactoring suggestions.' },
   { num: '04', title: 'Safe Deployment Check', desc: 'Pre-deployment checklist generation with migration safety, rollback plans, and monitoring notes.' },
 ];
 
-export default function DevelopmentBotsPage() {
+const DEV_CAPABILITIES_DE = [
+  { num: '01', title: 'A11y Review', desc: 'Systematisches Accessibility-Audit über React/Next.js-Komponenten. WCAG-2.1-Compliance-Checks mit priorisierten Fixes.' },
+  { num: '02', title: 'Performance-Audit', desc: 'Analyse der Render-Optimierung, Bundle-Size-Review und Empfehlungen zur Verbesserung der Core Web Vitals.' },
+  { num: '03', title: 'Code-Quality-Review', desc: 'Architektur-Review, Namens-Konsistenz, Anti-Pattern-Erkennung und Refactoring-Vorschläge.' },
+  { num: '04', title: 'Safe-Deployment-Check', desc: 'Generierung einer Pre-Deployment-Checkliste mit Migrationssicherheit, Rollback-Plänen und Monitoring-Notizen.' },
+];
+
+export default async function DevelopmentBotsPage() {
+  const locale = await getServerLocale();
+  const DEV_CAPABILITIES = locale === 'de' ? DEV_CAPABILITIES_DE : DEV_CAPABILITIES_EN;
   return (
     <main id="main-content" className="page-shell hud-grid bg-premium">
       <div className="container-x">
         <Link href="/solutions" className="inline-flex items-center gap-2 edge-label hover:text-foreground transition-colors mb-6" style={{ textDecoration: 'none' }}>
-          ← Solutions
+          ← {locale === 'de' ? 'Lösungen' : 'Solutions'}
         </Link>
-        <p className="label-eyebrow mb-4">Solutions / Development Bots</p>
+        <p className="label-eyebrow mb-4">{locale === 'de' ? 'Lösungen / Development Bots' : 'Solutions / Development Bots'}</p>
         <h1 className="heading-section text-balance" style={{ maxWidth: '680px' }}>
           Development Bots
         </h1>
         <p className="text-lead mt-5" style={{ maxWidth: '540px' }}>
-          Engineering AI copilots focused on quality, speed, and safe deployment. Accessibility audits, code review, and performance analysis built for frontend and fullstack teams.
+          {locale === 'de'
+            ? 'Engineering-KI-Copilots mit Fokus auf Qualität, Tempo und sicheres Deployment. Accessibility-Audits, Code-Review und Performance-Analyse, gebaut für Frontend- und Fullstack-Teams.'
+            : 'Engineering AI copilots focused on quality, speed, and safe deployment. Accessibility audits, code review, and performance analysis built for frontend and fullstack teams.'}
         </p>
 
         <div className="mt-10 grid gap-3 sm:grid-cols-2 mb-10">
@@ -46,17 +58,19 @@ export default function DevelopmentBotsPage() {
           className="p-5 mb-8"
           style={{ border: '1px solid var(--hud-border)', background: 'var(--command-surface)', borderRadius: 'var(--radius-lg)' }}
         >
-          <p className="edge-label mb-2">In Bot Lab</p>
+          <p className="edge-label mb-2">{locale === 'de' ? 'Im Bot Lab' : 'In Bot Lab'}</p>
           <p className="text-body mb-4">
-            Browse the Development category for frontend review bots, A11y auditors, and deployment safety checkers.
+            {locale === 'de'
+              ? 'Durchsuche die Development-Kategorie nach Frontend-Review-Bots, A11y-Auditoren und Deployment-Safety-Checkern.'
+              : 'Browse the Development category for frontend review bots, A11y auditors, and deployment safety checkers.'}
           </p>
-          <Link href="/categories/development" className="btn btn-primary" style={{ minHeight: 40 }}>Browse Development Bots</Link>
+          <Link href="/categories/development" className="btn btn-primary" style={{ minHeight: 40 }}>{locale === 'de' ? 'Development-Bots durchsuchen' : 'Browse Development Bots'}</Link>
         </div>
 
         <div className="flex flex-wrap gap-3">
-          <Link href="/scenarios/frontend-review" className="btn btn-primary" style={{ minHeight: 44 }}>Frontend Review Scenario</Link>
-          <Link href="/workflows/frontend-review-chain" className="btn" style={{ minHeight: 44 }}>Review Chain Workflow</Link>
-          <Link href="/contact" className="btn" style={{ minHeight: 44 }}>Custom Dev Build</Link>
+          <Link href="/scenarios/frontend-review" className="btn btn-primary" style={{ minHeight: 44 }}>{locale === 'de' ? 'Frontend-Review-Szenario' : 'Frontend Review Scenario'}</Link>
+          <Link href="/workflows/frontend-review-chain" className="btn" style={{ minHeight: 44 }}>{locale === 'de' ? 'Review-Chain-Workflow' : 'Review Chain Workflow'}</Link>
+          <Link href="/contact" className="btn" style={{ minHeight: 44 }}>{locale === 'de' ? 'Individuelles Dev-Build' : 'Custom Dev Build'}</Link>
         </div>
       </div>
     </main>

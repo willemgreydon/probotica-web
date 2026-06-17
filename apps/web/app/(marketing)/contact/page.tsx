@@ -1,21 +1,28 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Mail, Phone, MapPin, Clock } from 'lucide-react';
-import { getServerT } from '@/lib/i18n/server';
+import { getServerT, getServerLocale } from '@/lib/i18n/server';
 
 export const metadata: Metadata = {
   title: 'Contact ProBotica | Book AI Briefing',
   description: 'Book a 30-minute AI workflow briefing. Map your highest-leverage automation path and ship a practical execution plan.',
 };
 
-const CONTACT_INFO = [
+const CONTACT_INFO_EN = [
   { icon: Mail, label: 'Email', value: 'hello@probotica.at', href: 'mailto:hello@probotica.at' },
   { icon: Phone, label: 'Phone', value: '+43 699 108 737 81', href: 'tel:+4369910873781' },
   { icon: MapPin, label: 'Location', value: 'Vienna, Austria', href: null },
   { icon: Clock, label: 'Response SLA', value: 'Under 24 hours', href: null },
 ];
 
-const BRIEFING_INCLUDES = [
+const CONTACT_INFO_DE = [
+  { icon: Mail, label: 'E-Mail', value: 'hello@probotica.at', href: 'mailto:hello@probotica.at' },
+  { icon: Phone, label: 'Telefon', value: '+43 699 108 737 81', href: 'tel:+4369910873781' },
+  { icon: MapPin, label: 'Standort', value: 'Wien, Österreich', href: null },
+  { icon: Clock, label: 'Reaktions-SLA', value: 'Unter 24 Stunden', href: null },
+];
+
+const BRIEFING_INCLUDES_EN = [
   'Map your highest-leverage automation path',
   'Define system boundaries and data flows',
   'Identify which bots and workflows fit your use case',
@@ -23,8 +30,39 @@ const BRIEFING_INCLUDES = [
   'Answer all technical and compliance questions',
 ];
 
+const BRIEFING_INCLUDES_DE = [
+  'Den wirkungsstärksten Automatisierungspfad kartieren',
+  'Systemgrenzen und Datenflüsse definieren',
+  'Passende Bots und Workflows für deinen Use Case identifizieren',
+  'Einen praktischen Umsetzungsplan liefern',
+  'Alle technischen und Compliance-Fragen beantworten',
+];
+
+const C_COPY = {
+  en: {
+    briefingTitle: '30-Minute Workflow Briefing',
+    briefingLead: 'In one session we deliver a complete automation roadmap for your business.',
+    callUs: 'Call Us',
+    exploreFirst: 'Or explore first',
+    openBotLab: '→ Open Bot Lab',
+    viewMarketplace: '→ View Marketplace',
+  },
+  de: {
+    briefingTitle: '30-minütiges Workflow-Briefing',
+    briefingLead: 'In einer Sitzung liefern wir eine vollständige Automatisierungs-Roadmap für dein Unternehmen.',
+    callUs: 'Anrufen',
+    exploreFirst: 'Oder erst erkunden',
+    openBotLab: '→ Bot Lab öffnen',
+    viewMarketplace: '→ Marktplatz ansehen',
+  },
+};
+
 export default async function ContactPage() {
   const t = await getServerT();
+  const locale = await getServerLocale();
+  const CONTACT_INFO = locale === 'de' ? CONTACT_INFO_DE : CONTACT_INFO_EN;
+  const BRIEFING_INCLUDES = locale === 'de' ? BRIEFING_INCLUDES_DE : BRIEFING_INCLUDES_EN;
+  const c = locale === 'de' ? C_COPY.de : C_COPY.en;
   return (
     <main id="main-content" className="page-shell hud-grid bg-premium">
       <div className="container-x">
@@ -48,9 +86,9 @@ export default async function ContactPage() {
               style={{ background: 'radial-gradient(ellipse 60% 70% at 80% 0%, color-mix(in oklab, var(--neon-cyan), transparent 86%), transparent)' }}
             />
             <div className="relative z-10">
-              <p className="label-eyebrow mb-4">30-Minute Workflow Briefing</p>
+              <p className="label-eyebrow mb-4">{c.briefingTitle}</p>
               <p className="text-lead mb-6" style={{ maxWidth: '480px' }}>
-                In one session we deliver a complete automation roadmap for your business.
+                {c.briefingLead}
               </p>
               <ul className="space-y-2 mb-8">
                 {BRIEFING_INCLUDES.map((item) => (
@@ -67,7 +105,7 @@ export default async function ContactPage() {
                 </a>
                 <a href="tel:+4369910873781" className="btn" style={{ minHeight: 48 }}>
                   <Phone size={14} className="mr-2" aria-hidden />
-                  Call Us
+                  {c.callUs}
                 </a>
               </div>
             </div>
@@ -95,10 +133,10 @@ export default async function ContactPage() {
             ))}
 
             <div className="kpi-card" style={{ marginTop: 'var(--space-4)' }}>
-              <span className="kpi-label mb-2 block">Or explore first</span>
+              <span className="kpi-label mb-2 block">{c.exploreFirst}</span>
               <div className="flex flex-col gap-2">
-                <Link href="/bots" className="btn" style={{ minHeight: 40, justifyContent: 'flex-start', fontSize: '0.72rem' }}>→ Open Bot Lab</Link>
-                <Link href="/marketplace" className="btn" style={{ minHeight: 40, justifyContent: 'flex-start', fontSize: '0.72rem' }}>→ View Marketplace</Link>
+                <Link href="/bots" className="btn" style={{ minHeight: 40, justifyContent: 'flex-start', fontSize: '0.72rem' }}>{c.openBotLab}</Link>
+                <Link href="/marketplace" className="btn" style={{ minHeight: 40, justifyContent: 'flex-start', fontSize: '0.72rem' }}>{c.viewMarketplace}</Link>
               </div>
             </div>
           </div>

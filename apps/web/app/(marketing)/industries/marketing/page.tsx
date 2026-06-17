@@ -1,31 +1,43 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { getServerLocale } from '@/lib/i18n/server';
 
 export const metadata: Metadata = {
   title: 'Marketing AI | ProBotica Industries',
   description: 'Campaign systems, content operations, audience targeting, and conversion optimization AI for growth and marketing teams.',
 };
 
-const FEATURES = [
+const FEATURES_EN = [
   { num: '01', title: 'Campaign Planning', desc: 'Full campaign plans with channel breakdown, hooks, and CTA variant sets for any target audience and budget.' },
   { num: '02', title: 'Content Operations', desc: 'Content briefs, SEO outlines, and publication-ready articles generated from structured brand inputs.' },
   { num: '03', title: 'Audience Targeting', desc: 'Persona definitions, segment mapping, and messaging frameworks tailored per audience profile.' },
   { num: '04', title: 'Conversion Optimization', desc: 'Landing page, email, and ad copy optimization with A/B variant generation and performance hypotheses.' },
 ];
 
-export default function MarketingPage() {
+const FEATURES_DE = [
+  { num: '01', title: 'Kampagnenplanung', desc: 'Vollständige Kampagnenpläne mit Kanal-Aufschlüsselung, Hooks und CTA-Varianten-Sets für jede Zielgruppe und jedes Budget.' },
+  { num: '02', title: 'Content-Operations', desc: 'Content-Briefings, SEO-Gliederungen und veröffentlichungsfertige Artikel, erstellt aus strukturierten Brand-Inputs.' },
+  { num: '03', title: 'Zielgruppen-Targeting', desc: 'Persona-Definitionen, Segment-Mapping und Messaging-Frameworks, zugeschnitten auf jedes Zielgruppenprofil.' },
+  { num: '04', title: 'Conversion-Optimierung', desc: 'Optimierung von Landingpages, E-Mails und Anzeigentexten mit A/B-Varianten-Erstellung und Performance-Hypothesen.' },
+];
+
+export default async function MarketingPage() {
+  const locale = await getServerLocale();
+  const FEATURES = locale === 'de' ? FEATURES_DE : FEATURES_EN;
   return (
     <main id="main-content" className="page-shell hud-grid bg-premium">
       <div className="container-x">
         <Link href="/industries" className="inline-flex items-center gap-2 edge-label hover:text-foreground transition-colors mb-6" style={{ textDecoration: 'none' }}>
-          ← Industries
+          {locale === 'de' ? '← Branchen' : '← Industries'}
         </Link>
-        <p className="label-eyebrow mb-4">Industries / Marketing</p>
+        <p className="label-eyebrow mb-4">{locale === 'de' ? 'Branchen / Marketing' : 'Industries / Marketing'}</p>
         <h1 className="heading-section text-balance" style={{ maxWidth: '680px' }}>
-          Marketing AI
+          {locale === 'de' ? 'KI für Marketing' : 'Marketing AI'}
         </h1>
         <p className="text-lead mt-5" style={{ maxWidth: '540px' }}>
-          Campaign systems, content operations, and conversion optimization for growth teams. AI-powered marketing intelligence from brief to launch.
+          {locale === 'de'
+            ? 'Kampagnensysteme, Content-Operations und Conversion-Optimierung für Growth-Teams. KI-gestützte Marketing-Intelligence vom Briefing bis zum Launch.'
+            : 'Campaign systems, content operations, and conversion optimization for growth teams. AI-powered marketing intelligence from brief to launch.'}
         </p>
 
         <div className="mt-10 grid gap-3 sm:grid-cols-2 mb-10">
@@ -43,10 +55,10 @@ export default function MarketingPage() {
         </div>
 
         <div className="flex flex-wrap gap-3">
-          <Link href="/categories/marketing" className="btn btn-primary" style={{ minHeight: 44 }}>Marketing Bots</Link>
-          <Link href="/categories/content" className="btn" style={{ minHeight: 44 }}>Content Bots</Link>
-          <Link href="/scenarios/marketing-campaign" className="btn" style={{ minHeight: 44 }}>Campaign Scenario</Link>
-          <Link href="/contact" className="btn" style={{ minHeight: 44 }}>Custom Build</Link>
+          <Link href="/categories/marketing" className="btn btn-primary" style={{ minHeight: 44 }}>{locale === 'de' ? 'Marketing-Bots' : 'Marketing Bots'}</Link>
+          <Link href="/categories/content" className="btn" style={{ minHeight: 44 }}>{locale === 'de' ? 'Content-Bots' : 'Content Bots'}</Link>
+          <Link href="/scenarios/marketing-campaign" className="btn" style={{ minHeight: 44 }}>{locale === 'de' ? 'Kampagnen-Szenario' : 'Campaign Scenario'}</Link>
+          <Link href="/contact" className="btn" style={{ minHeight: 44 }}>{locale === 'de' ? 'Individueller Build' : 'Custom Build'}</Link>
         </div>
       </div>
     </main>

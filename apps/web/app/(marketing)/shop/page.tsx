@@ -1,21 +1,30 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { getServerT } from '@/lib/i18n/server';
+import { getServerT, getServerLocale } from '@/lib/i18n/server';
 
 export const metadata: Metadata = {
   title: 'Shop | ProBotica Marketplace',
   description: 'Browse prompt packs, AI workflow kits, and industry-ready bot modules from the ProBotica Marketplace.',
 };
 
-const SHOP_CATEGORIES = [
-  { tag: 'Workflows', title: 'Workflow Automation Packs', desc: 'Pre-built multi-step bot pipelines for sales, UX, content, and operations.', href: '/marketplace', count: '10 templates' },
-  { tag: 'Bots', title: 'Expert Bot Collection', desc: '111 domain-tuned AI assistants across 12 business categories. Browse, test, deploy.', href: '/bots', count: '111 bots' },
-  { tag: 'Prompts', title: 'Prompt Engineering Systems', desc: 'Structured prompt packs with role definitions, output contracts, and edge-case handling.', href: '/solutions/prompt-packs', count: 'Premium packs' },
-  { tag: 'Industries', title: 'Industry Kits', desc: 'Bundled AI modules for real estate, marketing, education, and development teams.', href: '/industries', count: '3 industries' },
+const SHOP_CATEGORIES_EN = [
+  { tag: 'Workflows', title: 'Workflow Automation Packs', desc: 'Pre-built multi-step bot pipelines for sales, UX, content, and operations.', href: '/marketplace', count: 'Templates', browse: 'Browse →' },
+  { tag: 'Bots', title: 'Expert Bot Collection', desc: '500+ domain-tuned AI assistants across every business category. Browse, test, deploy.', href: '/bots', count: '500+ bots', browse: 'Browse →' },
+  { tag: 'Prompts', title: 'Prompt Engineering Systems', desc: 'Structured prompt packs with role definitions, output contracts, and edge-case handling.', href: '/solutions/prompt-packs', count: 'Premium packs', browse: 'Browse →' },
+  { tag: 'Industries', title: 'Industry Kits', desc: 'Bundled AI modules for real estate, marketing, education, and development teams.', href: '/industries', count: 'Industries', browse: 'Browse →' },
+];
+
+const SHOP_CATEGORIES_DE = [
+  { tag: 'Workflows', title: 'Workflow-Automatisierungs-Pakete', desc: 'Vorgefertigte mehrstufige Bot-Pipelines für Sales, UX, Content und Betrieb.', href: '/marketplace', count: 'Vorlagen', browse: 'Ansehen →' },
+  { tag: 'Bots', title: 'Experten-Bot-Sammlung', desc: '500+ domänen-optimierte KI-Assistenten über alle Geschäftsbereiche. Durchsuchen, testen, einsetzen.', href: '/bots', count: '500+ Bots', browse: 'Ansehen →' },
+  { tag: 'Prompts', title: 'Prompt-Engineering-Systeme', desc: 'Strukturierte Prompt-Pakete mit Rollendefinitionen, Output-Verträgen und Edge-Case-Handling.', href: '/solutions/prompt-packs', count: 'Premium-Pakete', browse: 'Ansehen →' },
+  { tag: 'Industries', title: 'Branchen-Kits', desc: 'Gebündelte KI-Module für Immobilien-, Marketing-, Bildungs- und Entwicklungsteams.', href: '/industries', count: 'Branchen', browse: 'Ansehen →' },
 ];
 
 export default async function ShopPage() {
   const t = await getServerT();
+  const locale = await getServerLocale();
+  const categories = locale === 'de' ? SHOP_CATEGORIES_DE : SHOP_CATEGORIES_EN;
   return (
     <main id="main-content" className="page-shell hud-grid bg-premium">
       <div className="container-x">
@@ -28,7 +37,7 @@ export default async function ShopPage() {
         </p>
 
         <div className="mt-10 grid gap-4 sm:grid-cols-2 mb-10">
-          {SHOP_CATEGORIES.map((cat) => (
+          {categories.map((cat) => (
             <Link
               key={cat.title}
               href={cat.href}
@@ -46,7 +55,7 @@ export default async function ShopPage() {
                 <p className="text-body">{cat.desc}</p>
               </div>
               <div className="module-card-footer">
-                <span className="edge-label" style={{ color: 'var(--primary)' }}>Browse →</span>
+                <span className="edge-label" style={{ color: 'var(--primary)' }}>{cat.browse}</span>
               </div>
             </Link>
           ))}
@@ -56,9 +65,15 @@ export default async function ShopPage() {
           className="p-5 relative overflow-hidden mb-8"
           style={{ border: '1px solid var(--hud-border)', background: 'var(--command-surface)', borderRadius: 'var(--radius-lg)' }}
         >
-          <p className="edge-label mb-2">Custom Modules</p>
-          <p className="text-body mb-4">Need a custom AI module for your specific business process? Book a briefing and we&apos;ll scope it together.</p>
-          <Link href="/contact" className="btn btn-primary" style={{ minHeight: 44 }}>Book Custom Briefing</Link>
+          <p className="edge-label mb-2">{locale === 'de' ? 'Individuelle Module' : 'Custom Modules'}</p>
+          <p className="text-body mb-4">
+            {locale === 'de'
+              ? 'Brauchst du ein individuelles KI-Modul für deinen spezifischen Geschäftsprozess? Buche ein Briefing und wir scopen es gemeinsam.'
+              : 'Need a custom AI module for your specific business process? Book a briefing and we’ll scope it together.'}
+          </p>
+          <Link href="/contact" className="btn btn-primary" style={{ minHeight: 44 }}>
+            {locale === 'de' ? 'Individuelles Briefing buchen' : 'Book Custom Briefing'}
+          </Link>
         </div>
       </div>
     </main>

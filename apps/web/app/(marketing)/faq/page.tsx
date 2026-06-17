@@ -1,20 +1,20 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { getServerT } from '@/lib/i18n/server';
+import { getServerT, getServerLocale } from '@/lib/i18n/server';
 
 export const metadata: Metadata = {
   title: 'FAQ | ProBotica',
   description: 'Answers about ProBotica pricing, rollout, GDPR compliance, AI integrations, bot safety, and support.',
 };
 
-const FAQS = [
+const FAQS_EN = [
   {
     q: 'What is ProBotica?',
-    a: 'ProBotica is an AI operating system that combines 111 imported expert bots, a workflow engine, workspace memory, a marketplace, and a control-center telemetry dashboard into one practical platform for business AI operations.',
+    a: 'ProBotica is an AI operating system that combines 500+ expert bots, a workflow engine, workspace memory, a marketplace, and a control-center telemetry dashboard into one practical platform for business AI operations.',
   },
   {
     q: 'Do I need an OpenAI API key to use ProBotica?',
-    a: 'For the live demo and bot testing features, yes — a valid OpenAI API key is required. The platform includes safe fallback states for every bot so demos always work, even without a key.',
+    a: 'For live model output, yes — a valid OpenAI API key is required. Without one, every bot returns a deterministic, bot-specific simulated preview so the platform always works.',
   },
   {
     q: 'Are system prompts secure?',
@@ -26,11 +26,11 @@ const FAQS = [
   },
   {
     q: 'What domains do the bots cover?',
-    a: 'Sales, UX, content, marketing, real estate, development, learning, automation, research, support, strategy, and other specialized domains — 12 categories total with 111 expert bots.',
+    a: 'Sales, UX, content, marketing, real estate, development, learning, automation, research, support, strategy, and more — across all categories with 500+ expert bots.',
   },
   {
     q: 'Can I chain multiple bots together?',
-    a: 'Yes. The Workflow Engine lets you chain bots into intake → analysis → execution → review pipelines. 10 production workflow templates are included and fully configurable.',
+    a: 'Yes. The Workflow Engine lets you chain bots into intake → analysis → execution → review pipelines. Production workflow templates are included and fully configurable.',
   },
   {
     q: 'What is the Workspace?',
@@ -38,12 +38,49 @@ const FAQS = [
   },
   {
     q: 'How do I get started?',
-    a: 'Open the Bot Lab to browse all 111 bots, or jump directly to the Workspace to start a workflow session. The homepage includes a live AI demo you can run immediately.',
+    a: 'Open the Bot Lab to browse all bots, or jump directly to the Workspace to start a workflow session. The homepage includes a live AI demo you can run immediately.',
+  },
+];
+
+const FAQS_DE = [
+  {
+    q: 'Was ist ProBotica?',
+    a: 'ProBotica ist ein KI-Betriebssystem, das 500+ Experten-Bots, eine Workflow-Engine, Workspace-Speicher, einen Marktplatz und ein Control-Center-Telemetrie-Dashboard zu einer praktischen Plattform für KI-Geschäftsabläufe vereint.',
+  },
+  {
+    q: 'Brauche ich einen OpenAI-API-Schlüssel?',
+    a: 'Für echte Modellausgaben ja — ein gültiger OpenAI-API-Schlüssel ist erforderlich. Ohne Schlüssel liefert jeder Bot eine deterministische, bot-spezifische, simulierte Vorschau, sodass die Plattform immer funktioniert.',
+  },
+  {
+    q: 'Sind System-Prompts sicher?',
+    a: 'Ja. Alle System-Prompts werden ausschließlich serverseitig gespeichert und ausgeführt. Sie erscheinen nie in API-Antworten, Client-JavaScript-Bundles oder Browser-Netzwerk-Logs. ProBotica erzwingt dies über eine Next.js-Server-Grenze.',
+  },
+  {
+    q: 'Ist ProBotica DSGVO-konform?',
+    a: 'ProBotica ist für den EU-Markt gebaut. Kein sitzungsübergreifendes Tracking, kein Opt-in für Trainingsdaten und standardmäßig keine Drittanbieter-Analytics. Datenflüsse sind eingegrenzt und dokumentiert.',
+  },
+  {
+    q: 'Welche Bereiche decken die Bots ab?',
+    a: 'Sales, UX, Content, Marketing, Immobilien, Entwicklung, Lernen, Automatisierung, Research, Support, Strategie und mehr — über alle Kategorien hinweg mit 500+ Experten-Bots.',
+  },
+  {
+    q: 'Kann ich mehrere Bots verketten?',
+    a: 'Ja. Die Workflow-Engine verkettet Bots zu Intake → Analyse → Ausführung → Review-Pipelines. Produktionsreife Workflow-Vorlagen sind enthalten und vollständig konfigurierbar.',
+  },
+  {
+    q: 'Was ist der Workspace?',
+    a: 'Der Workspace ist eine local-first Sitzungs-Speicherschicht. Du kannst Bot-Ausgaben speichern, den Verlauf erneut abspielen und Multi-Bot-Kontext aufbauen, ohne dass Daten die aktuelle Sitzung verlassen.',
+  },
+  {
+    q: 'Wie fange ich an?',
+    a: 'Öffne das Bot Lab, um alle Bots zu durchsuchen, oder gehe direkt zum Workspace, um eine Workflow-Sitzung zu starten. Die Startseite enthält eine Live-KI-Demo, die du sofort ausführen kannst.',
   },
 ];
 
 export default async function FaqPage() {
   const t = await getServerT();
+  const locale = await getServerLocale();
+  const faqs = locale === 'de' ? FAQS_DE : FAQS_EN;
   return (
     <main id="main-content" className="page-shell hud-grid bg-premium">
       <div className="container-x">
@@ -56,7 +93,7 @@ export default async function FaqPage() {
         </p>
 
         <div className="mt-10 space-y-3 mb-10">
-          {FAQS.map((item, i) => (
+          {faqs.map((item, i) => (
             <div
               key={i}
               className="p-5 relative overflow-hidden"
@@ -76,8 +113,12 @@ export default async function FaqPage() {
         </div>
 
         <div className="flex flex-wrap gap-3">
-          <Link href="/bots" className="btn btn-primary" style={{ minHeight: 44 }}>Open Bot Lab</Link>
-          <Link href="/contact" className="btn" style={{ minHeight: 44 }}>Still have questions?</Link>
+          <Link href="/bots" className="btn btn-primary" style={{ minHeight: 44 }}>
+            {locale === 'de' ? 'Bot Lab öffnen' : 'Open Bot Lab'}
+          </Link>
+          <Link href="/contact" className="btn" style={{ minHeight: 44 }}>
+            {locale === 'de' ? 'Noch Fragen?' : 'Still have questions?'}
+          </Link>
         </div>
       </div>
     </main>

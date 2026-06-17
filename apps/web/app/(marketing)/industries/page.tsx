@@ -1,13 +1,13 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { getServerT } from '@/lib/i18n/server';
+import { getServerT, getServerLocale } from '@/lib/i18n/server';
 
 export const metadata: Metadata = {
   title: 'Industries | ProBotica Applied AI',
   description: 'Applied AI operating models for real estate, marketing, and education teams. Domain-tuned bots, workflows, and industry kits.',
 };
 
-const INDUSTRIES = [
+const INDUSTRIES_EN = [
   {
     href: '/industries/real-estate',
     tag: 'Real Estate',
@@ -31,8 +31,34 @@ const INDUSTRIES = [
   },
 ];
 
+const INDUSTRIES_DE = [
+  {
+    href: '/industries/real-estate',
+    tag: 'Immobilien',
+    title: 'KI für Immobilien',
+    desc: 'Lead-Qualifizierung, Listing-Intelligence, Bearbeitung von Käufer-/Verkäuferanfragen und automatisierte Makler-Kommunikation.',
+    color: 'var(--primary)',
+  },
+  {
+    href: '/industries/marketing',
+    tag: 'Marketing',
+    title: 'KI für Marketing',
+    desc: 'Kampagnensysteme, Content-Operations, Zielgruppen-Targeting und Conversion-Optimierung für Growth-Teams.',
+    color: 'var(--accent)',
+  },
+  {
+    href: '/industries/education',
+    tag: 'Bildung',
+    title: 'KI für Bildung',
+    desc: 'Lernassistenten, Erstellung von Skill-Plänen und didaktisch ausgerichtete Automatisierung für moderne Bildungsteams.',
+    color: 'var(--neon-cyan)',
+  },
+];
+
 export default async function IndustriesPage() {
   const t = await getServerT();
+  const locale = await getServerLocale();
+  const INDUSTRIES = locale === 'de' ? INDUSTRIES_DE : INDUSTRIES_EN;
   return (
     <main id="main-content" className="page-shell hud-grid bg-premium">
       <div className="container-x">
@@ -64,15 +90,15 @@ export default async function IndustriesPage() {
                 <p className="text-body">{ind.desc}</p>
               </div>
               <div className="module-card-footer">
-                <span className="edge-label" style={{ color: ind.color }}>View Playbook →</span>
+                <span className="edge-label" style={{ color: ind.color }}>{locale === 'de' ? 'Playbook ansehen →' : 'View Playbook →'}</span>
               </div>
             </Link>
           ))}
         </div>
 
         <div className="flex flex-wrap gap-3">
-          <Link href="/bots" className="btn btn-primary" style={{ minHeight: 44 }}>Explore All Bots</Link>
-          <Link href="/contact" className="btn" style={{ minHeight: 44 }}>Custom Industry Build</Link>
+          <Link href="/bots" className="btn btn-primary" style={{ minHeight: 44 }}>{locale === 'de' ? 'Alle Bots entdecken' : 'Explore All Bots'}</Link>
+          <Link href="/contact" className="btn" style={{ minHeight: 44 }}>{locale === 'de' ? 'Individueller Branchen-Build' : 'Custom Industry Build'}</Link>
         </div>
       </div>
     </main>

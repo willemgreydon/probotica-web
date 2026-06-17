@@ -1,12 +1,13 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { getServerLocale } from '@/lib/i18n/server';
 
 export const metadata: Metadata = {
   title: 'Workflow Automation | ProBotica Solutions',
   description: 'Chain AI bots into multi-step workflows. 10 production templates for sales, UX, content, and operations with intake → analysis → execution → review pipelines.',
 };
 
-const WORKFLOW_TEMPLATES = [
+const WORKFLOW_TEMPLATES_EN = [
   { id: 'lead-funnel-automation', title: 'Lead Funnel Automation', cat: 'Sales', steps: 3, duration: '4 min' },
   { id: 'ux-audit-pipeline', title: 'UX Audit Pipeline', cat: 'UX', steps: 3, duration: '5 min' },
   { id: 'seo-content-engine', title: 'SEO Content Engine', cat: 'Content', steps: 1, duration: '3 min' },
@@ -15,21 +16,36 @@ const WORKFLOW_TEMPLATES = [
   { id: 'multi-agent-strategy-chain', title: 'Multi-Agent Strategy', cat: 'Strategy', steps: 3, duration: '8 min' },
 ];
 
-const LANES = ['Intake', 'Analysis', 'Execution', 'Review'];
+const WORKFLOW_TEMPLATES_DE = [
+  { id: 'lead-funnel-automation', title: 'Lead-Funnel-Automatisierung', cat: 'Sales', steps: 3, duration: '4 Min' },
+  { id: 'ux-audit-pipeline', title: 'UX-Audit-Pipeline', cat: 'UX', steps: 3, duration: '5 Min' },
+  { id: 'seo-content-engine', title: 'SEO-Content-Engine', cat: 'Content', steps: 1, duration: '3 Min' },
+  { id: 'customer-support-escalation', title: 'Support-Eskalation', cat: 'Support', steps: 1, duration: '4 Min' },
+  { id: 'research-synthesizer', title: 'Research Synthesizer', cat: 'Research', steps: 1, duration: '3 Min' },
+  { id: 'multi-agent-strategy-chain', title: 'Multi-Agent-Strategie', cat: 'Strategy', steps: 3, duration: '8 Min' },
+];
 
-export default function WorkflowAutomationPage() {
+const LANES_EN = ['Intake', 'Analysis', 'Execution', 'Review'];
+const LANES_DE = ['Eingang', 'Analyse', 'Ausführung', 'Review'];
+
+export default async function WorkflowAutomationPage() {
+  const locale = await getServerLocale();
+  const WORKFLOW_TEMPLATES = locale === 'de' ? WORKFLOW_TEMPLATES_DE : WORKFLOW_TEMPLATES_EN;
+  const LANES = locale === 'de' ? LANES_DE : LANES_EN;
   return (
     <main id="main-content" className="page-shell hud-grid bg-premium">
       <div className="container-x">
         <Link href="/solutions" className="inline-flex items-center gap-2 edge-label hover:text-foreground transition-colors mb-6" style={{ textDecoration: 'none' }}>
-          ← Solutions
+          ← {locale === 'de' ? 'Lösungen' : 'Solutions'}
         </Link>
-        <p className="label-eyebrow mb-4">Solutions / Workflow Automation</p>
+        <p className="label-eyebrow mb-4">{locale === 'de' ? 'Lösungen / Workflow-Automatisierung' : 'Solutions / Workflow Automation'}</p>
         <h1 className="heading-section text-balance" style={{ maxWidth: '720px' }}>
-          Workflow Automation
+          {locale === 'de' ? 'Workflow-Automatisierung' : 'Workflow Automation'}
         </h1>
         <p className="text-lead mt-5" style={{ maxWidth: '560px' }}>
-          Chain AI bots into production pipelines. 10 workflow templates for sales, UX, content, and strategy — each with configurable step topology and runtime telemetry.
+          {locale === 'de'
+            ? 'Verkette KI-Bots zu produktiven Pipelines. 10 Workflow-Templates für Sales, UX, Content und Strategie — jedes mit konfigurierbarer Schritt-Topologie und Laufzeit-Telemetrie.'
+            : 'Chain AI bots into production pipelines. 10 workflow templates for sales, UX, content, and strategy — each with configurable step topology and runtime telemetry.'}
         </p>
 
         {/* Lane visualization */}
@@ -52,7 +68,7 @@ export default function WorkflowAutomationPage() {
           ))}
         </div>
 
-        <p className="label-eyebrow mb-5">Production Templates</p>
+        <p className="label-eyebrow mb-5">{locale === 'de' ? 'Produktions-Templates' : 'Production Templates'}</p>
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 mb-10">
           {WORKFLOW_TEMPLATES.map((w) => (
             <Link
@@ -71,26 +87,26 @@ export default function WorkflowAutomationPage() {
                 <div className="data-rail mt-3" style={{ padding: 'var(--space-3) var(--space-3)' }}>
                   <div className="data-rail-item">
                     <span className="data-rail-value">{w.steps}</span>
-                    <span className="data-rail-label">Steps</span>
+                    <span className="data-rail-label">{locale === 'de' ? 'Schritte' : 'Steps'}</span>
                   </div>
                   <div className="data-rail-sep" />
                   <div className="data-rail-item">
                     <span className="data-rail-value">{w.duration}</span>
-                    <span className="data-rail-label">Est. Duration</span>
+                    <span className="data-rail-label">{locale === 'de' ? 'Geschätzte Dauer' : 'Est. Duration'}</span>
                   </div>
                 </div>
               </div>
               <div className="module-card-footer">
-                <span className="edge-label" style={{ color: 'var(--primary)' }}>View Workflow →</span>
+                <span className="edge-label" style={{ color: 'var(--primary)' }}>{locale === 'de' ? 'Workflow ansehen →' : 'View Workflow →'}</span>
               </div>
             </Link>
           ))}
         </div>
 
         <div className="flex flex-wrap gap-3">
-          <Link href="/marketplace" className="btn btn-primary" style={{ minHeight: 44 }}>All Workflows</Link>
-          <Link href="/workspace" className="btn" style={{ minHeight: 44 }}>Build in Workspace</Link>
-          <Link href="/contact" className="btn" style={{ minHeight: 44 }}>Custom Workflow</Link>
+          <Link href="/marketplace" className="btn btn-primary" style={{ minHeight: 44 }}>{locale === 'de' ? 'Alle Workflows' : 'All Workflows'}</Link>
+          <Link href="/workspace" className="btn" style={{ minHeight: 44 }}>{locale === 'de' ? 'Im Workspace bauen' : 'Build in Workspace'}</Link>
+          <Link href="/contact" className="btn" style={{ minHeight: 44 }}>{locale === 'de' ? 'Individueller Workflow' : 'Custom Workflow'}</Link>
         </div>
       </div>
     </main>
