@@ -19,7 +19,7 @@ interface BotDefinition {
 interface BotTestRequest { botSlug; input; }
 interface BotTestResponse { ok; fallback; botSlug; botName; output; … }
 ```
-Data: `data/public-bots.ts`, `data/imported-bots.server.ts` (server-only), `data/bot-scenarios.ts`. Helpers: `lib/bot-readiness.ts`, `lib/bot-history.ts`. Raw exports staged in `_imports/bot-export/`.
+Data: `data/generated-bots.ts` (the ~500-bot generator, `PER_CATEGORY_TARGET = 46` per non-`other` category), `data/public-bots.ts`, `data/imported-bots.server.ts` (server-only), `data/bot-scenarios.ts`. Helpers: `lib/bot-readiness.ts`, `lib/bot-history.ts`, `lib/bot-export.ts` (ZIP via JSZip), `lib/bot-fallback.ts`. Raw exports staged in `_imports/bot-export/part-1/`.
 
 ## Workflows — `features/workflows/lib/workflow-types.ts`
 
@@ -35,15 +35,23 @@ Concrete, demoable use-cases that map to AI endpoints/bots: lead-qualification, 
 
 ## Workspace — `features/workspace/workspace-types.ts`
 
-Personal space for saved/chained runs. Store: `workspace-store.ts`; persistence shell: `workspace-persistence.ts`. **Client-side today** — server persistence + export/import + versioning is roadmap (PB-031). Treat current state as potentially ephemeral until then.
+Personal space for saved/chained runs. Store: `workspace-store.ts`; persistence: `workspace-persistence.ts` (localStorage key `probotica.workspace.records.v1`), surfaced via `WorkspacesOverview.tsx`, with ZIP export. **Client-side persistence is shipped** — only server persistence (+ cross-device sync/versioning) is roadmap (PB-031).
 
 ## Memory — `features/memory/memory-store.ts`
 
 Holds agent/run context so chained steps and the workspace can reference prior outputs.
 
-## Navigation — `lib/content/site.ts` (→ `lib/content/navigation.ts`)
+## Auth — `components/providers/AuthProvider.tsx`
 
-Nav groups + links + solutions/agents copy. Being consolidated into one typed model consumed by header/footer/mobile/sitemap (see [routing-navigation.md](./routing-navigation.md)).
+Mock auth only (no backend). `AuthUser` shape: `{ email; name }`. Session persists to localStorage key `probotica-auth`; test account `test@probotica.at` / `probotica`. Routes: `/login`, `/signup`, `/account` (`features/account/AccountView.tsx`).
+
+## i18n — `lib/i18n/`
+
+`Locale = 'de' | 'en'` (default `en`), resolved from the `probotica-locale` cookie. Copy lives in a single dictionary (`dictionaries.ts`); `config.ts` defines locales, `server.ts` exposes `getServerT()` / `getServerLocale()`.
+
+## Navigation — `lib/content/navigation.ts`
+
+The live, single typed nav model (groups + links + solutions/agents copy) consumed by `SiteHeader`/`SiteFooter`/`FullscreenMenu`/`HomeSectionNav`/sitemap/not-found/pricing (see [routing-navigation.md](./routing-navigation.md)). The older `lib/content/site.ts` is now dead (0 importers).
 
 ## Cross-links — `features/navigation/cross-links.ts`
 

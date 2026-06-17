@@ -30,16 +30,16 @@ Section (ArticleSection)
 
 ## Components
 
-`KnowledgeHero`, `KnowledgeGrid`, `KnowledgeCard`, `KnowledgeArticleLayout`, `KnowledgeTOC`, `RelatedConcepts`, `ConceptGraph`, `LearningPathRail`, `GlossaryPreview`, `DifficultyBadge`. SEO helpers in `lib/knowledge-seo.ts`; utils in `knowledge-utils.ts`.
+`KnowledgeHero`, `KnowledgeGrid`, `KnowledgeCard`, `KnowledgeArticleLayout`, `KnowledgeTOC`, `RelatedConcepts`, `ConceptGraph`, `LearningPathRail`, `GlossaryPreview`, `DifficultyBadge`, plus the pedagogy components `ArticleCompleteButton`, `PathJourney`, `PathProgressBadge`, and `PathQuiz`. Progress tracking lives in `lib/knowledge-progress.tsx` (persisted to localStorage under `probotica-knowledge-progress`); SEO helpers in `lib/knowledge-seo.ts`; utils in `knowledge-utils.ts`. Quiz content is in `data/path-quizzes.ts`.
 
 ## Pedagogy — what makes it *best-practice educational*
 
 The data model already encodes good teaching primitives (`prerequisites`, `difficulty`, `learning-paths`, `relatedSlugs`, `keyTakeaways`, `glossaryTerms`, typed `callout`s and `codeBlock`s). The job is to make the *experience* deliver on them:
 
 1. **Scaffolding & sequencing** — surface `prerequisites` as "learn these first"; gate nothing, but recommend order. Learning paths render as a guided sequence with progress.
-2. **Active recall** — add self-check questions / inline quizzes / "predict the output" before code blocks. Retrieval beats re-reading.
+2. **Active recall** — shipped: learning paths carry self-check quizzes (`PathQuiz`, content in `data/path-quizzes.ts`). Next: extend to inline per-article "predict the output" before code blocks. Retrieval beats re-reading.
 3. **Worked examples → transfer** — every `codeBlock`/prompt should be runnable or copyable, and concepts link out to a Bot Lab "try it" (the education→product bridge).
-4. **Visible progress & spaced return** — track read articles + path progress; offer "continue learning" and spaced "revisit" nudges.
+4. **Visible progress & spaced return** — shipped: `knowledge-progress.tsx` tracks read articles + path progress (localStorage), surfaced via `ArticleCompleteButton`, `PathProgressBadge`, and `PathJourney`. Next: "continue learning" and spaced "revisit" nudges.
 5. **Progressive disclosure** — plain-language summary up top (for Lena/Sophie), depth in expandable sections; `glossaryTerms` get hover/tap definitions inline.
 6. **Concept graph for exploration** — `ConceptGraph`/`RelatedConcepts` let curious learners wander the map, not just a linear feed.
 7. **Accuracy & currency** — `publishedAt`/`updatedAt` shown; claims sourced; `callout type:warning` flags common misconceptions; no teaching a falsehood for engagement.
@@ -49,6 +49,6 @@ The data model already encodes good teaching primitives (`prerequisites`, `diffi
 
 - New article: add to `data/knowledge-articles.ts` conforming to `KnowledgeArticle`; set realistic `readingTime`, real `prerequisites`/`relatedSlugs`, meaningful `keyTakeaways`, and link `glossaryTerms` that exist in `data/glossary.ts`.
 - Keep slugs stable (URLs + cross-link keys). Add the topic to `knowledge-topics.ts` if new; wire it into a learning path if it belongs to one.
-- Localization: ProBotica is DACH-rooted — design content + types to support German (`de-AT`) alongside English (see i18n stories).
+- Localization: DE/EN is shipped platform-wide for UI/chrome (cookie `probotica-locale`, `getServerT`/`useT`). Knowledge **article bodies are currently English-only** — the `KnowledgeArticle` type has no per-locale body fields yet. To localize content, extend the types and `data/*` first (still preserving the CMS-migration shape).
 
 The educational backlog is the **Knowledge Universe & Pedagogy** epic in [`stories/`](./stories/README.md).

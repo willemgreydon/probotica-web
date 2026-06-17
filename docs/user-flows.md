@@ -28,7 +28,7 @@ cookies). When real auth/persistence lands (PB-031), update this doc and the
 | Accessibility modes | localStorage (JSON) | `probotica-accessibility` | `components/providers/AccessibilityProvider.tsx` |
 | Bot run history | localStorage (max 10) | `probotica.botlab.runs.v1` | `features/bots/lib/bot-history.ts` |
 | Workspaces | localStorage (max 40) | `probotica.workspace.records.v1` | `features/workspace/workspace-persistence.ts` |
-| Learning progress | _not yet persisted_ | — | deferred (see Gaps) |
+| Learning progress | localStorage | `probotica-knowledge-progress` | `features/knowledge/lib/knowledge-progress.tsx` |
 
 ---
 
@@ -140,8 +140,13 @@ Data sources (typed, CMS-shaped — see [`content-model.md`](./content-model.md)
 `knowledge-articles.ts`, `knowledge-topics.ts`, `learning-paths.ts`,
 `path-quizzes.ts`, `glossary.ts`.
 
-**Terminal state:** article read / path quiz completed. ⚠️ **Progress is not yet
-persisted** — see Gaps.
+Progress (articles completed, path/quiz state) is tracked client-side via
+`features/knowledge/lib/knowledge-progress.tsx` → localStorage key
+`probotica-knowledge-progress`. UI surfaces it through `ArticleCompleteButton`,
+`PathProgressBadge`, `PathJourney`, and `PathQuiz`.
+
+**Terminal state:** article marked complete / path quiz finished, with progress
+persisted across reloads.
 
 ---
 
@@ -230,9 +235,6 @@ These layer over every flow above.
 
 ## Known gaps (don't mistake these for finished)
 
-- **Learning progress isn't persisted** — articles read and quiz results are not
-  written to storage yet; there's no resume/continue. (Candidate next: a
-  `probotica.knowledge.progress.v1` key mirroring the workspace pattern.)
 - **Scenario → workspace handoff is lossy** — **Run in Workspace** navigates to
   `/workspace` without passing the scenario id in the URL, so the scenario isn't
   auto-loaded the way `?bot=` is for bots (flow 1). Unify with the bot preselect

@@ -4,12 +4,17 @@ Persona: **Mara** — uses a screen reader and/or is motion-sensitive, may be on
 
 ## Current state
 
-- `lib/accessibility/accessibility-modes.ts` defines modes; `accessibility-storage.ts` persists the user's choice.
-- **~5 of 14 modes implemented** (PB-035). Target: all 14 modes + font scaling + contrast-safe focus ring, verified to **WCAG 2.1 AA**.
+- `lib/accessibility/accessibility-modes.ts` defines the taxonomy; `accessibility-storage.ts` loads/saves it and applies `data-*` attributes (init script avoids FOUC). Preferences persist to localStorage under `probotica-a11y-preferences` (`ACCESSIBILITY_STORAGE_KEY`).
+- The model is **largely realized**, not a stub. `accessibility-modes.ts` ships **14 `AccessibilityVisualMode` values** (`default`, `high-contrast`, `soft-contrast`, `dark-high-contrast`, `light-high-contrast`, `monochrome`, `deuteranopia`, `protanopia`, `tritanopia`, `low-vision`, `dyslexia-friendly`, `focus-mode`, `reduced-motion`, `migraine-safe`), each with a human label in `VISUAL_MODE_BADGES`, **plus four independent axes** — `FontScale`, `DensityMode`, `MotionMode`, `TransparencyMode` — and five boolean toggles (`focusEnhancement`, `underlineLinks`, `reduceGlow`, `increaseBorders`, `simplifyInterface`).
+- **CSS coverage is the remaining gap, not the taxonomy** (PB-035). The styled effects in `app/globals.css` currently key off the `AccessibilityProvider` attributes (`data-contrast`, `data-motion`, `data-transparency`, `data-reading`, `data-color-mode`) rather than the richer `data-a11y-mode`/`data-font-scale`/… dataset, so not every visual mode and axis yet has full CSS effect. Reconcile these two attribute systems and round out the per-mode styling, verified to **WCAG 2.1 AA**.
 
-## Target capabilities (the 14-mode goal)
+## The taxonomy (visual modes + axes)
 
-Reduced motion, high contrast, font scaling, dyslexia-friendly font, increased letter/line spacing, link underlining, focus-ring emphasis, reduced transparency, large click targets, color-blind-safe palettes, "calm mode" (kills grain/shaders/cursor), keyboard-only affordances, and reading-guide/spotlight — finalize the exact 14 in `accessibility-modes.ts`.
+- **14 visual modes** (the enum above): contrast variants, color-blind-safe palettes (deuteranopia/protanopia/tritanopia/monochrome), low-vision, dyslexia-friendly, focus-mode, reduced-motion, and migraine-safe ("calm" — tames grain/shaders/glow).
+- **Separate axes** (not modes): `FontScale` (`normal`/`large`/`x-large`), `DensityMode` (`comfortable`/`compact`/`spacious`), `MotionMode` (`full`/`reduced`/`none`), `TransparencyMode` (`full`/`reduced`/`none`).
+- **Boolean toggles**: focus-ring emphasis, link underlining, reduced glow, increased borders, simplified interface.
+
+Still on the list regardless of taxonomy: large click targets, keyboard-only affordances, and a reading-guide/spotlight.
 
 ## Hard rules (apply to every change)
 

@@ -2,36 +2,40 @@
 
 ## Current routes
 
-**Marketing/content/legal**: `/` (home), `/solutions` (+ `/solutions/*`), `/industries` (+ `/industries/[…]`), `/about`, `/contact`, `/faq`, `/knowledge` (+ `/[slug]`, `/category/[category]`), `/studio`, `/privacy`, `/terms`, `/imprint`. (`/pricing` is planned, PB-025.)
+**Marketing/content/legal** (`app/(marketing)`): `/` (home), `/solutions` (+ `/solutions/*`), `/industries` (+ `/industries/[…]`), `/about`, `/contact`, `/faq`, `/pricing`, `/shop`, `/knowledge` (+ `/[slug]`, `/category/[category]`, `/path/[slug]`), `/studio`, `/privacy`, `/terms`, `/imprint`.
 
-**Product**: `/bots` (+ `/[slug]`), `/workspace` (+ `/[workspaceId]`), `/marketplace`, `/shop` (legacy dup → redirect to `/marketplace`, PB-011), `/control-center`, `/workflows` (+ `/[id]`), `/scenarios/[scenarioId]`, `/categories/[category]`.
+**Product** (`app/(app)`): `/bots` (+ `/[slug]`), `/workspaces`, `/workspace` (+ `/[workspaceId]`), `/marketplace`, `/control-center`, `/workflows` (+ `/[id]`), `/scenarios` (+ `/[scenarioId]`), `/categories/[category]`.
+
+**Auth/account** (`app/(auth)`): `/login`, `/signup`, `/account`.
 
 **API**: `/api/ai/{lead-qualifier,ux-audit,content-studio}`, `/api/bots/{metadata,test}`, `/api/workflows/run`.
 
-## The route-group plan (Phase 1, PB-001…PB-009)
+## Route groups (Phase 1, PB-001…PB-009 — shipped)
 
-Today there are **three header systems** and ~17 pages with **no nav chrome**. The fix is App Router **route groups**:
+The App Router **route groups** are in place; the old three-header split is gone. One header system wraps the whole site:
 
 ```
 app/
 ├─ (marketing)/layout.tsx   # SiteHeader + SiteFooter wrap ALL public pages
 │   └─ home, solutions, industries, about, contact, faq,
-│      knowledge, studio, pricing, legal…
+│      knowledge, studio, pricing, shop, legal…
 ├─ (app)/layout.tsx         # AppShell wraps ALL product pages
-│   └─ bots, workspace, marketplace, control-center,
+│   └─ bots, workspaces, workspace, marketplace, control-center,
 │      scenarios, workflows, categories…
-└─ (auth)/                  # login, signup (UI-only placeholders, backend deferred)
+└─ (auth)/layout.tsx        # login (mock auth), signup, account
 ```
 
-Route groups don't change URLs. Goals: **one** header system sitewide, footer on 100% of pages, no chrome-less dead-ends.
+Route groups don't change URLs. Result: **one** header system sitewide, footer on every public page, no chrome-less dead-ends.
 
-New layout primitives to build: `SiteHeader` (sticky, dropdowns, theme/a11y menu, Sign in / Get started), `SiteFooter` (columns from nav model + newsletter/social/locale), mobile nav drawer (reuse `FullscreenMenu`), branded `not-found.tsx`, `error.tsx` / `global-error.tsx`, `loading.tsx` skeletons, `sitemap.ts`, `robots.ts`, default `opengraph-image`.
+The layout primitives exist: `SiteHeader` (sticky, dropdowns, theme/a11y menu, `LanguageSwitch`, Sign in / Get started), `SiteFooter` (columns from the nav model + locale), mobile nav drawer (`FullscreenMenu`), `HomeSectionNav`, branded `not-found.tsx` (with `NotFoundSearch`), `error.tsx` / `global-error.tsx`, `loading.tsx` skeletons, `sitemap.ts`, `robots.ts`, and a default `opengraph-image.tsx`.
+
+`/login` is functional against a test account via `AuthProvider` (`components/auth/LoginForm.tsx`); `/signup` renders but its submit is disabled ("coming soon"); `/account` is gated behind auth.
 
 ## Navigation model — single source of truth
 
-Today nav lives in `lib/content/site.ts` (sprawling: ~8 groups / 46 links + compatibility exports). The plan (PB-010/PB-013) is a **typed `lib/content/navigation.ts`** consumed by header, footer, mobile menu, and sitemap — **no duplicated link lists anywhere**.
+Nav lives in the **typed `lib/content/navigation.ts`**, consumed by `SiteHeader`, `SiteFooter`, `FullscreenMenu`, `HomeSectionNav`, `sitemap.ts`, `not-found.tsx`, and `/pricing` — **no duplicated link lists anywhere**. The old `lib/content/site.ts` is dead (no importers) and can be removed.
 
-**Target top-level taxonomy (6 items)**: `Product` · `Solutions` · `Industries` · `Resources` · `Pricing` · `Company`. Legal moves to the footer. Categories & Scenarios become **facets/filters within Bots**, not top-level destinations (PB-012). `/shop` collapses into `/marketplace` (PB-011) with a 301 (PB-014).
+**Top-level taxonomy (6 items)**: `Product` · `Solutions` · `Industries` · `Resources` · `Pricing` · `Company`. Legal lives in the footer. Categories & Scenarios are **facets/filters within Bots**, not top-level destinations (PB-012). `/shop` is its own standalone marketing page (DE/EN), separate from `/marketplace`.
 
 When you add a destination: add it to the nav model once; header/footer/mobile/sitemap pick it up automatically. Never hardcode a second copy of a link list.
 
@@ -41,4 +45,4 @@ When you add a destination: add it to the nav model once; header/footer/mobile/s
 
 ## Redirects & SEO hygiene
 
-Configure 301s for retired/duplicate routes in `next.config.mjs` (PB-014). Generate `sitemap.ts` from the nav model + dynamic routes (bots, knowledge, workflows, scenarios, industries) and a `robots.ts` referencing it.
+`sitemap.ts` is generated from the nav model + dynamic routes (bots, knowledge, workflows, scenarios, industries) and `robots.ts` references it. Add 301s for any future retired/duplicate routes in `next.config.mjs` (none today — `/shop` is a real page, not a redirect).

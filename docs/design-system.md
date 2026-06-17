@@ -6,8 +6,9 @@ ProBotica's look is **cinematic editorial**: glass cards, animated grain/noise, 
 
 - Source: `app/globals.css` (Tailwind v4 via `@tailwindcss/postcss`).
 - **Color/theme** via `next-themes` (`components/providers/ThemeProvider.tsx`).
-- **z-index**: introduce and use a **token scale** (PB-027). No hardcoded `9999` in header/menu/overlay/cursor layers.
-- **Motion tokens**: cursor/shader/scroll-reveal timings should be driven by tokens in `lib/motion/` (`easings.ts`, `transitions.ts`), not inline magic numbers (PB-036).
+- **Typography**: `app/layout.tsx` loads **Syne** as `--font-display` (weights 500–800) for headings, **Inter** as `--font-body`, and **JetBrains Mono** as `--font-mono`.
+- **z-index**: prefer a **token scale** (PB-027); still partly inline — avoid hardcoded `9999` in header/menu/overlay/cursor layers.
+- **Motion tokens**: cursor/shader/scroll-reveal timings draw from tokens in `lib/motion/` (`easings.ts`, `transitions.ts`); avoid inline magic numbers (PB-036).
 - **Layout primitives**: `ContentPage`, `SectionHeader` (to be extracted, PB-029) replace the 40–53 inline style blocks per page. Prefer primitives.
 
 ## Motion layer
@@ -30,11 +31,15 @@ ProBotica's look is **cinematic editorial**: glass cards, animated grain/noise, 
 
 ## Components catalog (shared)
 
-- `layout/`: `Header`, `AppShell`, `FullscreenMenu`, `ThemeAccessibilityMenu`, `RuntimeBreadcrumbs`, `HomeClientFx`, `PageShell` (dead — delete, PB-028).
+- `layout/`: `SiteHeader`, `SiteFooter`, `AppShell`, `FullscreenMenu`, `ThemeAccessibilityMenu`, `LanguageSwitch`, `HomeSectionNav`, `NotFoundSearch`, `RuntimeBreadcrumbs`, `HomeClientFx`, `PageShell` (dead — delete, PB-028).
 - `sections/`: `Hero`, `Solutions`, `AiStudio`, `HorizontalAgents`, `Contact`.
 - `motion/`: `CustomCursor`, `CursorProvider`, `ScrollReveal`.
-- `ai/`: `AiDemoPanel`. `visual/`: `ShaderField`. `command/`: `CommandPalette`.
-- `providers/`: `ThemeProvider`, `AccessibilityProvider`.
+- `ai/`: `AiDemoPanel`. `visual/`: `ShaderField`, `DistributionBars`. `command/`: `CommandPalette`.
+- `providers/`: `ThemeProvider`, `AccessibilityProvider`, `AuthProvider`, `LocaleProvider`.
+
+## Brand lockup
+
+The logo is a **single emblem + "ProBotica" wordmark**. `.brand-emblem` in `app/globals.css` theme-swaps `public/brand/emblem-dark.png` / `emblem-light.png`; `.brand-wordmark` is set in Syne. Use this lockup in header, footer, and favicon — never two emblems.
 
 ## Design hygiene rules
 

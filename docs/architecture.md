@@ -18,11 +18,14 @@ Turbo tasks: `dev` (persistent, uncached), `build` (depends on `^build`, caches 
 ```
 apps/web/
 ├─ app/                     # App Router — ROUTING ONLY, keep thin
-│  ├─ page.tsx              # home (currently bespoke header — to be unified)
-│  ├─ (marketing routes)    # solutions, industries, about, contact, faq,
+│  ├─ (marketing)/          # SiteHeader/SiteFooter shell (layout.tsx)
+│  │  ├─ page.tsx           # home (unified header now)
+│  │  └─ …                  # solutions, industries, about, contact, faq,
 │  │                        #   knowledge, studio, pricing, privacy, terms, imprint
-│  ├─ (product routes)      # bots, workspace, marketplace, control-center,
-│  │                        #   workflows, scenarios, categories, shop
+│  ├─ (app)/                # AppShell (layout.tsx)
+│  │  └─ …                  # bots, workspace, marketplace, control-center,
+│  │                        #   workflows, scenarios, categories, shop, account
+│  ├─ (auth)/               # login, signup (layout.tsx)
 │  └─ api/                  # route handlers (nodejs runtime)
 │     ├─ ai/{lead-qualifier,ux-audit,content-studio}/route.ts
 │     ├─ bots/{metadata,test}/route.ts
@@ -37,8 +40,9 @@ apps/web/
 │  ├─ ai/openai.ts          # OpenAI wrapper + structured AI + fallback
 │  ├─ accessibility/        # accessibility-modes.ts, accessibility-storage.ts
 │  ├─ config/env.ts         # env access
+│  ├─ i18n/                 # config.ts, dictionaries.ts, server.ts (DE/EN)
 │  ├─ motion/               # easings.ts, transitions.ts
-│  └─ content/site.ts       # legacy nav model (being replaced by lib/content/navigation.ts)
+│  └─ content/navigation.ts # nav model (SSOT; site.ts is now dead)
 └─ _imports/                # raw imported bot exports staged for processing
 ```
 
@@ -58,8 +62,9 @@ app/categories/[category]
 
 | Domain | Path | Responsibility |
 | --- | --- | --- |
-| **bots** | `features/bots` | Bot definitions, Bot Lab UI (`BotLab`, `BotConsole`, `BotCard`, `BotDetailPage`…), readiness/history logic, public + imported bot data |
-| **workspace** | `features/workspace` | Workspace store, types, persistence shell (client-side today) |
+| **bots** | `features/bots` | Bot definitions, Bot Lab UI (`BotLab`, `BotConsole`, `BotCard`, `BotDetailPage`…), readiness/history/export logic, public + generated + imported bot data |
+| **workspace** | `features/workspace` | Workspace store, types, client-side persistence (`WorkspacesOverview`, ZIP export) |
+| **account** | `features/account` | Account view (`AccountView`) backed by mock auth |
 | **marketplace** | `features/marketplace` | Catalog view |
 | **runtime** | `features/runtime` | Execution telemetry, Control Center panel |
 | **workflows** | `features/workflows` | Workflow types, engine, templates, builder UI |
@@ -72,14 +77,15 @@ app/categories/[category]
 1. **Content** is authored as **typed TS** in `features/*/data/*.ts`, conforming to interfaces in `features/*/lib/*-types.ts`. Types are CMS-migration-ready by design.
 2. **Pages** (`app/*`) import feature components and pass data; they stay thin.
 3. **AI calls** go from a client component → an `app/api/...` route handler → `lib/ai/openai.ts`. The wrapper returns **structured JSON** (zod-shaped) and a **demo fallback** when `OPENAI_API_KEY` is absent — so the UI always renders something useful.
-4. **Workspace/memory** state is held client-side (store modules); server persistence is roadmap (PB-031).
+4. **Workspace/memory** state is held client-side (store modules) with localStorage persistence (`probotica.workspace.records.v1`) + ZIP export; server persistence is roadmap (PB-031).
 
 ## Rendering & runtime
 
 - Server Components by default; `'use client'` for interactive/motion components.
 - API/AI routes set `export const runtime = 'nodejs'`.
 - Heavy visual layers (GSAP, R3F shaders, custom cursor) are client-only and **must** degrade under reduced motion.
+- Client-tree providers (`components/providers/`): `ThemeProvider`, `AccessibilityProvider`, `AuthProvider` (mock auth), `LocaleProvider` (DE/EN).
 
 ## Known architectural debt (roadmap)
 
-See `CLAUDE.md` → "Known truths." Headline items: header/shell fragmentation (fixed by `(marketing)`/`(app)` route groups), fragmented search, synthetic telemetry, missing auth/persistence backend, partial accessibility modes, hardcoded z-index/motion, dead `PageShell.tsx`.
+See `CLAUDE.md` → "Known truths." Headline items: header/shell fragmentation (fixed by `(marketing)`/`(app)`/`(auth)` route groups + `SiteHeader`/`SiteFooter`/`AppShell`), fragmented search, synthetic telemetry, partial accessibility modes, hardcoded z-index, dead `PageShell.tsx` + dead `lib/content/site.ts`. Auth is mock (`AuthProvider`, localStorage) and workspace persistence is client-side only — a real backend is still absent.

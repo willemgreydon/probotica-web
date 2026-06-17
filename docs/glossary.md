@@ -4,9 +4,9 @@ Domain and codebase vocabulary. (Distinct from the *learner* glossary in `featur
 
 ## Product surfaces
 
-- **Bot Lab** — `/bots`; browse/configure/run AI bots.
-- **Workspace** — `/workspace`; user's personal space for saved & chained runs (client-side today).
-- **Marketplace** — `/marketplace`; catalog of bots/prompt packs. `/shop` is a legacy duplicate.
+- **Bot Lab** — `/bots`; browse/configure/run AI bots (~500+ catalog).
+- **Workspace** — `/workspace`; user's personal space for saved & chained runs (persisted client-side to localStorage; `/workspaces` lists all).
+- **Marketplace** — `/marketplace`; catalog of bots/prompt packs. `/shop` is a separate standalone storefront page (DE/EN), not a redirect.
 - **Control Center** — `/control-center`; telemetry dashboards (synthetic data today).
 - **Workflows** — multi-step agent pipelines.
 - **Scenarios** — concrete demoable use-cases mapping to AI endpoints.
@@ -32,10 +32,13 @@ Domain and codebase vocabulary. (Distinct from the *learner* glossary in `featur
 - **Route group** — `(marketing)` / `(app)` / `(auth)`; shares a layout without changing URLs.
 - **Nav model** — the single typed source for all navigation links.
 - **Demo fallback** — the realistic output returned when `OPENAI_API_KEY` is absent.
-- **Accessibility mode** — a user-selectable inclusive setting (14 planned).
+- **Accessibility mode** — a user-selectable inclusive setting; 14 visual modes plus axes (font scale, density, motion, transparency) and boolean toggles in `lib/accessibility/accessibility-modes.ts` (storage key `probotica-a11y-preferences`).
 - **Motion tokens / z-index tokens** — design tokens replacing hardcoded values.
 - **Cross-links** — typed relationships between entities (`features/navigation/cross-links.ts`).
 - **Education→product bridge** — the "try it" handoff from a knowledge article to a matching bot/scenario.
+- **Mock auth** — `AuthProvider` with a test account (`test@probotica.at` / `probotica`), persisted to localStorage (`probotica-auth`); gates `/account`. No backend yet.
+- **Locale / i18n** — DE/EN via `lib/i18n` (`config.ts`, `dictionaries.ts`, `server.ts`); client `useT()` / server `getServerT()` / `getServerLocale()`; cookie `probotica-locale` (default `en`).
+- **Generated bot catalog** — ~500+ bots from `features/bots/data/generated-bots.ts` (46 per category) plus markdown imports under `_imports/bot-export/`.
 
 ## Status / planning terms (CSV)
 

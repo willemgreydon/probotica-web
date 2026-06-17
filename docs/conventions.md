@@ -26,6 +26,12 @@ Move *with* the grain of the codebase. When in doubt, copy the nearest existing 
 - API and AI route handlers: `export const runtime = 'nodejs';`.
 - Keep client bundles lean — heavy 3D/motion imports stay in client-only leaf components.
 
+## i18n (DE/EN)
+
+- One dictionary in `lib/i18n/dictionaries.ts`; locale resolves from the `probotica-locale` cookie (default `en`).
+- **Server components** read copy via `getServerT()` / `getServerLocale()` (`lib/i18n/server.ts`) — the page becomes `async`.
+- **Client components** use `useT()` from `LocaleProvider`. Never hardcode user-facing strings; add a key to the dictionary instead.
+
 ## AI code (hard rules)
 
 - All AI goes through `lib/ai/openai.ts` (`runStructuredAI` and friends). Don't call the OpenAI SDK directly from routes/components.
@@ -42,8 +48,8 @@ Move *with* the grain of the codebase. When in doubt, copy the nearest existing 
 ## Styling
 
 - Tailwind (v4) utility-first; design tokens in `app/globals.css`. Prefer tokens over magic numbers.
-- Use the **z-index token scale** and **motion tokens** once introduced (PB-027, PB-036) — avoid hardcoded `z-9999` / inline durations.
-- Reuse layout primitives (`ContentPage`, `SectionHeader` once extracted, PB-029) instead of repeating inline style blocks.
+- Use the **motion tokens** in `lib/motion/` (`easings.ts`, `transitions.ts`) instead of inline durations; use the z-index token scale once introduced (PB-027) — avoid hardcoded `z-9999`.
+- Reuse the page-level `shell-x` utility (`app/globals.css`) for gutters instead of repeating inline style blocks; shared `ContentPage`/`SectionHeader` primitives are not extracted yet (PB-029).
 
 ## Naming
 

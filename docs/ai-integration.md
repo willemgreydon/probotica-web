@@ -52,14 +52,14 @@ export async function POST(req: Request){
 
 ## Bot definitions
 
-A bot is a typed `BotDefinition` (`features/bots/lib/bot-types.ts`): `slug`, `name`, `category` (sales | ux | content | marketing | real-estate | development | learning | automation | research | support | strategy | other), `systemPrompt`, `starterPrompt`, `inputPlaceholder`, `outputMode` (`text`|`json`|`mixed`), `model`, `temperature`, `status` (`active`|`draft`|`disabled`), `sampleInputs`, `capabilities`, and **`safetyNotes`**. Data: `features/bots/data/public-bots.ts` and `imported-bots.server.ts` (raw exports staged in `_imports/`).
+A bot is a typed `BotDefinition` (`features/bots/lib/bot-types.ts`): `slug`, `name`, `category` (sales | ux | content | marketing | real-estate | development | learning | automation | research | support | strategy | other), `systemPrompt`, `starterPrompt`, `inputPlaceholder`, `outputMode` (`text`|`json`|`mixed`), `model`, `temperature`, `status` (`active`|`draft`|`disabled`), `sampleInputs`, `capabilities`, and **`safetyNotes`**. Data sources in `features/bots/data/`: `public-bots.ts` (hand-authored), `imported-bots.server.ts` (raw exports staged in `_imports/bot-export/part-1/`), `generated-bots.ts` (deterministic generator that tops every category up to `PER_CATEGORY_TARGET = 46`), and `bot-scenarios.ts`. Together these yield a **500+ bot catalog**.
 
 ## Safety & trust (hard requirements)
 
 - Surface each bot's **`safetyNotes`** in the UI before/around runs.
 - GDPR-aware: "no training on your data" messaging, scoped data flows, audit-friendly. This is part of the brand promise (the "AI Compliance Layer" solution).
 - Validate and clamp all user input; validate AI output shape with `zod` before rendering.
-- Make **demo vs. live** unmistakable — never show a fake "LIVE" badge (PB-022 fixes exactly this on `/studio`).
+- Make **demo vs. live** unmistakable — never show a fake "LIVE" badge. PB-022 is addressed: `components/ai/AiDemoPanel.tsx` flags fallback output with a "Demo Fallback" label and `app/(marketing)/studio/page.tsx` describes live API vs. safe-fallback behavior.
 - Rate-limit/guard endpoints before any public launch.
 
 ## Education ↔ product bridge

@@ -51,14 +51,20 @@ Domains: `bots`, `workspace`, `marketplace`, `runtime`, `workflows`, `knowledge`
 
 ## Known truths & active roadmap (don't re-discover these)
 
-The roadmap CSVs at repo root (`probotica-*.csv`, importable to Notion) track engineering work PB-001…PB-037. Current known gaps you may encounter:
+The roadmap CSVs at repo root (`probotica-*.csv`, importable to Notion) track engineering work PB-001…PB-037. What has **shipped** and what **remains**:
 
-- **3 different header systems** and ~17 pages with no nav chrome — route-group unification (`(marketing)`, `(app)`) is the Phase-1 fix.
+Shipped (don't re-discover or re-plan these):
+- **Route-group unification is done** — `app/(marketing)`, `app/(app)`, `app/(auth)` each have a `layout.tsx`; one `SiteHeader`/`SiteFooter` (marketing) + `AppShell` (app). The old "3 header systems" problem is resolved.
+- **DE/EN i18n** — cookie `probotica-locale`; `lib/i18n/{config,dictionaries,server}.ts`; client `useT()` (`LocaleProvider`), server `getServerT()`/`getServerLocale()`. Marketing chrome + bodies are bilingual; knowledge **article bodies** are still EN-only.
+- **Mock auth + client persistence** — `AuthProvider` (test account, localStorage `probotica-auth`); `/login` `/signup` `/account`; workspaces persist to `probotica.workspace.records.v1` (+ `/workspaces` overview, ZIP export); knowledge progress to `probotica-knowledge-progress`.
+- **Nav SSOT is `lib/content/navigation.ts`** (`lib/content/site.ts` is now dead). Syne display font + single-emblem `.brand-emblem`/`.brand-wordmark` lockup. Motion tokens in `lib/motion/`.
+
+Still open:
 - **Search is fragmented** across bots/workflows/scenarios/knowledge (unify later).
 - **Control Center telemetry is synthetic** (sine-wave placeholders), not real usage data.
-- **No real auth / backend persistence yet** — Workspace state is client-side and can be lost.
-- **Accessibility modes**: ~5 of 14 implemented.
-- Some **dead code** (`components/layout/PageShell.tsx`) and **hardcoded z-index / motion** values.
+- **No backend** — all persistence is client-side and device-local; can be lost (server persistence still roadmap, PB-031).
+- **Accessibility modes**: the model is rich (14 visual modes + font/density/motion/transparency axes in `lib/accessibility/accessibility-modes.ts`, key `probotica-a11y-preferences`), but `globals.css` only styles a subset of the data-attributes — CSS coverage is the gap (PB-035).
+- Dead code: `components/layout/PageShell.tsx` (0 importers); some hardcoded z-index values remain (PB-027).
 
 When you touch these areas, prefer the direction set in the roadmap rather than inventing a parallel approach.
 

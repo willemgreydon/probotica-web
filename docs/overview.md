@@ -8,12 +8,14 @@ ProBotica (**probotica.at**, an Austrian/DACH-rooted brand) is an **AI platform 
 
 ### 1. Product (the "do" surface)
 - **Bot Lab** (`/bots`, `/bots/[slug]`) — browse, configure, and run AI bots (sales, UX, content, marketing, dev, strategy, learning…). Each bot is a typed `BotDefinition` with a system prompt, model, temperature, sample inputs, capabilities, and **safety notes**.
-- **Workspace** (`/workspace`, `/workspace/[workspaceId]`) — a personal space to save and chain bot runs. *Currently client-side only; persistence is roadmap.*
-- **Marketplace** (`/marketplace`) — catalog of bots/prompt packs. (`/shop` is a legacy duplicate slated to redirect here.)
+- **Workspace** (`/workspace`, `/workspace/[workspaceId]`, plus a `/workspaces` overview) — a personal space to save and chain bot runs. *Persists client-side to localStorage; server persistence is still roadmap.*
+- **Marketplace** (`/marketplace`) — catalog of bots/prompt packs. (`/shop` is a separate standalone storefront page, DE/EN — not a redirect to here.)
 - **Control Center** (`/control-center`) — usage/telemetry dashboards. *Currently synthetic data; real telemetry is roadmap.*
 - **Workflows** (`/workflows`, `/workflows/[id]`) — multi-step agent pipelines (lead funnel, UX audit pipeline, SEO content engine, research synthesizer, multi-agent strategy, frontend review).
 - **Scenarios** (`/scenarios/[scenarioId]`) & **Categories** (`/categories/[category]`) — discovery facets over bots; planned to become filters rather than top-level destinations.
 - **AI Studio** (`/studio`) — interactive demo surface (`components/ai/AiDemoPanel.tsx`).
+- **Account & auth** (`/login`, `/signup`, `/account`) — mock auth (`components/providers/AuthProvider.tsx`, test account `test@probotica.at` / `probotica`, localStorage). Signup submit is "coming soon"; `/account` is gated. *No real backend yet.*
+- **Pricing** (`/pricing`) — plans and packaging.
 
 ### 2. Knowledge Universe (the "understand" surface)
 `/knowledge`, `/knowledge/[slug]`, `/knowledge/category/[category]` — a structured curriculum: **topics** (taxonomy across AI/ML/robotics/ethics/business), **articles** (sectioned, with callouts, code blocks, key takeaways, prerequisites, difficulty, reading time), a **glossary**, **learning paths**, a **concept graph**, and difficulty badges. The type system (`features/knowledge/lib/knowledge-types.ts`) is explicitly designed to migrate to Sanity/MDX without refactor. See [knowledge-universe.md](./knowledge-universe.md).
@@ -44,7 +46,7 @@ Not "has articles." It means the learning experience follows evidence-based peda
 
 ## What "usable and satisfying" means here
 
-- **Usable**: every page has navigation chrome; one coherent nav model; unified search; clear empty/error/loading states; WCAG AA; fast and responsive from 360px up; predictable IA.
+- **Usable**: every page has navigation chrome; one coherent nav model; unified search; clear empty/error/loading states; WCAG AA; fast and responsive from 360px up; predictable IA; bilingual (DE/EN via `lib/i18n`, `useT` / `getServerT`, cookie `probotica-locale`).
 - **Satisfying**: the cinematic motion *rewards* rather than blocks; transitions feel intentional; feedback is immediate; the product feels alive (without ever sacrificing performance, accessibility, or honesty about what's real vs. demo).
 
 The story backlog in [`stories/`](./stories/README.md) operationalizes all of the above.

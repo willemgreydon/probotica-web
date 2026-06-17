@@ -10,7 +10,7 @@ Start with the root [`CLAUDE.md`](../CLAUDE.md) for the one-page orientation, th
 | [overview.md](./overview.md) | Product vision, the two surfaces, personas, what "best-practice educational" means here |
 | [architecture.md](./architecture.md) | Monorepo, App Router layout, feature-based structure, data flow |
 | [conventions.md](./conventions.md) | Code style, naming, imports, server/client rules, content-as-data pattern |
-| [routing-navigation.md](./routing-navigation.md) | Routes, dynamic segments, the planned `(marketing)`/`(app)` groups, IA & nav model |
+| [routing-navigation.md](./routing-navigation.md) | Routes, dynamic segments, the `(marketing)`/`(app)`/`(auth)` route groups, IA & nav model |
 | [user-flows.md](./user-flows.md) | The real journeys: bot→test→workspace, workflows, knowledge, auth, marketplace; client-state map |
 | [design-system.md](./design-system.md) | Tokens, theming, motion layer, the cinematic aesthetic, hygiene rules |
 | [accessibility.md](./accessibility.md) | Accessibility modes, WCAG targets, reduced-motion, inclusive defaults |
@@ -29,4 +29,4 @@ Start with the root [`CLAUDE.md`](../CLAUDE.md) for the one-page orientation, th
 
 ## Maintenance
 
-These docs describe intent and current reality. When reality changes (e.g. route groups land, telemetry becomes real, auth ships), update the relevant doc *and* the "Known truths" list in `CLAUDE.md`. Keep docs short, true, and link-rich.
+These docs describe intent and current reality. When reality changes (e.g. telemetry becomes real, server persistence ships), update the relevant doc *and* the "Known truths" list in `CLAUDE.md`. Keep docs short, true, and link-rich.
